@@ -1,118 +1,802 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcrypt');
-const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const rateLimit = require('express-rate-limit');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
+
+// Importar serviço do ChatGPT
+const chatGPTService = require('./services/chatgpt');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = crypto.randomBytes(32).toString('hex');
+const SECRET_KEY = process.env.JWT_SECRET || 'sua-chave-secreta-super-forte-aqui';
 
-// Configurações de segurança
+// Configurar banco de dados
+const db = new sqlite3.Database('./database.sqlite');
+
+// Middleware
 app.use(helmet());
 app.use(cors({
-    origin: ['http://localhost:5500', 'http://127.0.0.1:5500'],
+    origin: process.env.FRONTEND_URL || 'http://localhost:8080',
     credentials: true
 }));
 app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Rate limiting
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutos
-    max: 100 // limite de 100 requests por IP
+    max: 100 // limite de requisições por IP
 });
 app.use('/api/', limiter);
-
-// Conectar ao banco SQLite
-const db = new sqlite3.Database('./psicogestao.db', (err) => {
-    if (err) {
-        console.error('Erro ao conectar ao banco:', err);
-    } else {
-        console.log('Conectado ao banco SQLite');
-        initializeDatabase();
-    }
-});
 
 // Middleware de autenticação
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-    
-    if (!token) {
-        return res.status(401).json({ error: 'Token não fornecido' });
-    }
-    
-    jwt.verify(token, JWT_SECRET, (err, user) => {
-        if (err) {
-            return res.status(403).json({ error: 'Token inválido' });
-        }
+
+    if (!token) return res.sendStatus(401);
+
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+        if (err) return res.sendStatus(403);
         req.user = user;
         next();
     });
 }
 
-// Middleware de auditoria
-function auditLog(req, res, next) {
-    const oldJson = res.json;
-    res.json = function(data) {
-        if (req.user) {
-            const auditData = {
-                user_id: req.user.id,
-                action: req.method + ' ' + req.path,
-                resource_type: req.baseUrl,
-                resource_id: req.params.id,
-                ip_address: req.ip,
-                user_agent: req.get('User-Agent'),
-                success: res.statusCode < 400,
-                created_at: new Date().toISOString()
-            };
+// Funções auxiliares para criptografia (simplificadas - em produção usar biblioteca adequada)
+function encrypt(text) {
+    // Em produção, usar uma biblioteca de criptografia real
+    return Buffer.from(text).toString('base64');
+}
+
+function decrypt(encrypted) {
+    return Buffer.from(encrypted, 'base64').toString('utf-8');
+}
+
+// ============================================
+// ROTAS PÚBLICAS
+// ============================================
+
+// Rota de login
+app.post('/api/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        db.get('SELECT * FROM users WHERE username = ? AND is_active = 1', [username], async (err, user) => {
+            if (err || !user) {
+                return res.status(401).json({ error: 'Credenciais inválidas' });
+            }
+
+            const validPassword = await bcrypt.compare(password, user.password_hash);
+            if (!validPassword) {
+                return res.status(401).json({ error: 'Credenciais inválidas' });
+            }
+
+            // Atualizar último login
+            db.run('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?', [user.id]);
+
+            // Gerar token JWT
+            const token = jwt.sign(
+                { 
+                    id: user.id, 
+                    username: user.username,
+                    full_name: user.full_name,
+                    role: user.role 
+                },
+                SECRET_KEY,
+                { expiresIn: '8h' }
+            );
+
+            res.json({
+                token,
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    full_name: user.full_name,
+                    email: user.email,
+                    role: user.role
+                }
+            });
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Erro no servidor' });
+    }
+});
+
+// Rota de registro (apenas para desenvolvimento)
+app.post('/api/register', async (req, res) => {
+    const { username, password, full_name, email } = req.body;
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        
+        db.run(
+            `INSERT INTO users (username, password_hash, full_name, email) VALUES (?, ?, ?, ?)`,
+            [username, hashedPassword, full_name, email],
+            function(err) {
+                if (err) {
+                    return res.status(400).json({ error: 'Usuário já existe' });
+                }
+                res.json({ message: 'Usuário criado com sucesso' });
+            }
+        );
+    } catch (error) {
+        res.status(500).json({ error: 'Erro no servidor' });
+    }
+});
+
+// Rota do ChatGPT (pública mas com limite)
+app.post('/api/chat', async (req, res) => {
+    try {
+        const { message, context = 'psychological_assistant' } = req.body;
+        
+        if (!message || message.trim().length === 0) {
+            return res.status(400).json({ error: 'Mensagem é obrigatória' });
+        }
+
+        const response = await chatGPTService.getResponse(message, context);
+        res.json({ response });
+    } catch (error) {
+        console.error('Erro no chat:', error);
+        res.status(500).json({ error: 'Erro ao processar sua mensagem' });
+    }
+});
+
+// ============================================
+// ROTAS PROTEGIDAS (requerem autenticação)
+// ============================================
+
+// Middleware para todas as rotas abaixo
+app.use('/api/data', authenticateToken);
+
+// Pacientes
+app.get('/api/data/patients', (req, res) => {
+    db.all(
+        `SELECT * FROM patients WHERE is_deleted = 0 ORDER BY created_at DESC`,
+        (err, rows) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
             
-            db.run(
-                `INSERT INTO access_logs (user_id, action, resource_type, resource_id, ip_address, user_agent, success, created_at) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                [auditData.user_id, auditData.action, auditData.resource_type, auditData.resource_id,
-                 auditData.ip_address, auditData.user_agent, auditData.success, auditData.created_at]
+            // Decriptar dados sensíveis
+            const patients = rows.map(patient => ({
+                ...patient,
+                phone: patient.phone_encrypted ? decrypt(patient.phone_encrypted) : '',
+                email: patient.email_encrypted ? decrypt(patient.email_encrypted) : '',
+                address: patient.address_encrypted ? decrypt(patient.address_encrypted) : '',
+                cpf: patient.cpf_encrypted ? decrypt(patient.cpf_encrypted) : ''
+            }));
+            
+            res.json(patients);
+        }
+    );
+});
+
+app.post('/api/data/patients', (req, res) => {
+    const {
+        first_name, last_name, birth_date, gender, cpf, phone, email,
+        address, profession, emergency_contact, health_insurance,
+        session_frequency, therapy_reason, observations
+    } = req.body;
+
+    const patientData = {
+        first_name,
+        last_name,
+        birth_date,
+        gender,
+        cpf_encrypted: cpf ? encrypt(cpf) : null,
+        phone_encrypted: phone ? encrypt(phone) : null,
+        email_encrypted: email ? encrypt(email) : null,
+        address_encrypted: address ? encrypt(address) : null,
+        profession,
+        emergency_contact,
+        health_insurance,
+        session_frequency: session_frequency || 'weekly',
+        therapy_reason,
+        observations,
+        first_session_date: new Date().toISOString().split('T')[0],
+        created_by: req.user.id
+    };
+
+    const columns = Object.keys(patientData);
+    const values = Object.values(patientData);
+    const placeholders = columns.map(() => '?').join(', ');
+
+    db.run(
+        `INSERT INTO patients (${columns.join(', ')}) VALUES (${placeholders})`,
+        values,
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // Retornar o paciente criado
+            db.get(
+                `SELECT * FROM patients WHERE id = ?`,
+                [this.lastID],
+                (err, row) => {
+                    if (err) return res.status(500).json({ error: err.message });
+                    
+                    const patient = {
+                        ...row,
+                        phone: row.phone_encrypted ? decrypt(row.phone_encrypted) : '',
+                        email: row.email_encrypted ? decrypt(row.email_encrypted) : '',
+                        address: row.address_encrypted ? decrypt(row.address_encrypted) : '',
+                        cpf: row.cpf_encrypted ? decrypt(row.cpf_encrypted) : ''
+                    };
+                    
+                    // Log de atividade
+                    logActivity(req.user.id, 'create', 'patients', this.lastID, 'Novo paciente criado');
+                    
+                    res.json(patient);
+                }
             );
         }
-        oldJson.call(this, data);
+    );
+});
+
+// Atualizar paciente
+app.put('/api/data/patients/:id', (req, res) => {
+    const id = req.params.id;
+    const {
+        first_name, last_name, birth_date, gender, cpf, phone, email,
+        address, profession, emergency_contact, health_insurance,
+        session_frequency, therapy_reason, observations, status
+    } = req.body;
+
+    const updates = {
+        first_name,
+        last_name,
+        birth_date,
+        gender,
+        cpf_encrypted: cpf ? encrypt(cpf) : null,
+        phone_encrypted: phone ? encrypt(phone) : null,
+        email_encrypted: email ? encrypt(email) : null,
+        address_encrypted: address ? encrypt(address) : null,
+        profession,
+        emergency_contact,
+        health_insurance,
+        session_frequency,
+        therapy_reason,
+        observations,
+        status,
+        updated_at: new Date().toISOString()
     };
-    next();
+
+    // Filtrar campos nulos/undefined
+    const filteredUpdates = Object.entries(updates)
+        .filter(([_, value]) => value !== undefined && value !== null)
+        .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
+
+    const setClause = Object.keys(filteredUpdates)
+        .map(key => `${key} = ?`)
+        .join(', ');
+    
+    const values = [...Object.values(filteredUpdates), id];
+
+    db.run(
+        `UPDATE patients SET ${setClause} WHERE id = ?`,
+        values,
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // Log de atividade
+            logActivity(req.user.id, 'update', 'patients', id, 'Paciente atualizado');
+            
+            res.json({ message: 'Paciente atualizado com sucesso' });
+        }
+    );
+});
+
+// Excluir paciente (soft delete)
+app.delete('/api/data/patients/:id', (req, res) => {
+    const id = req.params.id;
+    const { deletion_reason } = req.body;
+
+    db.run(
+        `UPDATE patients SET is_deleted = 1, deletion_reason = ?, deleted_at = CURRENT_TIMESTAMP WHERE id = ?`,
+        [deletion_reason, id],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // Log de atividade
+            logActivity(req.user.id, 'delete', 'patients', id, 'Paciente excluído');
+            
+            res.json({ message: 'Paciente excluído com sucesso' });
+        }
+    );
+});
+
+// Consultas
+app.get('/api/data/appointments', (req, res) => {
+    const { date, patient_id } = req.query;
+    
+    let query = `
+        SELECT a.*, p.first_name, p.last_name 
+        FROM appointments a
+        LEFT JOIN patients p ON a.patient_id = p.id
+        WHERE p.is_deleted = 0
+    `;
+    
+    const params = [];
+    
+    if (date) {
+        query += ` AND a.appointment_date = ?`;
+        params.push(date);
+    }
+    
+    if (patient_id) {
+        query += ` AND a.patient_id = ?`;
+        params.push(patient_id);
+    }
+    
+    query += ` ORDER BY a.appointment_date, a.appointment_time`;
+    
+    db.all(query, params, (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows);
+    });
+});
+
+app.post('/api/data/appointments', (req, res) => {
+    const {
+        patient_id, appointment_date, appointment_time, duration,
+        type, notes, price
+    } = req.body;
+
+    // Validar horário para o mesmo dia
+    const today = new Date().toISOString().split('T')[0];
+    const [hours, minutes] = appointment_time.split(':').map(Number);
+    const appointmentDateTime = new Date(`${appointment_date}T${appointment_time}`);
+    
+    if (appointment_date === today) {
+        const now = new Date();
+        if (appointmentDateTime < now) {
+            return res.status(400).json({ error: 'Não é possível agendar consultas para horários passados no mesmo dia' });
+        }
+    }
+
+    db.run(
+        `INSERT INTO appointments 
+         (patient_id, appointment_date, appointment_time, duration, type, notes, price, created_by) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [patient_id, appointment_date, appointment_time, duration, type, notes, price, req.user.id],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // Log de atividade
+            logActivity(req.user.id, 'create', 'appointments', this.lastID, 'Nova consulta agendada');
+            
+            // Buscar dados completos da consulta
+            db.get(
+                `SELECT a.*, p.first_name, p.last_name 
+                 FROM appointments a
+                 LEFT JOIN patients p ON a.patient_id = p.id
+                 WHERE a.id = ?`,
+                [this.lastID],
+                (err, row) => {
+                    if (err) return res.status(500).json({ error: err.message });
+                    res.json(row);
+                }
+            );
+        }
+    );
+});
+
+// Atualizar status da consulta
+app.put('/api/data/appointments/:id/status', (req, res) => {
+    const id = req.params.id;
+    const { status } = req.body;
+
+    db.run(
+        `UPDATE appointments SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+        [status, id],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // Log de atividade
+            logActivity(req.user.id, 'update', 'appointments', id, `Status da consulta alterado para ${status}`);
+            
+            res.json({ message: 'Status atualizado com sucesso' });
+        }
+    );
+});
+
+// Relatórios
+app.get('/api/data/reports', (req, res) => {
+    db.all(
+        `SELECT r.*, p.first_name, p.last_name, u.full_name as author_name
+         FROM reports r
+         LEFT JOIN patients p ON r.patient_id = p.id
+         LEFT JOIN users u ON r.author_id = u.id
+         WHERE r.is_deleted = 0
+         ORDER BY r.report_date DESC`,
+        (err, rows) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            res.json(rows);
+        }
+    );
+});
+
+app.post('/api/data/reports', (req, res) => {
+    const {
+        patient_id, appointment_id, report_date, report_type,
+        title, content, confidentiality_level
+    } = req.body;
+
+    db.run(
+        `INSERT INTO reports 
+         (patient_id, appointment_id, report_date, report_type, title, content, 
+          author_id, confidentiality_level) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [patient_id, appointment_id, report_date, report_type, title, content, req.user.id, confidentiality_level],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // Log de atividade
+            logActivity(req.user.id, 'create', 'reports', this.lastID, 'Novo relatório criado');
+            
+            res.json({ id: this.lastID, message: 'Relatório criado com sucesso' });
+        }
+    );
+});
+
+// Pagamentos
+app.get('/api/data/payments', (req, res) => {
+    db.all(
+        `SELECT p.*, pt.first_name, pt.last_name, a.appointment_date
+         FROM payments p
+         LEFT JOIN patients pt ON p.patient_id = pt.id
+         LEFT JOIN appointments a ON p.appointment_id = a.id
+         ORDER BY p.payment_date DESC`,
+        (err, rows) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            res.json(rows);
+        }
+    );
+});
+
+app.post('/api/data/payments', (req, res) => {
+    const {
+        patient_id, appointment_id, payment_date, amount,
+        payment_method, payment_type, description, receipt_number
+    } = req.body;
+
+    db.run(
+        `INSERT INTO payments 
+         (patient_id, appointment_id, payment_date, amount, payment_method, 
+          payment_type, description, receipt_number, created_by) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [patient_id, appointment_id, payment_date, amount, payment_method, 
+         payment_type, description, receipt_number, req.user.id],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // Log de atividade
+            logActivity(req.user.id, 'create', 'payments', this.lastID, 'Novo pagamento registrado');
+            
+            // Se for de uma consulta, atualizar status de pagamento
+            if (appointment_id) {
+                db.run(
+                    `UPDATE appointments SET payment_status = 'paid' WHERE id = ?`,
+                    [appointment_id]
+                );
+            }
+            
+            res.json({ id: this.lastID, message: 'Pagamento registrado com sucesso' });
+        }
+    );
+});
+
+// Anotações clínicas
+app.get('/api/data/clinical-notes/:patient_id', (req, res) => {
+    const patient_id = req.params.patient_id;
+    
+    db.all(
+        `SELECT cn.*, u.full_name as author_name
+         FROM clinical_notes cn
+         LEFT JOIN users u ON cn.created_by = u.id
+         WHERE cn.patient_id = ?
+         ORDER BY cn.note_date DESC`,
+        [patient_id],
+        (err, rows) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            res.json(rows);
+        }
+    );
+});
+
+app.post('/api/data/clinical-notes', (req, res) => {
+    const {
+        patient_id, note_date, title, content, category, tags
+    } = req.body;
+
+    db.run(
+        `INSERT INTO clinical_notes 
+         (patient_id, note_date, title, content, category, tags, created_by) 
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [patient_id, note_date, title, content, category, tags, req.user.id],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // Log de atividade
+            logActivity(req.user.id, 'create', 'clinical_notes', this.lastID, 'Nova anotação clínica');
+            
+            res.json({ id: this.lastID, message: 'Anotação criada com sucesso' });
+        }
+    );
+});
+
+// Pastas e Documentos
+app.get('/api/data/folders', (req, res) => {
+    const { folder_type } = req.query;
+    
+    let query = `SELECT * FROM folders WHERE 1=1`;
+    const params = [];
+    
+    if (folder_type) {
+        query += ` AND folder_type = ?`;
+        params.push(folder_type);
+    }
+    
+    query += ` ORDER BY folder_name`;
+    
+    db.all(query, params, (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows);
+    });
+});
+
+app.post('/api/data/folders', (req, res) => {
+    const { folder_name, folder_type, parent_folder_id } = req.body;
+
+    db.run(
+        `INSERT INTO folders (folder_name, folder_type, parent_folder_id, created_by) 
+         VALUES (?, ?, ?, ?)`,
+        [folder_name, folder_type, parent_folder_id, req.user.id],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // Log de atividade
+            logActivity(req.user.id, 'create', 'folders', this.lastID, 'Nova pasta criada');
+            
+            res.json({ id: this.lastID, message: 'Pasta criada com sucesso' });
+        }
+    );
+});
+
+app.get('/api/data/documents', (req, res) => {
+    const { folder_id, patient_id } = req.query;
+    
+    let query = `
+        SELECT d.*, f.folder_name, p.first_name, p.last_name
+        FROM documents d
+        LEFT JOIN folders f ON d.folder_id = f.id
+        LEFT JOIN patients p ON d.patient_id = p.id
+        WHERE 1=1
+    `;
+    
+    const params = [];
+    
+    if (folder_id) {
+        query += ` AND d.folder_id = ?`;
+        params.push(folder_id);
+    }
+    
+    if (patient_id) {
+        query += ` AND d.patient_id = ?`;
+        params.push(patient_id);
+    }
+    
+    query += ` ORDER BY d.created_at DESC`;
+    
+    db.all(query, params, (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows);
+    });
+});
+
+app.post('/api/data/documents', (req, res) => {
+    const {
+        patient_id, document_name, document_type, file_path,
+        file_size, mime_type, description, folder_id
+    } = req.body;
+
+    db.run(
+        `INSERT INTO documents 
+         (patient_id, document_name, document_type, file_path, file_size, 
+          mime_type, description, folder_id, uploaded_by) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [patient_id, document_name, document_type, file_path, file_size,
+         mime_type, description, folder_id, req.user.id],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // Log de atividade
+            logActivity(req.user.id, 'create', 'documents', this.lastID, 'Novo documento criado');
+            
+            res.json({ id: this.lastID, message: 'Documento criado com sucesso' });
+        }
+    );
+});
+
+// Upload de arquivos (simplificado - em produção usar multer e armazenamento em nuvem)
+app.post('/api/data/upload', (req, res) => {
+    const { file_data, file_name, file_type } = req.body;
+    
+    if (!file_data || !file_name) {
+        return res.status(400).json({ error: 'Dados do arquivo são obrigatórios' });
+    }
+    
+    // Em produção, salvar em um serviço de armazenamento (S3, Google Cloud, etc.)
+    const uploadDir = path.join(__dirname, 'uploads');
+    if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    
+    const fileId = Date.now();
+    const filePath = path.join(uploadDir, `${fileId}_${file_name}`);
+    
+    // Converter base64 para arquivo
+    const base64Data = file_data.replace(/^data:.*?;base64,/, '');
+    fs.writeFile(filePath, base64Data, 'base64', (err) => {
+        if (err) {
+            return res.status(500).json({ error: 'Erro ao salvar arquivo' });
+        }
+        
+        res.json({
+            file_id: fileId,
+            file_path: `/uploads/${fileId}_${file_name}`,
+            message: 'Arquivo enviado com sucesso'
+        });
+    });
+});
+
+// Dashboard statistics
+app.get('/api/data/dashboard', (req, res) => {
+    const today = new Date().toISOString().split('T')[0];
+    
+    const stats = {};
+    
+    // Contar pacientes ativos
+    db.get(
+        `SELECT COUNT(*) as count FROM patients WHERE status = 'active' AND is_deleted = 0`,
+        (err, row) => {
+            if (err) return res.status(500).json({ error: err.message });
+            stats.activePatients = row.count;
+            
+            // Consultas de hoje
+            db.get(
+                `SELECT COUNT(*) as count FROM appointments WHERE appointment_date = ?`,
+                [today],
+                (err, row) => {
+                    if (err) return res.status(500).json({ error: err.message });
+                    stats.todayAppointments = row.count;
+                    
+                    // Receita do mês
+                    const currentMonth = new Date().getMonth() + 1;
+                    const currentYear = new Date().getFullYear();
+                    
+                    db.get(
+                        `SELECT SUM(amount) as total FROM payments 
+                         WHERE strftime('%m', payment_date) = ? AND strftime('%Y', payment_date) = ?`,
+                        [currentMonth.toString().padStart(2, '0'), currentYear],
+                        (err, row) => {
+                            if (err) return res.status(500).json({ error: err.message });
+                            stats.monthlyRevenue = row.total || 0;
+                            
+                            // Relatórios pendentes (consultas realizadas sem relatório)
+                            db.get(
+                                `SELECT COUNT(*) as count FROM appointments a
+                                 LEFT JOIN reports r ON a.id = r.appointment_id
+                                 WHERE a.status = 'completed' AND r.id IS NULL`,
+                                (err, row) => {
+                                    if (err) return res.status(500).json({ error: err.message });
+                                    stats.pendingReports = row.count;
+                                    
+                                    res.json(stats);
+                                }
+                            );
+                        }
+                    );
+                }
+            );
+        }
+    );
+});
+
+// Atividades recentes
+app.get('/api/data/activities', (req, res) => {
+    db.all(
+        `SELECT a.*, u.full_name as user_name, p.first_name as patient_first_name,
+                p.last_name as patient_last_name
+         FROM activities a
+         LEFT JOIN users u ON a.user_id = u.id
+         LEFT JOIN patients p ON a.patient_id = p.id
+         ORDER BY a.created_at DESC
+         LIMIT 20`,
+        (err, rows) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            res.json(rows);
+        }
+    );
+});
+
+// Log de atividade
+function logActivity(userId, activityType, tableName, recordId, description) {
+    const ip = '127.0.0.1'; // Em produção, pegar do req.ip
+    const userAgent = 'Server'; // Em produção, pegar do req.headers['user-agent']
+    
+    db.run(
+        `INSERT INTO activities 
+         (user_id, activity_type, activity_description, ip_address, user_agent,
+          table_name, record_id) 
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [userId, activityType, description, ip, userAgent, tableName, recordId]
+    );
 }
 
 // Inicializar banco de dados
 function initializeDatabase() {
-    const schema = fs.readFileSync('./database.sql', 'utf8');
-    db.exec(schema, (err) => {
+    const sql = fs.readFileSync('./database.sql', 'utf8');
+    
+    db.exec(sql, (err) => {
         if (err) {
-            console.error('Erro ao criar tabelas:', err);
+            console.error('Erro ao inicializar banco de dados:', err);
         } else {
-            console.log('Banco de dados inicializado');
+            console.log('Banco de dados inicializado com sucesso');
             
             // Criar usuário padrão se não existir
             const defaultPassword = 'Andrea1103#';
             bcrypt.hash(defaultPassword, 10, (err, hash) => {
-                if (err) {
-                    console.error('Erro ao hash senha:', err);
-                    return;
-                }
+                if (err) return;
                 
-                db.get('SELECT id FROM users WHERE username = ?', ['Andrea'], (err, row) => {
+                db.get('SELECT * FROM users WHERE username = ?', ['Andrea'], (err, row) => {
                     if (!row) {
                         db.run(
-                            `INSERT INTO users (username, password_hash, full_name, email, role) 
+                            `INSERT INTO users (username, password_hash, full_name, email, role)
                              VALUES (?, ?, ?, ?, ?)`,
-                            ['Andrea', hash, 'Andrea', 'andrea@email.com', 'psychologist'],
-                            (err) => {
-                                if (err) console.error('Erro ao criar usuário padrão:', err);
-                                else console.log('Usuário padrão criado');
-                            }
+                            ['Andrea', hash, 'Andrea', 'andrea@email.com', 'psychologist']
                         );
                     }
                 });
@@ -121,335 +805,24 @@ function initializeDatabase() {
     });
 }
 
-// Chave de criptografia (deve ser armazenada de forma segura em produção)
-const ENCRYPTION_KEY = crypto.scryptSync('chave-mestra-lgpd-2024', 'salt', 32);
-const ALGORITHM = 'aes-256-gcm';
+// Inicializar e iniciar servidor
+initializeDatabase();
 
-// Funções de criptografia LGPD
-function encryptText(text) {
-    if (!text) return null;
-    const iv = crypto.randomBytes(16);
-    const cipher = crypto.createCipheriv(ALGORITHM, ENCRYPTION_KEY, iv);
-    let encrypted = cipher.update(text, 'utf8', 'hex');
-    encrypted += cipher.final('hex');
-    const authTag = cipher.getAuthTag();
-    return {
-        iv: iv.toString('hex'),
-        content: encrypted,
-        tag: authTag.toString('hex')
+// Configurar HTTPS (para produção)
+if (process.env.NODE_ENV === 'production') {
+    const options = {
+        key: fs.readFileSync(process.env.SSL_KEY_PATH),
+        cert: fs.readFileSync(process.env.SSL_CERT_PATH)
     };
-}
-
-function decryptText(encryptedData) {
-    if (!encryptedData) return null;
-    try {
-        const decipher = crypto.createDecipheriv(
-            ALGORITHM,
-            ENCRYPTION_KEY,
-            Buffer.from(encryptedData.iv, 'hex')
-        );
-        decipher.setAuthTag(Buffer.from(encryptedData.tag, 'hex'));
-        let decrypted = decipher.update(encryptedData.content, 'hex', 'utf8');
-        decrypted += decipher.final('utf8');
-        return decrypted;
-    } catch (error) {
-        console.error('Erro na descriptografia:', error);
-        return null;
-    }
-}
-
-// ROTAS DA API
-
-// 1. Autenticação
-app.post('/api/login', (req, res) => {
-    const { username, password } = req.body;
     
-    if (!username || !password) {
-        return res.status(400).json({ error: 'Usuário e senha são obrigatórios' });
-    }
-    
-    db.get(
-        'SELECT id, username, password_hash, full_name, role FROM users WHERE username = ? AND is_active = 1',
-        [username],
-        async (err, user) => {
-            if (err) {
-                return res.status(500).json({ error: 'Erro no servidor' });
-            }
-            
-            if (!user) {
-                return res.status(401).json({ error: 'Credenciais inválidas' });
-            }
-            
-            const isValid = await bcrypt.compare(password, user.password_hash);
-            if (!isValid) {
-                return res.status(401).json({ error: 'Credenciais inválidas' });
-            }
-            
-            // Atualizar último login
-            db.run('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?', [user.id]);
-            
-            // Gerar token JWT
-            const token = jwt.sign(
-                { id: user.id, username: user.username, role: user.role },
-                JWT_SECRET,
-                { expiresIn: '8h' }
-            );
-            
-            res.json({
-                token,
-                user: {
-                    id: user.id,
-                    username: user.username,
-                    fullName: user.full_name,
-                    role: user.role
-                }
-            });
-        }
-    );
-});
-
-// 2. Pacientes (com criptografia LGPD)
-app.post('/api/patients', authenticateToken, auditLog, (req, res) => {
-    const patient = req.body;
-    
-    // Criptografar dados sensíveis
-    const cpfEncrypted = encryptText(patient.cpf);
-    const phoneEncrypted = encryptText(patient.phone);
-    const emailEncrypted = encryptText(patient.email);
-    const addressEncrypted = encryptText(patient.address);
-    
-    db.run(
-        `INSERT INTO patients (
-            first_name, last_name, birth_date, gender, 
-            cpf_encrypted, phone_encrypted, email_encrypted, address_encrypted,
-            profession, emergency_contact, health_insurance, status,
-            first_session_date, session_frequency, therapy_reason, observations,
-            created_by
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-            patient.firstName, patient.lastName, patient.birthDate, patient.gender,
-            JSON.stringify(cpfEncrypted), JSON.stringify(phoneEncrypted),
-            JSON.stringify(emailEncrypted), JSON.stringify(addressEncrypted),
-            patient.profession, patient.emergencyContact, patient.healthInsurance,
-            patient.status || 'active',
-            patient.firstSessionDate, patient.sessionFrequency, patient.therapyReason,
-            patient.observations, req.user.id
-        ],
-        function(err) {
-            if (err) {
-                console.error('Erro ao criar paciente:', err);
-                return res.status(500).json({ error: 'Erro ao criar paciente' });
-            }
-            
-            // Registrar atividade
-            db.run(
-                `INSERT INTO activities (user_id, activity_type, activity_description, patient_id, table_name, record_id)
-                 VALUES (?, ?, ?, ?, ?, ?)`,
-                [req.user.id, 'create', `Paciente ${patient.firstName} ${patient.lastName} criado`, 
-                 this.lastID, 'patients', this.lastID]
-            );
-            
-            res.json({ id: this.lastID, message: 'Paciente criado com sucesso' });
-        }
-    );
-});
-
-app.get('/api/patients', authenticateToken, (req, res) => {
-    db.all(
-        `SELECT id, first_name, last_name, birth_date, gender, profession, status,
-                first_session_date, session_frequency, therapy_reason,
-                created_at, updated_at
-         FROM patients 
-         WHERE is_deleted = 0 
-         ORDER BY created_at DESC`,
-        [],
-        (err, rows) => {
-            if (err) {
-                console.error('Erro ao buscar pacientes:', err);
-                return res.status(500).json({ error: 'Erro ao buscar pacientes' });
-            }
-            res.json(rows);
-        }
-    );
-});
-
-app.get('/api/patients/:id', authenticateToken, (req, res) => {
-    db.get(
-        `SELECT *, cpf_encrypted, phone_encrypted, email_encrypted, address_encrypted
-         FROM patients WHERE id = ? AND is_deleted = 0`,
-        [req.params.id],
-        (err, row) => {
-            if (err) {
-                console.error('Erro ao buscar paciente:', err);
-                return res.status(500).json({ error: 'Erro ao buscar paciente' });
-            }
-            
-            if (!row) {
-                return res.status(404).json({ error: 'Paciente não encontrado' });
-            }
-            
-            // Descriptografar dados sensíveis
-            const patient = { ...row };
-            if (patient.cpf_encrypted) {
-                patient.cpf = decryptText(JSON.parse(patient.cpf_encrypted));
-            }
-            if (patient.phone_encrypted) {
-                patient.phone = decryptText(JSON.parse(patient.phone_encrypted));
-            }
-            if (patient.email_encrypted) {
-                patient.email = decryptText(JSON.parse(patient.email_encrypted));
-            }
-            if (patient.address_encrypted) {
-                patient.address = decryptText(JSON.parse(patient.address_encrypted));
-            }
-            
-            // Remover dados criptografados da resposta
-            delete patient.cpf_encrypted;
-            delete patient.phone_encrypted;
-            delete patient.email_encrypted;
-            delete patient.address_encrypted;
-            
-            res.json(patient);
-        }
-    );
-});
-
-// 3. Consultas
-app.post('/api/appointments', authenticateToken, auditLog, (req, res) => {
-    const appointment = req.body;
-    
-    db.run(
-        `INSERT INTO appointments (
-            patient_id, appointment_date, appointment_time, duration,
-            type, status, notes, price, payment_status, created_by
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-            appointment.patientId, appointment.date, appointment.time, appointment.duration,
-            appointment.type, appointment.status || 'scheduled', appointment.notes,
-            appointment.price, appointment.paymentStatus || 'pending', req.user.id
-        ],
-        function(err) {
-            if (err) {
-                console.error('Erro ao criar consulta:', err);
-                return res.status(500).json({ error: 'Erro ao criar consulta' });
-            }
-            
-            res.json({ id: this.lastID, message: 'Consulta agendada com sucesso' });
-        }
-    );
-});
-
-// 4. Relatórios
-app.post('/api/reports', authenticateToken, auditLog, (req, res) => {
-    const report = req.body;
-    
-    db.run(
-        `INSERT INTO reports (
-            patient_id, appointment_id, report_date, report_type,
-            title, content, author_id, confidentiality_level
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-            report.patientId, report.appointmentId, report.date, report.type,
-            report.title, report.content, req.user.id, report.confidentialityLevel || 'confidential'
-        ],
-        function(err) {
-            if (err) {
-                console.error('Erro ao criar relatório:', err);
-                return res.status(500).json({ error: 'Erro ao criar relatório' });
-            }
-            
-            res.json({ id: this.lastID, message: 'Relatório criado com sucesso' });
-        }
-    );
-});
-
-// 5. Backups automáticos
-function performBackup() {
-    const backupName = `backup_${Date.now()}.db`;
-    const backupPath = path.join(__dirname, 'backups', backupName);
-    
-    // Copiar banco de dados
-    fs.copyFile('./psicogestao.db', backupPath, (err) => {
-        if (err) {
-            console.error('Erro no backup:', err);
-            return;
-        }
-        
-        const stats = fs.statSync(backupPath);
-        db.run(
-            `INSERT INTO backups (backup_name, backup_type, file_path, file_size, created_by)
-             VALUES (?, ?, ?, ?, ?)`,
-            [backupName, 'automatic', backupPath, stats.size, 1]
-        );
-        
-        console.log(`Backup realizado: ${backupName}`);
-        
-        // Limitar a 30 backups
-        db.all('SELECT id FROM backups ORDER BY created_at DESC', [], (err, rows) => {
-            if (rows.length > 30) {
-                const toDelete = rows.slice(30);
-                toDelete.forEach(row => {
-                    db.get('SELECT file_path FROM backups WHERE id = ?', [row.id], (err, backup) => {
-                        if (backup && backup.file_path) {
-                            fs.unlink(backup.file_path, () => {});
-                        }
-                        db.run('DELETE FROM backups WHERE id = ?', [row.id]);
-                    });
-                });
-            }
-        });
+    https.createServer(options, app).listen(PORT, () => {
+        console.log(`Servidor HTTPS rodando na porta ${PORT}`);
+    });
+} else {
+    app.listen(PORT, () => {
+        console.log(`Servidor rodando na porta ${PORT}`);
     });
 }
 
-// Agendar backup diário
-setInterval(performBackup, 24 * 60 * 60 * 1000); // 24 horas
-
-// 6. Limpeza de dados expirados (LGPD)
-function cleanExpiredData() {
-    const retentionYears = 5; // Manter dados por 5 anos conforme LGPD
-    const cutoffDate = new Date();
-    cutoffDate.setFullYear(cutoffDate.getFullYear() - retentionYears);
-    
-    // Anonimizar dados de pacientes inativos há mais de 5 anos
-    db.run(
-        `UPDATE patients SET 
-            first_name = 'ANONIMIZADO',
-            last_name = 'ANONIMIZADO',
-            cpf_encrypted = NULL,
-            phone_encrypted = NULL,
-            email_encrypted = NULL,
-            address_encrypted = NULL,
-            is_deleted = 1,
-            deletion_reason = 'LGPD - Retenção expirada',
-            deleted_at = CURRENT_TIMESTAMP
-         WHERE status = 'inactive' 
-         AND updated_at < ? 
-         AND is_deleted = 0`,
-        [cutoffDate.toISOString()]
-    );
-    
-    console.log('Limpeza LGPD executada');
-}
-
-// Executar limpeza semanal
-setInterval(cleanExpiredData, 7 * 24 * 60 * 60 * 1000);
-
-// 7. Middleware de timeout de sessão
-app.use((req, res, next) => {
-    req.sessionTimeout = setTimeout(() => {
-        if (req.user) {
-            console.log(`Sessão expirada para usuário ${req.user.id}`);
-            // Aqui você pode invalidar o token se necessário
-        }
-    }, 30 * 60 * 1000); // 30 minutos
-    
-    next();
-});
-
 // Servir arquivos estáticos
-app.use(express.static('public'));
-
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-    console.log(`JWT Secret: ${JWT_SECRET}`);
-});
+app.use(express.static(path.join(__dirname, '../public')));
