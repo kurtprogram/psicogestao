@@ -1489,7 +1489,6 @@
             justify-content: center;
             background: linear-gradient(135deg, var(--dark-color) 0%, var(--primary-color) 100%);
             padding: 20px;
-            transition: opacity 0.3s ease;
         }
 
         .login-container {
@@ -1550,25 +1549,24 @@
             font-size: 1rem;
         }
 
-        /* ANIMAÇÕES */
+        /* ANIMAÇÕES E EFEITOS */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
             20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
 
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .slide-down {
+            animation: slideDown 0.3s ease;
         }
 
         /* RESPONSIVIDADE */
@@ -1713,6 +1711,17 @@
             margin: 0 auto;
         }
 
+        /* LOADING */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
         .spinner {
             width: 40px;
             height: 40px;
@@ -1721,6 +1730,158 @@
             border-top-color: var(--primary-color);
             animation: spin 1s ease-in-out infinite;
             margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* FOLDER VIEW */
+        .folder-view-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+        }
+
+        .folder-view-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .folder-view-header i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .folder-view-header h3 {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .back-btn {
+            margin-right: auto;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .file-item:hover {
+            background-color: var(--light-bg);
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .file-icon.pdf {
+            background-color: #e74c3c;
+        }
+
+        .file-icon.image {
+            background-color: #3498db;
+        }
+
+        .file-icon.document {
+            background-color: #2ecc71;
+        }
+
+        .file-icon.other {
+            background-color: #9b59b6;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .file-size {
+            font-size: 0.85rem;
+            color: var(--light-text);
+        }
+
+        .file-date {
+            font-size: 0.85rem;
+            color: var(--light-text);
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .file-item:hover .file-actions {
+            opacity: 1;
+        }
+
+        /* ANOTAÇÕES CLÍNICAS */
+        .clinical-notes-container {
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+        }
+
+        .note-editor {
+            background-color: var(--white);
+            border-radius: var(--border-radius-sm);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .note-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius-sm);
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .note-date {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .note-content {
+            line-height: 1.6;
+            white-space: pre-wrap;
         }
 
         /* CPF VALIDATION */
@@ -1750,13 +1911,13 @@
             <form id="loginForm" class="login-form">
                 <div class="form-group">
                     <label for="username">Nome de usuário</label>
-                    <input type="text" id="username" class="form-control" placeholder="Digite seu nome de usuário" required>
+                    <input type="text" id="username" class="form-control" placeholder="Digite seu nome de usuário" required autofocus>
                 </div>
                 <div class="form-group">
                     <label for="password">Senha</label>
                     <input type="password" id="password" class="form-control" placeholder="Digite sua senha" required>
                 </div>
-                <button type="submit" class="btn login-btn">
+                <button type="submit" class="btn login-btn" id="loginButton">
                     <span id="loginBtnText">Acessar Sistema</span>
                 </button>
             </form>
@@ -2799,8 +2960,392 @@
 
     <script>
         // ============================================
+        // BANCO DE DADOS COM INDEXEDDB
+        // ============================================
+        
+        class Database {
+            constructor() {
+                this.dbName = 'PsicoGestaoDB';
+                this.dbVersion = 3;
+                this.db = null;
+                this.initialize();
+            }
+            
+            async initialize() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(this.dbName, this.dbVersion);
+                    
+                    request.onerror = (event) => {
+                        console.error('Erro ao abrir banco de dados:', event.target.error);
+                        reject(event.target.error);
+                    };
+                    
+                    request.onsuccess = (event) => {
+                        this.db = event.target.result;
+                        console.log('Banco de dados aberto com sucesso');
+                        resolve(this.db);
+                    };
+                    
+                    request.onupgradeneeded = (event) => {
+                        const db = event.target.result;
+                        
+                        // Criar stores se não existirem
+                        if (!db.objectStoreNames.contains('patients')) {
+                            const patientsStore = db.createObjectStore('patients', { keyPath: 'id', autoIncrement: true });
+                            patientsStore.createIndex('status', 'status', { unique: false });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('appointments')) {
+                            const appointmentsStore = db.createObjectStore('appointments', { keyPath: 'id', autoIncrement: true });
+                            appointmentsStore.createIndex('date', 'date', { unique: false });
+                            appointmentsStore.createIndex('patientId', 'patientId', { unique: false });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('reports')) {
+                            const reportsStore = db.createObjectStore('reports', { keyPath: 'id', autoIncrement: true });
+                            reportsStore.createIndex('patientId', 'patientId', { unique: false });
+                            reportsStore.createIndex('date', 'date', { unique: false });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('payments')) {
+                            const paymentsStore = db.createObjectStore('payments', { keyPath: 'id', autoIncrement: true });
+                            paymentsStore.createIndex('patientId', 'patientId', { unique: false });
+                            paymentsStore.createIndex('date', 'date', { unique: false });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('activities')) {
+                            const activitiesStore = db.createObjectStore('activities', { keyPath: 'id', autoIncrement: true });
+                            activitiesStore.createIndex('timestamp', 'timestamp', { unique: false });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('folders')) {
+                            const foldersStore = db.createObjectStore('folders', { keyPath: 'id', autoIncrement: true });
+                            foldersStore.createIndex('type', 'type', { unique: false });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('documents')) {
+                            const documentsStore = db.createObjectStore('documents', { keyPath: 'id', autoIncrement: true });
+                            documentsStore.createIndex('folderId', 'folderId', { unique: false });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('files')) {
+                            const filesStore = db.createObjectStore('files', { keyPath: 'id', autoIncrement: true });
+                            filesStore.createIndex('folderId', 'folderId', { unique: false });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('clinicalNotes')) {
+                            const notesStore = db.createObjectStore('clinicalNotes', { keyPath: 'id', autoIncrement: true });
+                            notesStore.createIndex('patientId', 'patientId', { unique: false });
+                            notesStore.createIndex('date', 'date', { unique: false });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('settings')) {
+                            const settingsStore = db.createObjectStore('settings', { keyPath: 'key' });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('chatMessages')) {
+                            const chatStore = db.createObjectStore('chatMessages', { keyPath: 'id', autoIncrement: true });
+                            chatStore.createIndex('timestamp', 'timestamp', { unique: false });
+                        }
+                        
+                        console.log('Estrutura do banco de dados criada');
+                    };
+                });
+            }
+            
+            // Métodos genéricos
+            async getAll(storeName) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([storeName], 'readonly');
+                    const store = transaction.objectStore(storeName);
+                    const request = store.getAll();
+                    
+                    request.onsuccess = () => resolve(request.result || []);
+                    request.onerror = (event) => reject(event.target.error);
+                });
+            }
+            
+            async get(storeName, key) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([storeName], 'readonly');
+                    const store = transaction.objectStore(storeName);
+                    const request = store.get(key);
+                    
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = (event) => reject(event.target.error);
+                });
+            }
+            
+            async save(storeName, data) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([storeName], 'readwrite');
+                    const store = transaction.objectStore(storeName);
+                    
+                    let request;
+                    if (data.id) {
+                        request = store.put(data);
+                    } else {
+                        request = store.add(data);
+                    }
+                    
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = (event) => reject(event.target.error);
+                });
+            }
+            
+            async delete(storeName, key) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([storeName], 'readwrite');
+                    const store = transaction.objectStore(storeName);
+                    const request = store.delete(key);
+                    
+                    request.onsuccess = () => resolve(true);
+                    request.onerror = (event) => reject(event.target.error);
+                });
+            }
+            
+            async query(storeName, indexName, key) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([storeName], 'readonly');
+                    const store = transaction.objectStore(storeName);
+                    const index = store.index(indexName);
+                    const request = index.getAll(key);
+                    
+                    request.onsuccess = () => resolve(request.result || []);
+                    request.onerror = (event) => reject(event.target.error);
+                });
+            }
+            
+            // Métodos específicos
+            async getPatients() {
+                return this.getAll('patients');
+            }
+            
+            async savePatient(patient) {
+                if (!patient.createdAt) {
+                    patient.createdAt = new Date().toISOString();
+                }
+                patient.updatedAt = new Date().toISOString();
+                return this.save('patients', patient);
+            }
+            
+            async getAppointments() {
+                return this.getAll('appointments');
+            }
+            
+            async saveAppointment(appointment) {
+                if (!appointment.createdAt) {
+                    appointment.createdAt = new Date().toISOString();
+                }
+                appointment.updatedAt = new Date().toISOString();
+                return this.save('appointments', appointment);
+            }
+            
+            async getReports() {
+                return this.getAll('reports');
+            }
+            
+            async saveReport(report) {
+                if (!report.createdAt) {
+                    report.createdAt = new Date().toISOString();
+                }
+                report.updatedAt = new Date().toISOString();
+                return this.save('reports', report);
+            }
+            
+            async getPayments() {
+                return this.getAll('payments');
+            }
+            
+            async savePayment(payment) {
+                if (!payment.createdAt) {
+                    payment.createdAt = new Date().toISOString();
+                }
+                return this.save('payments', payment);
+            }
+            
+            async getActivities() {
+                const activities = await this.getAll('activities');
+                return activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            }
+            
+            async saveActivity(activity) {
+                activity.timestamp = new Date().toISOString();
+                const saved = await this.save('activities', activity);
+                
+                // Manter apenas as últimas 50 atividades
+                const allActivities = await this.getAll('activities');
+                if (allActivities.length > 50) {
+                    const toDelete = allActivities.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)).slice(0, allActivities.length - 50);
+                    for (const act of toDelete) {
+                        await this.delete('activities', act.id);
+                    }
+                }
+                
+                return saved;
+            }
+            
+            async getFolders(type = null) {
+                const folders = await this.getAll('folders');
+                if (type) {
+                    return folders.filter(f => f.type === type);
+                }
+                return folders;
+            }
+            
+            async saveFolder(folder) {
+                if (!folder.createdAt) {
+                    folder.createdAt = new Date().toISOString();
+                }
+                return this.save('folders', folder);
+            }
+            
+            async getDocuments(folderId = null) {
+                const documents = await this.getAll('documents');
+                if (folderId) {
+                    return documents.filter(d => d.folderId === folderId);
+                }
+                return documents.filter(d => !d.folderId);
+            }
+            
+            async saveDocument(document) {
+                if (!document.createdAt) {
+                    document.createdAt = new Date().toISOString();
+                }
+                return this.save('documents', document);
+            }
+            
+            async getFiles(folderId = null) {
+                const files = await this.getAll('files');
+                if (folderId) {
+                    return files.filter(f => f.folderId === folderId);
+                }
+                return files.filter(f => !f.folderId);
+            }
+            
+            async saveFile(file) {
+                if (!file.uploadedAt) {
+                    file.uploadedAt = new Date().toISOString();
+                }
+                return this.save('files', file);
+            }
+            
+            async getClinicalNotes(patientId) {
+                return this.query('clinicalNotes', 'patientId', patientId);
+            }
+            
+            async saveClinicalNote(note) {
+                if (!note.createdAt) {
+                    note.createdAt = new Date().toISOString();
+                }
+                return this.save('clinicalNotes', note);
+            }
+            
+            async deleteClinicalNote(id) {
+                return this.delete('clinicalNotes', id);
+            }
+            
+            async getChatMessages() {
+                return this.getAll('chatMessages');
+            }
+            
+            async saveChatMessage(message) {
+                if (!message.timestamp) {
+                    message.timestamp = new Date().toISOString();
+                }
+                return this.save('chatMessages', message);
+            }
+            
+            async clearChatMessages() {
+                const messages = await this.getAll('chatMessages');
+                for (const message of messages) {
+                    await this.delete('chatMessages', message.id);
+                }
+                return true;
+            }
+            
+            async getSetting(key, defaultValue = null) {
+                const setting = await this.get('settings', key);
+                return setting ? setting.value : defaultValue;
+            }
+            
+            async saveSetting(key, value) {
+                return this.save('settings', { key, value });
+            }
+            
+            async getUserAvatar() {
+                return this.getSetting('user_avatar');
+            }
+            
+            async saveUserAvatar(avatarData) {
+                return this.saveSetting('user_avatar', avatarData);
+            }
+            
+            // Exportar todos os dados
+            async exportData() {
+                const data = {
+                    patients: await this.getPatients(),
+                    appointments: await this.getAppointments(),
+                    reports: await this.getReports(),
+                    payments: await this.getPayments(),
+                    activities: await this.getActivities(),
+                    folders: await this.getFolders(),
+                    documents: await this.getDocuments(),
+                    files: await this.getFiles(),
+                    clinicalNotes: await this.getAll('clinicalNotes'),
+                    settings: await this.getAll('settings'),
+                    chatMessages: await this.getChatMessages(),
+                    exportDate: new Date().toISOString(),
+                    version: '1.0'
+                };
+                return JSON.stringify(data, null, 2);
+            }
+            
+            // Importar dados
+            async importData(jsonData) {
+                const data = JSON.parse(jsonData);
+                
+                // Limpar dados existentes
+                const stores = [
+                    'patients', 'appointments', 'reports', 'payments', 
+                    'activities', 'folders', 'documents', 'files', 
+                    'clinicalNotes', 'settings', 'chatMessages'
+                ];
+                
+                for (const storeName of stores) {
+                    const items = await this.getAll(storeName);
+                    for (const item of items) {
+                        await this.delete(storeName, item.id || item.key);
+                    }
+                }
+                
+                // Importar novos dados
+                for (const storeName in data) {
+                    if (storeName === 'exportDate' || storeName === 'version') continue;
+                    
+                    const items = data[storeName];
+                    for (const item of items) {
+                        await this.save(storeName, item);
+                    }
+                }
+                
+                return true;
+            }
+            
+            // Fechar conexão
+            close() {
+                if (this.db) {
+                    this.db.close();
+                }
+            }
+        }
+
+        // ============================================
         // SISTEMA PRINCIPAL
         // ============================================
+        
+        // Inicializar banco de dados
+        let db;
         
         // Credenciais do usuário
         const predefinedUser = {
@@ -2817,14 +3362,18 @@
         let editingNoteId = null;
         let currentFolderId = null;
         let currentFolderType = null;
-        let inactivityTimer = null;
-
+        let isLoggedIn = false;
+        
+        // Sistema de sessão
+        const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutos de inatividade
+        const SESSION_EXPIRY = 8 * 60 * 60 * 1000; // 8 horas máximo
+        let sessionTimer;
+        
         // ============================================
         // FUNÇÕES UTILITÁRIAS
         // ============================================
         
         function formatDate(dateString) {
-            if (!dateString) return '';
             const date = new Date(dateString);
             return date.toLocaleDateString('pt-BR');
         }
@@ -2870,7 +3419,6 @@
         }
         
         function calculateAge(birthDateString) {
-            if (!birthDateString) return 0;
             const birthDate = new Date(birthDateString);
             const today = new Date();
             let age = today.getFullYear() - birthDate.getFullYear();
@@ -2916,7 +3464,18 @@
             });
         }
         
-        function showConfirmModal(message, onConfirm, onCancel = null) {
+        function addActivity(type, description, patientName = '') {
+            const activity = {
+                type: type,
+                description: description,
+                patientName: patientName
+            };
+            
+            db.saveActivity(activity);
+            updateActivityList();
+        }
+        
+        function showConfirmModal(message, onConfirm) {
             document.getElementById('confirmMessage').textContent = message;
             const modal = document.getElementById('confirmModal');
             
@@ -2930,90 +3489,166 @@
             };
             
             // Configurar botão de cancelar
-            const cancelBtn = document.getElementById('confirmCancel');
-            cancelBtn.onclick = () => {
+            document.getElementById('confirmCancel').onclick = () => {
                 modal.classList.remove('active');
-                if (onCancel) onCancel();
             };
         }
         
-        function resetInactivityTimer() {
-            clearTimeout(inactivityTimer);
+        function getFileIcon(type) {
+            if (type.includes('pdf')) return 'fa-file-pdf';
+            if (type.includes('image')) return 'fa-file-image';
+            if (type.includes('text') || type.includes('document')) return 'fa-file-alt';
+            return 'fa-file';
+        }
+        
+        function getFileTypeClass(type) {
+            if (type.includes('pdf')) return 'pdf';
+            if (type.includes('image')) return 'image';
+            if (type.includes('text') || type.includes('document')) return 'document';
+            return 'other';
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // ============================================
+        // SISTEMA DE SESSÃO SEGURO
+        // ============================================
+        
+        function startSession() {
+            const sessionStart = Date.now();
+            sessionStorage.setItem('psicogestao_session_start', sessionStart.toString());
+            sessionStorage.setItem('psicogestao_last_activity', sessionStart.toString());
             
-            inactivityTimer = setTimeout(() => {
-                if (currentUser) {
-                    showConfirmModal(
-                        'Sua sessão expirou por inatividade. Deseja continuar?',
-                        () => {
-                            resetInactivityTimer();
-                            sessionStorage.setItem('psicogestao_login_time', Date.now().toString());
-                            showNotification('Sessão renovada.', 'info');
-                        },
-                        () => {
-                            logout();
-                            showNotification('Sessão encerrada por inatividade.', 'info');
-                        }
-                    );
-                }
-            }, 30 * 60 * 1000); // 30 minutos
+            // Iniciar timer para verificar inatividade
+            resetSessionTimer();
+            
+            // Configurar eventos para detectar atividade do usuário
+            document.addEventListener('mousemove', resetSessionTimer);
+            document.addEventListener('keypress', resetSessionTimer);
+            document.addEventListener('click', resetSessionTimer);
+        }
+        
+        function resetSessionTimer() {
+            sessionStorage.setItem('psicogestao_last_activity', Date.now().toString());
+            
+            if (sessionTimer) {
+                clearTimeout(sessionTimer);
+            }
+            
+            // Verificar se a sessão expirou por tempo máximo
+            const sessionStart = parseInt(sessionStorage.getItem('psicogestao_session_start') || '0');
+            if (Date.now() - sessionStart > SESSION_EXPIRY) {
+                sessionExpired();
+                return;
+            }
+            
+            // Configurar timer para inatividade
+            sessionTimer = setTimeout(() => {
+                sessionExpired();
+            }, SESSION_TIMEOUT);
+        }
+        
+        function sessionExpired() {
+            if (currentUser) {
+                showNotification('Sessão expirada por inatividade. Por favor, faça login novamente.', 'warning');
+                logout();
+            }
+        }
+        
+        function checkSession() {
+            const sessionStart = parseInt(sessionStorage.getItem('psicogestao_session_start') || '0');
+            const lastActivity = parseInt(sessionStorage.getItem('psicogestao_last_activity') || '0');
+            
+            // Verificar se a sessão existe e é válida
+            if (!sessionStart || !lastActivity) {
+                return false;
+            }
+            
+            // Verificar se a sessão expirou
+            const now = Date.now();
+            if (now - sessionStart > SESSION_EXPIRY) {
+                return false;
+            }
+            
+            if (now - lastActivity > SESSION_TIMEOUT) {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function logout() {
+            currentUser = null;
+            sessionStorage.removeItem('psicogestao_session_start');
+            sessionStorage.removeItem('psicogestao_last_activity');
+            sessionStorage.removeItem('psicogestao_logged_in');
+            
+            if (sessionTimer) {
+                clearTimeout(sessionTimer);
+            }
+            
+            // Remover eventos
+            document.removeEventListener('mousemove', resetSessionTimer);
+            document.removeEventListener('keypress', resetSessionTimer);
+            document.removeEventListener('click', resetSessionTimer);
+            
+            // Resetar campos de login
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            
+            // Mostrar tela de login
+            document.getElementById('mainSystem').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('loginScreen').classList.add('slide-down');
+            
+            showNotification('Logout realizado com sucesso.', 'success');
         }
         
         // ============================================
         // INICIALIZAÇÃO
         // ============================================
         
-        function checkSession() {
-            const isLoggedIn = sessionStorage.getItem('psicogestao_logged_in') === 'true';
-            const savedUser = sessionStorage.getItem('psicogestao_user');
-            
-            if (isLoggedIn && savedUser) {
-                try {
-                    currentUser = JSON.parse(savedUser);
-                    
-                    // Verificar se a sessão tem menos de 8 horas
-                    const loginTime = sessionStorage.getItem('psicogestao_login_time');
-                    if (loginTime) {
-                        const loginDate = new Date(parseInt(loginTime));
-                        const now = new Date();
-                        const hoursDiff = (now - loginDate) / (1000 * 60 * 60);
-                        
-                        if (hoursDiff > 8) {
-                            // Sessão expirada
-                            logout();
-                            return false;
-                        }
-                    }
-                    
-                    return true;
-                } catch (error) {
-                    console.error('Erro ao verificar sessão:', error);
-                    return false;
-                }
-            }
-            return false;
-        }
-        
         async function initializeApp() {
             try {
-                // Verificar se há sessão ativa
-                if (checkSession()) {
-                    document.getElementById('loginScreen').classList.add('hidden');
-                    document.getElementById('mainSystem').classList.remove('hidden');
-                    document.getElementById('userNameDisplay').textContent = currentUser.fullName || currentUser.username;
+                db = new Database();
+                await db.initialize();
+                
+                // Verificar se há sessão válida
+                const hasValidSession = checkSession();
+                const savedUser = sessionStorage.getItem('psicogestao_user');
+                
+                if (hasValidSession && savedUser) {
+                    currentUser = JSON.parse(savedUser);
                     
-                    // Iniciar timer de inatividade
-                    resetInactivityTimer();
-                    
-                    // Carregar dados iniciais
-                    await loadInitialData();
-                    
-                    showNotification(`Bem-vinda de volta, ${currentUser.username}!`, 'success');
-                    return;
+                    // Verificar credenciais
+                    if (currentUser.username === predefinedUser.username && currentUser.password === predefinedUser.password) {
+                        document.getElementById('userNameDisplay').textContent = currentUser.username;
+                        document.getElementById('loginScreen').classList.add('hidden');
+                        document.getElementById('mainSystem').classList.remove('hidden');
+                        
+                        // Iniciar sessão
+                        startSession();
+                        
+                        // Carregar dados iniciais
+                        await loadInitialData();
+                        
+                        // Carregar avatar do usuário
+                        await loadUserAvatar();
+                        
+                        return;
+                    }
                 }
                 
-                // Se não houver sessão, mostrar tela de login
+                // Se não estiver logado, mostrar tela de login
                 document.getElementById('loginScreen').classList.remove('hidden');
                 document.getElementById('mainSystem').classList.add('hidden');
+                document.getElementById('username').focus();
                 
             } catch (error) {
                 console.error('Erro ao inicializar aplicação:', error);
@@ -3022,218 +3657,55 @@
         }
         
         async function loadInitialData() {
-            try {
-                // Configurar data atual nos formulários
-                const today = new Date().toISOString().split('T')[0];
-                document.querySelectorAll('input[type="date"]').forEach(input => {
-                    if (input.id !== 'patientBirthDateInput' && input.id !== 'noteDate') {
-                        input.value = today;
-                    }
-                });
-                
-                // Configurar hora atual
-                const now = new Date();
-                const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-                if (document.getElementById('appointmentTime')) {
-                    document.getElementById('appointmentTime').value = currentTime;
+            // Configurar data atual
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Configurar data mínima para hoje nos formulários
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                if (input.id !== 'patientBirthDateInput' && input.id !== 'noteDate') {
+                    input.value = today;
+                    input.min = today;
                 }
-                
-                // Carregar dados do dashboard
-                await loadDashboard();
-                
-            } catch (error) {
-                console.error('Erro ao carregar dados iniciais:', error);
-            }
-        }
-        
-        async function loadDashboard() {
-            try {
-                // Simular dados do dashboard
-                document.getElementById('activePatients').textContent = '12';
-                document.getElementById('todayAppointments').textContent = '3';
-                document.getElementById('monthlyRevenue').textContent = 'R$ 4.250,00';
-                document.getElementById('pendingReports').textContent = '2';
-                
-                // Atualizar atividades
-                await updateActivityList();
-            } catch (error) {
-                console.error('Erro ao carregar dashboard:', error);
-            }
-        }
-        
-        async function updateActivityList() {
-            try {
-                const activityList = document.getElementById('activityList');
-                const emptyActivity = document.getElementById('emptyActivity');
-                
-                // Dados de exemplo
-                const activities = [
-                    {
-                        type: 'patient',
-                        description: 'Paciente João Silva cadastrado',
-                        patientName: 'João',
-                        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
-                    },
-                    {
-                        type: 'appointment',
-                        description: 'Consulta com Maria Santos realizada',
-                        patientName: 'Maria',
-                        timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString()
-                    },
-                    {
-                        type: 'report',
-                        description: 'Relatório de evolução criado',
-                        patientName: 'Carlos',
-                        timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-                    }
-                ];
-                
-                if (activities.length === 0) {
-                    activityList.innerHTML = '';
-                    emptyActivity.classList.remove('hidden');
-                    return;
-                }
-                
-                emptyActivity.classList.add('hidden');
-                activityList.innerHTML = '';
-                
-                activities.forEach(activity => {
-                    const activityDate = new Date(activity.timestamp);
-                    const timeAgo = getTimeAgo(activityDate);
-                    
-                    const activityItem = document.createElement('div');
-                    activityItem.className = 'activity-item';
-                    
-                    let icon = 'fa-calendar-check';
-                    let color = 'blue';
-                    let typeText = 'Consulta';
-                    
-                    if (activity.type === 'patient') {
-                        icon = 'fa-user-injured';
-                        color = 'green';
-                        typeText = 'Paciente';
-                    } else if (activity.type === 'report') {
-                        icon = 'fa-file-alt';
-                        color = 'orange';
-                        typeText = 'Relatório';
-                    }
-                    
-                    activityItem.innerHTML = `
-                        <div class="activity-icon ${color}">
-                            <i class="fas ${icon}"></i>
-                        </div>
-                        <div class="activity-content">
-                            <h4>${typeText}: ${activity.description}</h4>
-                            ${activity.patientName ? `<p>Paciente: ${activity.patientName}</p>` : ''}
-                            <div class="activity-time">${timeAgo}</div>
-                        </div>
-                    `;
-                    
-                    activityList.appendChild(activityItem);
-                });
-            } catch (error) {
-                console.error('Erro ao carregar atividades:', error);
-            }
-        }
-        
-        function getTimeAgo(date) {
+            });
+            
+            // Configurar hora atual
             const now = new Date();
-            const diffMs = now - date;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
-            const diffDays = Math.floor(diffMs / 86400000);
-            
-            if (diffMins < 60) {
-                return `há ${diffMins} minuto${diffMins !== 1 ? 's' : ''}`;
-            } else if (diffHours < 24) {
-                return `há ${diffHours} hora${diffHours !== 1 ? 's' : ''}`;
-            } else if (diffDays < 7) {
-                return `há ${diffDays} dia${diffDays !== 1 ? 's' : ''}`;
-            } else {
-                return date.toLocaleDateString('pt-BR');
+            const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            if (document.getElementById('appointmentTime')) {
+                document.getElementById('appointmentTime').value = currentTime;
             }
+            
+            // Carregar tema salvo
+            await loadTheme();
+            
+            // Carregar dados do dashboard
+            await loadDashboard();
+            
+            // Configurar eventos
+            setupEventListeners();
         }
         
-        // ============================================
-        // LOGIN E LOGOUT
-        // ============================================
-        
-        async function handleLogin(username, password) {
+        async function loadUserAvatar() {
             try {
-                // Verificar credenciais
-                if (username === predefinedUser.username && password === predefinedUser.password) {
-                    currentUser = { 
-                        username: username, 
-                        password: password,
-                        fullName: 'Andrea',
-                        role: 'psychologist'
-                    };
-                    
-                    // Salvar estado de login na sessão
-                    sessionStorage.setItem('psicogestao_logged_in', 'true');
-                    sessionStorage.setItem('psicogestao_user', JSON.stringify(currentUser));
-                    sessionStorage.setItem('psicogestao_login_time', Date.now().toString());
-                    
-                    // Atualizar interface
-                    document.getElementById('userNameDisplay').textContent = currentUser.fullName;
-                    
-                    // Limpar campos de login
-                    document.getElementById('username').value = '';
-                    document.getElementById('password').value = '';
-                    
-                    // Transição suave
-                    document.getElementById('loginScreen').style.opacity = '0';
-                    
-                    setTimeout(() => {
-                        document.getElementById('loginScreen').classList.add('hidden');
-                        document.getElementById('mainSystem').classList.remove('hidden');
-                        document.getElementById('mainSystem').style.opacity = '0';
-                        
-                        setTimeout(() => {
-                            document.getElementById('mainSystem').style.opacity = '1';
-                        }, 50);
-                    }, 300);
-                    
-                    // Iniciar timer de inatividade
-                    resetInactivityTimer();
-                    
-                    // Carregar dados
-                    await loadInitialData();
-                    
-                    return true;
-                } else {
-                    return false;
+                const avatarData = await db.getUserAvatar();
+                if (avatarData) {
+                    if (avatarData.startsWith('data:image')) {
+                        // Avatar é uma imagem base64
+                        document.getElementById('userAvatarImg').src = avatarData;
+                        document.getElementById('currentUserAvatarImg').src = avatarData;
+                        document.getElementById('userAvatarFallback').style.display = 'none';
+                        document.getElementById('currentUserAvatarFallback').style.display = 'none';
+                    } else {
+                        // Avatar é uma letra
+                        document.getElementById('userAvatarFallback').textContent = avatarData;
+                        document.getElementById('currentUserAvatarFallback').textContent = avatarData;
+                        document.getElementById('userAvatarFallback').style.display = 'flex';
+                        document.getElementById('currentUserAvatarFallback').style.display = 'flex';
+                    }
                 }
             } catch (error) {
-                console.error('Erro no login:', error);
-                return false;
+                console.error('Erro ao carregar avatar:', error);
             }
-        }
-        
-        function logout() {
-            // Limpar dados da sessão
-            currentUser = null;
-            sessionStorage.removeItem('psicogestao_logged_in');
-            sessionStorage.removeItem('psicogestao_user');
-            sessionStorage.removeItem('psicogestao_login_time');
-            
-            // Parar timer de inatividade
-            clearTimeout(inactivityTimer);
-            
-            // Transição suave
-            document.getElementById('mainSystem').style.opacity = '0';
-            
-            setTimeout(() => {
-                document.getElementById('mainSystem').classList.add('hidden');
-                document.getElementById('loginScreen').classList.remove('hidden');
-                document.getElementById('loginScreen').style.opacity = '0';
-                
-                setTimeout(() => {
-                    document.getElementById('loginScreen').style.opacity = '1';
-                    // Focar no campo de usuário
-                    document.getElementById('username').focus();
-                }, 50);
-            }, 300);
         }
         
         // ============================================
@@ -3245,7 +3717,7 @@
             const loginForm = document.getElementById('loginForm');
             if (loginForm) {
                 loginForm.addEventListener('submit', async function(e) {
-                    e.preventDefault(); // Previne recarregamento da página
+                    e.preventDefault();
                     
                     const username = document.getElementById('username').value.trim();
                     const password = document.getElementById('password').value;
@@ -3253,45 +3725,66 @@
                     // Validação básica
                     if (!username || !password) {
                         showNotification('Por favor, preencha todos os campos.', 'error');
+                        document.getElementById('username').focus();
                         return;
                     }
                     
-                    // Referência ao botão de login
-                    const loginBtn = this.querySelector('.login-btn');
-                    const originalText = loginBtn.innerHTML;
-                    
-                    // Estado de carregamento
-                    loginBtn.innerHTML = '<div class="loading"></div> Processando...';
+                    // Simular carregamento
+                    const loginBtn = document.getElementById('loginButton');
+                    const loginBtnText = document.getElementById('loginBtnText');
+                    const originalText = loginBtnText.textContent;
+                    loginBtnText.innerHTML = '<div class="loading"></div> Processando...';
                     loginBtn.disabled = true;
                     
+                    // Pequeno delay para feedback visual
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    
                     try {
-                        // Pequeno delay para feedback visual
-                        await new Promise(resolve => setTimeout(resolve, 500));
-                        
-                        // Tentar login
-                        const success = await handleLogin(username, password);
-                        
-                        if (success) {
-                            showNotification(`Login realizado com sucesso! Bem-vinda, ${username}!`, 'success');
+                        // Verificar credenciais
+                        if (username === predefinedUser.username && password === predefinedUser.password) {
+                            currentUser = { username, password };
+                            
+                            // Salvar estado de login na sessionStorage
+                            sessionStorage.setItem('psicogestao_logged_in', 'true');
+                            sessionStorage.setItem('psicogestao_user', JSON.stringify(currentUser));
+                            
+                            // Iniciar sessão
+                            startSession();
+                            
+                            // Atualizar interface
+                            document.getElementById('userNameDisplay').textContent = currentUser.username;
+                            
+                            // Esconder credenciais por segurança
+                            document.getElementById('username').value = '';
+                            document.getElementById('password').value = '';
+                            
+                            // Transição suave entre telas
+                            document.getElementById('loginScreen').classList.add('hidden');
+                            document.getElementById('mainSystem').classList.remove('hidden');
+                            document.getElementById('mainSystem').classList.add('slide-down');
+                            
+                            // Carregar dados do sistema
+                            await loadInitialData();
+                            await loadUserAvatar();
+                            
+                            showNotification(`Login realizado com sucesso! Bem-vindo(a), ${username}!`, 'success');
+                            
+                            // Adicionar atividade
+                            await addActivity('system', 'Usuário logou no sistema');
+                            
                         } else {
-                            showNotification('Credenciais inválidas. Tente novamente.', 'error');
-                            
-                            // Animação de shake no formulário
-                            loginForm.style.animation = 'shake 0.5s ease-in-out';
-                            setTimeout(() => {
-                                loginForm.style.animation = '';
-                            }, 500);
-                            
-                            // Focar no campo de usuário
+                            showNotification('Credenciais inválidas. Usuário: "Andrea", Senha: "Andrea1103#"', 'error');
+                            // Adicionar shake animation para feedback visual
+                            loginForm.classList.add('shake');
+                            setTimeout(() => loginForm.classList.remove('shake'), 500);
                             document.getElementById('username').focus();
-                            document.getElementById('username').select();
                         }
                     } catch (error) {
-                        console.error('Erro no login:', error);
-                        showNotification('Erro no processo de login. Tente novamente.', 'error');
+                        console.error('Erro durante login:', error);
+                        showNotification('Erro durante o login. Tente novamente.', 'error');
                     } finally {
                         // Restaurar botão
-                        loginBtn.innerHTML = originalText;
+                        loginBtnText.textContent = originalText;
                         loginBtn.disabled = false;
                     }
                 });
@@ -3305,7 +3798,6 @@
                         'Tem certeza que deseja sair do sistema?',
                         () => {
                             logout();
-                            showNotification('Logout realizado com sucesso.', 'success');
                         }
                     );
                 });
@@ -3327,17 +3819,131 @@
                     // Atualizar dados específicos da página
                     if (pageId === 'dashboardPage') {
                         await loadDashboard();
+                    } else if (pageId === 'patientsPage') {
+                        await loadPatientsList();
+                    } else if (pageId === 'agendaPage') {
+                        await loadAgenda();
+                    } else if (pageId === 'financePage') {
+                        await updateFinanceSummary();
+                    } else if (pageId === 'reportsPage') {
+                        await loadReportsList();
+                    } else if (pageId === 'filesPage') {
+                        await loadFolders('files');
+                    } else if (pageId === 'documentsPage') {
+                        await loadFolders('documents');
+                    } else if (pageId === 'chatbotPage') {
+                        await loadChatMessages();
                     }
                 });
             });
             
-            // Resetar timer de inatividade em eventos do usuário
-            document.addEventListener('mousemove', resetInactivityTimer);
-            document.addEventListener('keypress', resetInactivityTimer);
-            document.addEventListener('click', resetInactivityTimer);
+            // Novo paciente
+            document.getElementById('newPatientBtn')?.addEventListener('click', () => openPatientModal());
+            document.getElementById('emptyNewPatientBtn')?.addEventListener('click', () => openPatientModal());
+            
+            // Nova consulta
+            document.getElementById('newAppointmentBtn')?.addEventListener('click', () => openAppointmentModal());
+            document.getElementById('quickAppointment')?.addEventListener('click', () => openAppointmentModal());
+            
+            // Novo pagamento
+            document.getElementById('newPaymentBtn')?.addEventListener('click', () => {
+                const paymentForm = document.getElementById('paymentForm');
+                paymentForm.reset();
+                document.getElementById('paymentDate').value = new Date().toISOString().split('T')[0];
+                populatePatientSelect('paymentPatient');
+                showNotification('Preencha os dados do pagamento abaixo.', 'info');
+            });
+            
+            // Novo relatório
+            document.getElementById('newReportBtn')?.addEventListener('click', () => openReportModal());
+            
+            // Navegação da agenda
+            document.getElementById('prevDay')?.addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() - 1);
+                updateAgendaDate();
+                loadAgenda();
+            });
+            
+            document.getElementById('nextDay')?.addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() + 1);
+                updateAgendaDate();
+                loadAgenda();
+            });
+            
+            document.getElementById('todayBtn')?.addEventListener('click', () => {
+                currentDate = new Date();
+                updateAgendaDate();
+                loadAgenda();
+            });
+            
+            // Formulário de pagamento
+            const paymentForm = document.getElementById('paymentForm');
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const patientId = parseInt(document.getElementById('paymentPatient').value);
+                    const date = document.getElementById('paymentDate').value;
+                    const amount = parseFloat(document.getElementById('paymentAmount').value);
+                    const type = document.getElementById('paymentType').value;
+                    const description = document.getElementById('paymentDescription').value;
+                    
+                    if (!patientId) {
+                        showNotification('Selecione um paciente.', 'error');
+                        return;
+                    }
+                    
+                    if (amount <= 0 || isNaN(amount)) {
+                        showNotification('Informe um valor válido.', 'error');
+                        return;
+                    }
+                    
+                    try {
+                        const patients = await db.getPatients();
+                        const patient = patients.find(p => p.id === patientId);
+                        
+                        if (patient) {
+                            const payment = {
+                                patientId: patient.id,
+                                patientName: `${patient.firstName} ${patient.lastName}`,
+                                date: date,
+                                amount: amount,
+                                type: type,
+                                description: description
+                            };
+                            
+                            await db.savePayment(payment);
+                            
+                            // Atualizar interface
+                            await updateFinanceSummary();
+                            
+                            // Limpar formulário
+                            this.reset();
+                            document.getElementById('paymentDate').value = new Date().toISOString().split('T')[0];
+                            
+                            // Adicionar atividade
+                            await addActivity('payment', `Pagamento registrado: R$ ${amount.toFixed(2)}`, patient.firstName);
+                            
+                            showNotification(`Pagamento de R$ ${amount.toFixed(2)} registrado com sucesso!`, 'success');
+                        }
+                    } catch (error) {
+                        console.error('Erro ao salvar pagamento:', error);
+                        showNotification('Erro ao registrar pagamento.', 'error');
+                    }
+                });
+            }
             
             // Configurar modais
             setupModalEvents();
+            
+            // Configurar tema
+            setupThemeEvents();
+            
+            // Configurar botões de arquivos e documentos
+            setupFileAndDocumentEvents();
+            
+            // Configurar chat bot
+            setupChatBotEvents();
         }
         
         function setupModalEvents() {
@@ -3391,23 +3997,170 @@
                 editingNoteId = null;
             });
             
-            // Nova consulta
-            document.getElementById('newAppointmentBtn')?.addEventListener('click', () => {
-                openAppointmentModal();
-            });
+            // Formulário de consulta
+            const appointmentForm = document.getElementById('appointmentForm');
+            if (appointmentForm) {
+                appointmentForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const patientId = parseInt(document.getElementById('appointmentPatient').value);
+                    const date = document.getElementById('appointmentDate').value;
+                    const time = document.getElementById('appointmentTime').value;
+                    const duration = parseInt(document.getElementById('appointmentDuration').value);
+                    const type = document.getElementById('appointmentType').value;
+                    const notes = document.getElementById('appointmentNotes').value;
+                    
+                    // Validações
+                    const selectedDate = new Date(date);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    
+                    // PERMITIR datas passadas para registrar consultas retroativas
+                    // Se for hoje ou passado, não fazer validação de horário
+                    // Se for futuro, validar horário
+                    if (selectedDate > today) {
+                        const now = new Date();
+                        const [hours, minutes] = time.split(':').map(Number);
+                        const appointmentTime = new Date();
+                        appointmentTime.setHours(hours, minutes, 0, 0);
+                        
+                        // Se for hoje (futuro), validar horário
+                        if (selectedDate.getTime() === today.getTime() && appointmentTime < now) {
+                            showNotification('Não é possível agendar consultas para horários passados.', 'error');
+                            return;
+                        }
+                    }
+                    
+                    try {
+                        const patients = await db.getPatients();
+                        const patient = patients.find(p => p.id === patientId);
+                        
+                        if (patient) {
+                            const appointment = {
+                                patientId: patient.id,
+                                patientName: `${patient.firstName} ${patient.lastName}`,
+                                date: date,
+                                time: time,
+                                duration: duration,
+                                type: type,
+                                notes: notes,
+                                status: 'scheduled'
+                            };
+                            
+                            await db.saveAppointment(appointment);
+                            
+                            // Atualizar interface
+                            await loadAgenda();
+                            await loadDashboard();
+                            
+                            // Fechar modal e limpar formulário
+                            document.getElementById('appointmentModal').classList.remove('active');
+                            appointmentForm.reset();
+                            
+                            // Configurar data e hora atuais
+                            const now = new Date();
+                            document.getElementById('appointmentDate').value = now.toISOString().split('T')[0];
+                            document.getElementById('appointmentTime').value = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                            document.getElementById('appointmentDuration').value = 50;
+                            
+                            // Adicionar atividade
+                            await addActivity('appointment', `Consulta agendada para ${formatDateTime(date, time)}`, patient.firstName);
+                            
+                            showNotification(`Consulta agendada para ${patient.firstName} ${patient.lastName} às ${time} do dia ${formatDate(date)}!`, 'success');
+                        }
+                    } catch (error) {
+                        console.error('Erro ao salvar consulta:', error);
+                        showNotification('Erro ao agendar consulta.', 'error');
+                    }
+                });
+            }
             
-            document.getElementById('quickAppointment')?.addEventListener('click', () => {
-                openAppointmentModal();
-            });
-            
-            // Novo paciente
-            document.getElementById('newPatientBtn')?.addEventListener('click', () => {
-                openPatientModal();
-            });
-            
-            document.getElementById('emptyNewPatientBtn')?.addEventListener('click', () => {
-                openPatientModal();
-            });
+            // Formulário de paciente
+            const patientForm = document.getElementById('patientForm');
+            if (patientForm) {
+                patientForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const firstName = document.getElementById('patientFirstName').value.trim();
+                    const lastName = document.getElementById('patientLastName').value.trim();
+                    const birthDate = document.getElementById('patientBirthDateInput').value;
+                    const gender = document.getElementById('patientGender').value;
+                    const cpf = document.getElementById('patientCPFInput').value;
+                    const phone = document.getElementById('patientPhoneInput').value;
+                    const email = document.getElementById('patientEmailInput').value;
+                    
+                    // Validar CPF se informado
+                    if (cpf && cpf.length > 0) {
+                        if (!validateCPF(cpf)) {
+                            document.getElementById('cpfError').classList.add('show');
+                            return;
+                        }
+                    }
+                    
+                    document.getElementById('cpfError').classList.remove('show');
+                    
+                    try {
+                        if (editingPatientId) {
+                            // Editar paciente existente
+                            const patients = await db.getPatients();
+                            const patient = patients.find(p => p.id === editingPatientId);
+                            if (patient) {
+                                patient.firstName = firstName;
+                                patient.lastName = lastName;
+                                patient.birthDate = birthDate;
+                                patient.gender = gender;
+                                patient.cpf = cpf;
+                                patient.phone = phone;
+                                patient.email = email;
+                                patient.updatedAt = new Date().toISOString();
+                                
+                                await db.savePatient(patient);
+                                
+                                showNotification(`Paciente ${firstName} ${lastName} atualizado com sucesso!`, 'success');
+                                await addActivity('patient', `Paciente ${firstName} ${lastName} atualizado`, firstName);
+                            }
+                        } else {
+                            // Novo paciente
+                            const patient = {
+                                firstName,
+                                lastName,
+                                birthDate,
+                                gender,
+                                cpf,
+                                phone,
+                                email,
+                                status: 'active',
+                                firstSessionDate: new Date().toISOString().split('T')[0],
+                                sessionFrequency: 'weekly',
+                                therapyReason: 'A ser definido na primeira sessão'
+                            };
+                            
+                            await db.savePatient(patient);
+                            showNotification(`Paciente ${firstName} ${lastName} cadastrado com sucesso!`, 'success');
+                            await addActivity('patient', `Paciente ${firstName} ${lastName} cadastrado`, firstName);
+                        }
+                        
+                        // Atualizar interface
+                        await loadPatientsList();
+                        await loadDashboard();
+                        
+                        // Fechar modal e limpar formulário
+                        document.getElementById('patientModal').classList.remove('active');
+                        patientForm.reset();
+                        editingPatientId = null;
+                        
+                        // Selecionar o paciente recém-criado/editado
+                        if (!editingPatientId) {
+                            const patients = await db.getPatients();
+                            const newPatient = patients[patients.length - 1];
+                            setTimeout(() => selectPatient(newPatient.id), 100);
+                        }
+                    } catch (error) {
+                        console.error('Erro ao salvar paciente:', error);
+                        showNotification('Erro ao salvar paciente.', 'error');
+                    }
+                });
+            }
             
             // Validação de CPF em tempo real
             document.getElementById('patientCPFInput')?.addEventListener('input', function() {
@@ -3422,24 +4175,2032 @@
                     document.getElementById('cpfError').classList.remove('show');
                 }
             });
+            
+            // Formulário de relatório
+            const reportForm = document.getElementById('reportForm');
+            if (reportForm) {
+                reportForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const patientId = parseInt(document.getElementById('reportPatient').value);
+                    const appointmentId = document.getElementById('reportAppointment').value ? parseInt(document.getElementById('reportAppointment').value) : null;
+                    const date = document.getElementById('reportDate').value;
+                    const type = document.getElementById('reportType').value;
+                    const title = document.getElementById('reportTitle').value.trim();
+                    const content = document.getElementById('reportContent').value.trim();
+                    
+                    try {
+                        const patients = await db.getPatients();
+                        const patient = patients.find(p => p.id === patientId);
+                        
+                        if (patient) {
+                            const report = {
+                                patientId: patient.id,
+                                patientName: `${patient.firstName} ${patient.lastName}`,
+                                appointmentId: appointmentId,
+                                date: date,
+                                type: type,
+                                title: title,
+                                content: content,
+                                author: currentUser.username
+                            };
+                            
+                            await db.saveReport(report);
+                            
+                            // Atualizar interface
+                            await loadReportsList();
+                            await loadDashboard();
+                            
+                            // Fechar modal e limpar formulário
+                            document.getElementById('reportModal').classList.remove('active');
+                            reportForm.reset();
+                            document.getElementById('reportDate').value = new Date().toISOString().split('T')[0];
+                            
+                            // Adicionar atividade
+                            await addActivity('report', `Relatório "${title}" criado`, patient.firstName);
+                            
+                            showNotification(`Relatório criado com sucesso para ${patient.firstName} ${patient.lastName}!`, 'success');
+                        }
+                    } catch (error) {
+                        console.error('Erro ao salvar relatório:', error);
+                        showNotification('Erro ao criar relatório.', 'error');
+                    }
+                });
+            }
+            
+            // Atualizar lista de sessões quando selecionar paciente no relatório
+            document.getElementById('reportPatient')?.addEventListener('change', async function() {
+                await updateReportAppointmentOptions(parseInt(this.value));
+            });
+            
+            // Botões do modal de status da consulta
+            document.getElementById('markCompleted')?.addEventListener('click', async () => {
+                await markAppointmentStatus('completed');
+            });
+            
+            document.getElementById('markNotCompleted')?.addEventListener('click', async () => {
+                await markAppointmentStatus('not_completed');
+            });
+            
+            document.getElementById('markRescheduled')?.addEventListener('click', () => {
+                showNotification('Funcionalidade de reagendamento em desenvolvimento.', 'info');
+                document.getElementById('statusModal').classList.remove('active');
+            });
+            
+            // Formulário de nova pasta
+            const folderForm = document.getElementById('folderForm');
+            if (folderForm) {
+                folderForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const folderName = document.getElementById('folderName').value.trim();
+                    const folderType = document.getElementById('folderType').value;
+                    
+                    if (folderName) {
+                        try {
+                            const folder = {
+                                name: folderName,
+                                type: folderType,
+                                fileCount: 0,
+                                createdAt: new Date().toISOString()
+                            };
+                            
+                            await db.saveFolder(folder);
+                            
+                            // Atualizar interface
+                            if (folderType === 'files') {
+                                await loadFolders('files');
+                            } else {
+                                await loadFolders('documents');
+                            }
+                            
+                            // Fechar modal e limpar formulário
+                            document.getElementById('newFolderModal').classList.remove('active');
+                            folderForm.reset();
+                            
+                            showNotification(`Pasta "${folderName}" criada com sucesso!`, 'success');
+                        } catch (error) {
+                            console.error('Erro ao criar pasta:', error);
+                            showNotification('Erro ao criar pasta.', 'error');
+                        }
+                    }
+                });
+            }
+            
+            // Formulário de novo documento
+            const documentForm = document.getElementById('documentForm');
+            if (documentForm) {
+                documentForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const title = document.getElementById('documentTitle').value.trim();
+                    const content = document.getElementById('documentContent').value.trim();
+                    const folderId = document.getElementById('documentFolder').value ? parseInt(document.getElementById('documentFolder').value) : null;
+                    
+                    if (title && content) {
+                        try {
+                            const document = {
+                                title: title,
+                                content: content,
+                                folderId: folderId,
+                                type: 'document',
+                                createdAt: new Date().toISOString()
+                            };
+                            
+                            await db.saveDocument(document);
+                            
+                            // Atualizar interface
+                            await loadFolders('documents');
+                            
+                            // Fechar modal e limpar formulário
+                            document.getElementById('newDocumentModal').classList.remove('active');
+                            documentForm.reset();
+                            
+                            showNotification(`Documento "${title}" criado com sucesso!`, 'success');
+                        } catch (error) {
+                            console.error('Erro ao salvar documento:', error);
+                            showNotification('Erro ao criar documento.', 'error');
+                        }
+                    }
+                });
+            }
+            
+            // Formulário de upload de arquivo
+            const uploadForm = document.getElementById('uploadForm');
+            if (uploadForm) {
+                uploadForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const fileInput = document.getElementById('fileInput');
+                    const fileName = document.getElementById('fileName').value.trim();
+                    const folderId = document.getElementById('fileFolder').value ? parseInt(document.getElementById('fileFolder').value) : null;
+                    const description = document.getElementById('fileDescription').value.trim();
+                    
+                    if (fileInput.files.length > 0) {
+                        const file = fileInput.files[0];
+                        const fileSizeMB = file.size / (1024 * 1024);
+                        
+                        if (fileSizeMB > 10) {
+                            showNotification('O arquivo é muito grande. Tamanho máximo: 10MB.', 'error');
+                            return;
+                        }
+                        
+                        const finalFileName = fileName || file.name;
+                        
+                        try {
+                            // Ler arquivo como base64
+                            const reader = new FileReader();
+                            reader.onload = async function(e) {
+                                const fileData = {
+                                    name: finalFileName,
+                                    originalName: file.name,
+                                    size: file.size,
+                                    type: file.type,
+                                    folderId: folderId,
+                                    description: description,
+                                    data: e.target.result, // Base64
+                                    uploadedAt: new Date().toISOString()
+                                };
+                                
+                                await db.saveFile(fileData);
+                                
+                                // Fechar modal e limpar formulário
+                                document.getElementById('uploadFileModal').classList.remove('active');
+                                uploadForm.reset();
+                                fileInput.value = '';
+                                
+                                showNotification(`Arquivo "${finalFileName}" enviado com sucesso!`, 'success');
+                                
+                                // Atualizar interface se estiver na página de arquivos
+                                if (document.getElementById('filesPage').classList.contains('active')) {
+                                    if (currentFolderId) {
+                                        await loadFolderFiles(currentFolderId);
+                                    } else {
+                                        await loadFolders('files');
+                                    }
+                                }
+                            };
+                            
+                            reader.readAsDataURL(file);
+                        } catch (error) {
+                            console.error('Erro ao fazer upload:', error);
+                            showNotification('Erro ao fazer upload do arquivo.', 'error');
+                        }
+                    } else {
+                        showNotification('Selecione um arquivo para enviar.', 'error');
+                    }
+                });
+            }
+            
+            // Formulário de anotação clínica
+            const noteForm = document.getElementById('noteForm');
+            if (noteForm) {
+                noteForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const title = document.getElementById('noteTitle').value.trim();
+                    const date = document.getElementById('noteDate').value;
+                    const content = document.getElementById('noteContent').value.trim();
+                    const patientId = parseInt(document.getElementById('notePatientId').value);
+                    
+                    try {
+                        if (editingNoteId) {
+                            // Editar anotação existente
+                            const note = {
+                                id: editingNoteId,
+                                patientId: patientId,
+                                title: title,
+                                date: date,
+                                content: content,
+                                updatedAt: new Date().toISOString()
+                            };
+                            
+                            await db.saveClinicalNote(note);
+                            showNotification(`Anotação "${title}" atualizada com sucesso!`, 'success');
+                        } else {
+                            // Nova anotação
+                            const note = {
+                                patientId: patientId,
+                                title: title,
+                                date: date,
+                                content: content,
+                                createdAt: new Date().toISOString()
+                            };
+                            
+                            await db.saveClinicalNote(note);
+                            showNotification(`Anotação "${title}" criada com sucesso!`, 'success');
+                        }
+                        
+                        // Atualizar interface
+                        if (selectedPatientId === patientId) {
+                            await loadClinicalNotes(patientId);
+                        }
+                        
+                        // Fechar modal e limpar formulário
+                        document.getElementById('noteModal').classList.remove('active');
+                        noteForm.reset();
+                        editingNoteId = null;
+                        
+                    } catch (error) {
+                        console.error('Erro ao salvar anotação:', error);
+                        showNotification('Erro ao salvar anotação.', 'error');
+                    }
+                });
+            }
+        }
+        
+        function setupThemeEvents() {
+            // Alterar foto
+            document.getElementById('changePhotoBtn')?.addEventListener('click', () => {
+                document.getElementById('profilePhotoInput').click();
+            });
+            
+            document.getElementById('profilePhotoInput')?.addEventListener('change', async function(e) {
+                if (this.files.length > 0) {
+                    const file = this.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = async function(e) {
+                        const base64Data = e.target.result;
+                        
+                        // Salvar no banco de dados
+                        await db.saveUserAvatar(base64Data);
+                        
+                        // Atualizar interface
+                        document.getElementById('userAvatarImg').src = base64Data;
+                        document.getElementById('currentUserAvatarImg').src = base64Data;
+                        document.getElementById('userAvatarFallback').style.display = 'none';
+                        document.getElementById('currentUserAvatarFallback').style.display = 'none';
+                        
+                        showNotification('Foto do perfil atualizada com sucesso!', 'success');
+                    };
+                    
+                    reader.readAsDataURL(file);
+                    this.value = '';
+                }
+            });
+            
+            // Tema claro/escuro
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
+                    setTheme(theme);
+                });
+            });
+            
+            // Exportar dados
+            document.getElementById('exportDataBtn')?.addEventListener('click', async function() {
+                try {
+                    const data = await db.exportData();
+                    const blob = new Blob([data], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `psicogestao_backup_${new Date().toISOString().split('T')[0]}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    showNotification('Dados exportados com sucesso!', 'success');
+                } catch (error) {
+                    console.error('Erro ao exportar dados:', error);
+                    showNotification('Erro ao exportar dados.', 'error');
+                }
+            });
+            
+            // Importar dados
+            document.getElementById('importDataBtn')?.addEventListener('click', () => {
+                document.getElementById('importDataInput').click();
+            });
+            
+            document.getElementById('importDataInput')?.addEventListener('change', async function(e) {
+                if (this.files.length > 0) {
+                    const file = this.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = async function(e) {
+                        try {
+                            await db.importData(e.target.result);
+                            showNotification('Dados importados com sucesso! Recarregando...', 'success');
+                            
+                            // Recarregar a página
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 2000);
+                        } catch (error) {
+                            console.error('Erro ao importar dados:', error);
+                            showNotification('Erro ao importar dados. Verifique o arquivo.', 'error');
+                        }
+                    };
+                    
+                    reader.readAsText(file);
+                    this.value = '';
+                }
+            });
+            
+            // Sincronizar agora
+            document.getElementById('syncNowBtn')?.addEventListener('click', async () => {
+                showNotification('Use a função de exportar/importar dados para sincronizar entre dispositivos.', 'info');
+            });
+        }
+        
+        function setupFileAndDocumentEvents() {
+            // Nova pasta (Fichas)
+            document.getElementById('newFolderBtn')?.addEventListener('click', () => {
+                document.getElementById('folderType').value = 'files';
+                document.getElementById('newFolderModal').classList.add('active');
+                document.getElementById('folderName').focus();
+            });
+            
+            // Enviar arquivo
+            document.getElementById('uploadFileBtn')?.addEventListener('click', async () => {
+                // Preencher lista de pastas
+                await populateFolderSelect('fileFolder', 'files');
+                document.getElementById('uploadFileModal').classList.add('active');
+            });
+            
+            // Novo documento
+            document.getElementById('newDocumentBtn')?.addEventListener('click', async () => {
+                // Preencher lista de pastas
+                await populateFolderSelect('documentFolder', 'documents');
+                document.getElementById('newDocumentModal').classList.add('active');
+                document.getElementById('documentTitle').focus();
+            });
+            
+            // Nova pasta (Documentos)
+            document.getElementById('newDocFolderBtn')?.addEventListener('click', () => {
+                document.getElementById('folderType').value = 'documents';
+                document.getElementById('newFolderModal').classList.add('active');
+                document.getElementById('folderName').focus();
+            });
+        }
+        
+        function setupChatBotEvents() {
+            // Enviar mensagem
+            document.getElementById('sendMessageBtn')?.addEventListener('click', async () => {
+                await sendChatMessage();
+            });
+            
+            document.getElementById('chatInput')?.addEventListener('keypress', async (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    await sendChatMessage();
+                }
+            });
+            
+            // Limpar chat
+            document.getElementById('clearChatBtn')?.addEventListener('click', async () => {
+                showConfirmModal(
+                    'Tem certeza que deseja limpar todo o histórico do chat?',
+                    async () => {
+                        await db.clearChatMessages();
+                        await loadChatMessages();
+                        showNotification('Chat limpo com sucesso!', 'success');
+                    }
+                );
+            });
         }
         
         // ============================================
-        // FUNÇÕES DOS MODAIS
+        // FUNÇÕES PRINCIPAIS
         // ============================================
         
-        function openAppointmentModal() {
-            // Configurar data e hora atuais
+        async function loadDashboard() {
+            try {
+                // Atualizar estatísticas
+                const patients = await db.getPatients();
+                const appointments = await db.getAppointments();
+                const reports = await db.getReports();
+                const payments = await db.getPayments();
+                
+                const activePatientsCount = patients.filter(p => p.status === 'active').length;
+                const today = new Date().toISOString().split('T')[0];
+                const todayAppointmentsCount = appointments.filter(a => a.date === today).length;
+                
+                // Calcular relatórios pendentes (consultas realizadas sem relatório)
+                const completedAppointments = appointments.filter(a => a.status === 'completed');
+                const appointmentsWithReports = new Set(reports.map(r => r.appointmentId).filter(id => id));
+                const pendingReportsCount = completedAppointments.filter(a => !appointmentsWithReports.has(a.id)).length;
+                
+                // Calcular receita do mês atual
+                const now = new Date();
+                const currentMonth = now.getMonth();
+                const currentYear = now.getFullYear();
+                const monthlyRevenue = payments
+                    .filter(p => {
+                        const paymentDate = new Date(p.date);
+                        return paymentDate.getMonth() === currentMonth && paymentDate.getFullYear() === currentYear;
+                    })
+                    .reduce((sum, payment) => sum + payment.amount, 0);
+                
+                document.getElementById('activePatients').textContent = activePatientsCount;
+                document.getElementById('todayAppointments').textContent = todayAppointmentsCount;
+                document.getElementById('pendingReports').textContent = pendingReportsCount;
+                document.getElementById('monthlyRevenue').textContent = `R$ ${monthlyRevenue.toFixed(2)}`;
+                
+                // Atualizar atividades
+                await updateActivityList();
+            } catch (error) {
+                console.error('Erro ao carregar dashboard:', error);
+            }
+        }
+        
+        async function updateActivityList() {
+            try {
+                const activityList = document.getElementById('activityList');
+                const emptyActivity = document.getElementById('emptyActivity');
+                const activities = await db.getActivities();
+                
+                if (activities.length === 0) {
+                    activityList.innerHTML = '';
+                    emptyActivity.classList.remove('hidden');
+                    return;
+                }
+                
+                emptyActivity.classList.add('hidden');
+                activityList.innerHTML = '';
+                
+                activities.slice(0, 5).forEach(activity => {
+                    const activityDate = new Date(activity.timestamp);
+                    const timeAgo = getTimeAgo(activityDate);
+                    
+                    const activityItem = document.createElement('div');
+                    activityItem.className = 'activity-item';
+                    
+                    let icon = 'fa-calendar-check';
+                    let color = 'blue';
+                    let typeText = 'Consulta';
+                    
+                    if (activity.type === 'patient') {
+                        icon = 'fa-user-injured';
+                        color = 'green';
+                        typeText = 'Paciente';
+                    } else if (activity.type === 'report') {
+                        icon = 'fa-file-alt';
+                        color = 'orange';
+                        typeText = 'Relatório';
+                    } else if (activity.type === 'payment') {
+                        icon = 'fa-dollar-sign';
+                        color = 'purple';
+                        typeText = 'Pagamento';
+                    }
+                    
+                    activityItem.innerHTML = `
+                        <div class="activity-icon ${color}">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>${typeText}: ${activity.description}</h4>
+                            ${activity.patientName ? `<p>Paciente: ${activity.patientName}</p>` : ''}
+                            <div class="activity-time">${timeAgo}</div>
+                        </div>
+                    `;
+                    
+                    activityList.appendChild(activityItem);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar atividades:', error);
+            }
+        }
+        
+        function getTimeAgo(date) {
             const now = new Date();
-            document.getElementById('appointmentDate').value = now.toISOString().split('T')[0];
-            document.getElementById('appointmentTime').value = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
             
-            // Limpar formulário
-            document.getElementById('appointmentForm').reset();
-            document.getElementById('appointmentDuration').value = 50;
+            if (diffMins < 60) {
+                return `há ${diffMins} minuto${diffMins !== 1 ? 's' : ''}`;
+            } else if (diffHours < 24) {
+                return `há ${diffHours} hora${diffHours !== 1 ? 's' : ''}`;
+            } else if (diffDays < 7) {
+                return `há ${diffDays} dia${diffDays !== 1 ? 's' : ''}`;
+            } else {
+                return date.toLocaleDateString('pt-BR');
+            }
+        }
+        
+        async function loadPatientsList() {
+            try {
+                const patientsList = document.getElementById('patientsList');
+                const emptyPatientsList = document.getElementById('emptyPatientsList');
+                const patients = await db.getPatients();
+                
+                if (patients.length === 0) {
+                    patientsList.innerHTML = '';
+                    emptyPatientsList.classList.remove('hidden');
+                    return;
+                }
+                
+                emptyPatientsList.classList.add('hidden');
+                patientsList.innerHTML = '';
+                
+                patients.forEach(patient => {
+                    const patientItem = document.createElement('div');
+                    patientItem.className = 'patient-item';
+                    patientItem.setAttribute('data-id', patient.id);
+                    
+                    const initials = patient.firstName.charAt(0) + patient.lastName.charAt(0);
+                    const fullName = `${patient.firstName} ${patient.lastName}`;
+                    const age = calculateAge(patient.birthDate);
+                    const genderText = patient.gender === 'male' ? 'Masculino' : patient.gender === 'female' ? 'Feminino' : 'Outro';
+                    
+                    patientItem.innerHTML = `
+                        <div class="patient-avatar">${initials}</div>
+                        <div class="patient-info">
+                            <h4>${fullName}</h4>
+                            <p><i class="fas fa-user"></i> ${age} anos • ${genderText}</p>
+                            <p><i class="fas fa-calendar"></i> Desde ${formatDate(patient.firstSessionDate)}</p>
+                            <span class="patient-status ${patient.status === 'active' ? 'status-active' : 'status-inactive'}">
+                                ${patient.status === 'active' ? 'Ativo' : 'Inativo'}
+                            </span>
+                        </div>
+                        <div class="patient-actions">
+                            <button class="action-btn edit-patient-btn" data-id="${patient.id}" title="Editar paciente">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete delete-patient-btn" data-id="${patient.id}" title="Excluir paciente">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Evento para selecionar paciente
+                    patientItem.addEventListener('click', function(e) {
+                        if (!e.target.closest('.patient-actions')) {
+                            selectPatient(patient.id);
+                        }
+                    });
+                    
+                    // Evento para editar paciente
+                    const editBtn = patientItem.querySelector('.edit-patient-btn');
+                    editBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        editPatient(patient.id);
+                    });
+                    
+                    // Evento para excluir paciente
+                    const deleteBtn = patientItem.querySelector('.delete-patient-btn');
+                    deleteBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        deletePatient(patient.id);
+                    });
+                    
+                    patientsList.appendChild(patientItem);
+                });
+                
+                // Busca de pacientes
+                const patientSearch = document.getElementById('patientSearch');
+                if (patientSearch) {
+                    patientSearch.addEventListener('input', function() {
+                        const searchTerm = this.value.toLowerCase();
+                        const patientItems = document.querySelectorAll('.patient-item');
+                        
+                        patientItems.forEach(item => {
+                            const patientName = item.querySelector('h4').textContent.toLowerCase();
+                            const shouldShow = patientName.includes(searchTerm) || searchTerm === '';
+                            item.style.display = shouldShow ? 'flex' : 'none';
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar pacientes:', error);
+                showNotification('Erro ao carregar lista de pacientes.', 'error');
+            }
+        }
+        
+        async function selectPatient(patientId) {
+            try {
+                const patients = await db.getPatients();
+                const patient = patients.find(p => p.id === patientId);
+                if (!patient) return;
+                
+                selectedPatientId = patientId;
+                
+                // Atualizar seleção visual
+                document.querySelectorAll('.patient-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (parseInt(item.getAttribute('data-id')) === patientId) {
+                        item.classList.add('active');
+                    }
+                });
+                
+                // Mostrar detalhes
+                document.getElementById('emptyPatientDetail').classList.add('hidden');
+                document.getElementById('patientDetail').classList.remove('hidden');
+                
+                // Atualizar informações básicas
+                const initials = patient.firstName.charAt(0) + patient.lastName.charAt(0);
+                const fullName = `${patient.firstName} ${patient.lastName}`;
+                const age = calculateAge(patient.birthDate);
+                const genderText = patient.gender === 'male' ? 'Masculino' : patient.gender === 'female' ? 'Feminino' : 'Outro';
+                
+                document.getElementById('patientDetailAvatar').textContent = initials;
+                document.getElementById('patientDetailName').textContent = fullName;
+                document.getElementById('patientDetailInfo').textContent = `${age} anos • ${genderText}`;
+                
+                // Atualizar dados pessoais
+                document.getElementById('patientBirthDate').textContent = formatDate(patient.birthDate);
+                document.getElementById('patientCPF').textContent = formatCPF(patient.cpf) || 'Não informado';
+                document.getElementById('patientPhone').textContent = patient.phone;
+                document.getElementById('patientEmail').textContent = patient.email || 'Não informado';
+                document.getElementById('patientAddress').textContent = patient.address || 'Não informado';
+                document.getElementById('patientOccupation').textContent = patient.occupation || 'Não informado';
+                document.getElementById('firstSessionDate').textContent = formatDate(patient.firstSessionDate);
+                document.getElementById('sessionFrequency').textContent = patient.sessionFrequency === 'weekly' ? 'Semanal' : 'Quinzenal';
+                document.getElementById('therapyReason').textContent = patient.therapyReason;
+                
+                // Configurar botões de ação
+                document.getElementById('deletePatientBtn').onclick = () => deletePatient(patientId);
+                document.getElementById('editPatientBtn').onclick = () => editPatient(patientId);
+                
+                // Carregar conteúdo das abas
+                await loadPatientSessions(patientId);
+                await loadClinicalNotes(patientId);
+                await loadPatientEvolution(patientId);
+                await loadPatientFinance(patientId);
+                
+                // Configurar abas
+                setupPatientTabs();
+            } catch (error) {
+                console.error('Erro ao selecionar paciente:', error);
+                showNotification('Erro ao carregar dados do paciente.', 'error');
+            }
+        }
+        
+        function setupPatientTabs() {
+            const tabs = document.querySelectorAll('.patient-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
             
-            // Mostrar modal
-            document.getElementById('appointmentModal').classList.add('active');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Atualizar abas ativas
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === tabId + 'Tab') {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+        
+        async function loadPatientSessions(patientId) {
+            try {
+                const container = document.getElementById('sessionsTab');
+                const appointments = await db.getAppointments();
+                const patientAppointments = appointments
+                    .filter(a => a.patientId === patientId)
+                    .sort((a, b) => new Date(b.date + 'T' + b.time) - new Date(a.date + 'T' + a.time));
+                
+                if (patientAppointments.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state" style="padding: 40px 20px;">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h4>Nenhuma sessão registrada</h4>
+                            <p>Este paciente ainda não tem sessões agendadas</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = '<div class="activity-list">';
+                patientAppointments.forEach(appointment => {
+                    const statusText = {
+                        'scheduled': 'Agendada',
+                        'completed': 'Realizada',
+                        'not_completed': 'Não Realizada',
+                        'rescheduled': 'Reagendada'
+                    }[appointment.status] || 'Agendada';
+                    
+                    const statusClass = {
+                        'scheduled': 'blue',
+                        'completed': 'green',
+                        'not_completed': 'red',
+                        'rescheduled': 'orange'
+                    }[appointment.status] || 'blue';
+                    
+                    html += `
+                        <div class="activity-item">
+                            <div class="activity-icon ${statusClass}">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>Sessão ${statusText}</h4>
+                                <p>${formatDateTime(appointment.date, appointment.time)} • ${appointment.duration} minutos</p>
+                                <p>Tipo: ${appointment.type === 'individual' ? 'Individual' : 
+                                          appointment.type === 'couple' ? 'Casal' : 
+                                          appointment.type === 'family' ? 'Familiar' : 
+                                          appointment.type === 'assessment' ? 'Avaliação' : 'Emergência'}</p>
+                                ${appointment.notes ? `<p>Observações: ${appointment.notes}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                
+                container.innerHTML = html;
+            } catch (error) {
+                console.error('Erro ao carregar sessões:', error);
+                document.getElementById('sessionsTab').innerHTML = `
+                    <div class="empty-state" style="padding: 40px 20px;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Erro ao carregar sessões</h4>
+                        <p>Não foi possível carregar o histórico de sessões</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function loadClinicalNotes(patientId) {
+            try {
+                const container = document.getElementById('notesTab');
+                const notes = await db.getClinicalNotes(patientId);
+                
+                // Ordenar por data (mais recente primeiro)
+                notes.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                if (notes.length === 0) {
+                    container.innerHTML = `
+                        <div class="clinical-notes-container">
+                            <div class="empty-state" style="padding: 40px 20px;">
+                                <i class="fas fa-file-alt"></i>
+                                <h4>Nenhuma anotação clínica</h4>
+                                <p>Este paciente ainda não tem anotações clínicas registradas</p>
+                                <button class="btn" style="margin-top: 20px;" id="newClinicalNoteBtn">
+                                    <i class="fas fa-plus"></i> Criar Primeira Anotação
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.getElementById('newClinicalNoteBtn')?.addEventListener('click', () => {
+                        openClinicalNoteModal(patientId);
+                    });
+                    return;
+                }
+                
+                let html = `
+                    <div class="clinical-notes-container">
+                        <div style="margin-bottom: 20px; display: flex; justify-content: flex-end;">
+                            <button class="btn" id="newClinicalNoteBtn">
+                                <i class="fas fa-plus"></i> Nova Anotação
+                            </button>
+                        </div>
+                        <div class="notes-list">
+                `;
+                
+                notes.forEach(note => {
+                    html += `
+                        <div class="note-item" data-id="${note.id}">
+                            <div class="note-header">
+                                <h4>${note.title}</h4>
+                                <div class="note-actions">
+                                    <button class="action-btn edit-note-btn" data-id="${note.id}" title="Editar anotação">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn delete delete-note-btn" data-id="${note.id}" title="Excluir anotação">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="note-date">${formatDate(note.date)}</div>
+                            <div class="note-content">${note.content}</div>
+                        </div>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+                
+                container.innerHTML = html;
+                
+                // Configurar eventos dos botões
+                document.getElementById('newClinicalNoteBtn')?.addEventListener('click', () => {
+                    openClinicalNoteModal(patientId);
+                });
+                
+                document.querySelectorAll('.edit-note-btn').forEach(btn => {
+                    btn.addEventListener('click', async function() {
+                        const noteId = parseInt(this.getAttribute('data-id'));
+                        await editClinicalNote(noteId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-note-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const noteId = parseInt(this.getAttribute('data-id'));
+                        deleteClinicalNote(noteId);
+                    });
+                });
+            } catch (error) {
+                console.error('Erro ao carregar anotações clínicas:', error);
+                container.innerHTML = `
+                    <div class="empty-state" style="padding: 40px 20px;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Erro ao carregar anotações</h4>
+                        <p>Não foi possível carregar as anotações clínicas</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function openClinicalNoteModal(patientId, noteId = null) {
+            editingNoteId = noteId;
+            
+            if (noteId) {
+                document.getElementById('noteModalTitle').textContent = 'Editar Anotação Clínica';
+                document.getElementById('noteSubmitBtn').textContent = 'Atualizar Anotação';
+                
+                // Carregar dados da anotação
+                db.getClinicalNotes(patientId).then(notes => {
+                    const note = notes.find(n => n.id === noteId);
+                    if (note) {
+                        document.getElementById('noteTitle').value = note.title;
+                        document.getElementById('noteDate').value = note.date;
+                        document.getElementById('noteContent').value = note.content;
+                    }
+                });
+            } else {
+                document.getElementById('noteModalTitle').textContent = 'Nova Anotação Clínica';
+                document.getElementById('noteSubmitBtn').textContent = 'Salvar Anotação';
+                
+                // Limpar formulário
+                document.getElementById('noteForm').reset();
+                document.getElementById('noteDate').value = new Date().toISOString().split('T')[0];
+            }
+            
+            document.getElementById('notePatientId').value = patientId;
+            document.getElementById('noteModal').classList.add('active');
+        }
+        
+        async function editClinicalNote(noteId) {
+            try {
+                const notes = await db.getAll('clinicalNotes');
+                const note = notes.find(n => n.id === noteId);
+                if (note) {
+                    openClinicalNoteModal(note.patientId, noteId);
+                }
+            } catch (error) {
+                console.error('Erro ao editar anotação:', error);
+                showNotification('Erro ao carregar anotação.', 'error');
+            }
+        }
+        
+        async function deleteClinicalNote(noteId) {
+            showConfirmModal(
+                'Tem certeza que deseja excluir esta anotação clínica?',
+                async () => {
+                    try {
+                        await db.deleteClinicalNote(noteId);
+                        
+                        // Recarregar anotações
+                        if (selectedPatientId) {
+                            await loadClinicalNotes(selectedPatientId);
+                        }
+                        
+                        showNotification('Anotação excluída com sucesso!', 'success');
+                    } catch (error) {
+                        console.error('Erro ao excluir anotação:', error);
+                        showNotification('Erro ao excluir anotação.', 'error');
+                    }
+                }
+            );
+        }
+        
+        async function loadPatientEvolution(patientId) {
+            const container = document.getElementById('evolutionTab');
+            container.innerHTML = `
+                <div class="empty-state" style="padding: 40px 20px;">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>Evolução do Paciente</h4>
+                    <p>Registre a evolução do paciente ao longo do tratamento</p>
+                    <button class="btn" style="margin-top: 20px;" onclick="showNotification('Funcionalidade em desenvolvimento.', 'info')">
+                        <i class="fas fa-plus"></i> Registrar Evolução
+                    </button>
+                </div>
+            `;
+        }
+        
+        async function loadPatientFinance(patientId) {
+            try {
+                const container = document.getElementById('financeTab');
+                const payments = await db.getPayments();
+                const patientPayments = payments
+                    .filter(p => p.patientId === patientId)
+                    .sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                const totalPaid = patientPayments.reduce((sum, payment) => sum + payment.amount, 0);
+                
+                if (patientPayments.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state" style="padding: 40px 20px;">
+                            <i class="fas fa-dollar-sign"></i>
+                            <h4>Nenhum pagamento registrado</h4>
+                            <p>Este paciente ainda não tem pagamentos registrados</p>
+                            <p style="margin-top: 10px; font-weight: 600;">Total pago: R$ 0,00</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = `
+                    <div class="summary-card" style="margin-bottom: 30px;">
+                        <div class="summary-label">Total Pago pelo Paciente</div>
+                        <div class="summary-value">R$ ${totalPaid.toFixed(2)}</div>
+                    </div>
+                    <div class="activity-list">
+                `;
+                
+                patientPayments.forEach(payment => {
+                    const typeText = {
+                        'session': 'Sessão Individual',
+                        'package': 'Pacote Mensal',
+                        'assessment': 'Avaliação',
+                        'other': 'Outro'
+                    }[payment.type] || 'Pagamento';
+                    
+                    html += `
+                        <div class="activity-item">
+                            <div class="activity-icon purple">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="activity-content">
+                                <h4>${typeText}</h4>
+                                <p>Valor: R$ ${payment.amount.toFixed(2)}</p>
+                                <p>Data: ${formatDate(payment.date)}</p>
+                                ${payment.description ? `<p>Descrição: ${payment.description}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                container.innerHTML = html;
+            } catch (error) {
+                console.error('Erro ao carregar finanças do paciente:', error);
+                container.innerHTML = `
+                    <div class="empty-state" style="padding: 40px 20px;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>Erro ao carregar dados financeiros</h4>
+                        <p>Não foi possível carregar as informações financeiras</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function deletePatient(patientId) {
+            showConfirmModal(
+                'Tem certeza que deseja excluir este paciente? Esta ação não pode ser desfeita.',
+                async () => {
+                    try {
+                        // Excluir paciente
+                        await db.delete('patients', patientId);
+                        
+                        // Excluir dados relacionados
+                        const appointments = await db.getAppointments();
+                        const patientAppointments = appointments.filter(a => a.patientId === patientId);
+                        for (const appointment of patientAppointments) {
+                            await db.delete('appointments', appointment.id);
+                        }
+                        
+                        const reports = await db.getReports();
+                        const patientReports = reports.filter(r => r.patientId === patientId);
+                        for (const report of patientReports) {
+                            await db.delete('reports', report.id);
+                        }
+                        
+                        const payments = await db.getPayments();
+                        const patientPayments = payments.filter(p => p.patientId === patientId);
+                        for (const payment of patientPayments) {
+                            await db.delete('payments', payment.id);
+                        }
+                        
+                        const notes = await db.getClinicalNotes(patientId);
+                        for (const note of notes) {
+                            await db.delete('clinicalNotes', note.id);
+                        }
+                        
+                        // Atualizar interface
+                        await loadPatientsList();
+                        await loadDashboard();
+                        await loadAgenda();
+                        await loadReportsList();
+                        await updateFinanceSummary();
+                        
+                        // Esconder detalhes do paciente
+                        document.getElementById('emptyPatientDetail').classList.remove('hidden');
+                        document.getElementById('patientDetail').classList.add('hidden');
+                        
+                        // Adicionar atividade
+                        const patients = await db.getPatients();
+                        const deletedPatient = patients.find(p => p.id === patientId);
+                        if (deletedPatient) {
+                            await addActivity('patient', `Paciente ${deletedPatient.firstName} ${deletedPatient.lastName} excluído`);
+                        }
+                        
+                        showNotification('Paciente excluído com sucesso!', 'success');
+                    } catch (error) {
+                        console.error('Erro ao excluir paciente:', error);
+                        showNotification('Erro ao excluir paciente.', 'error');
+                    }
+                }
+            );
+        }
+        
+        async function editPatient(patientId) {
+            try {
+                const patients = await db.getPatients();
+                const patient = patients.find(p => p.id === patientId);
+                if (!patient) return;
+                
+                editingPatientId = patientId;
+                
+                // Preencher formulário
+                document.getElementById('patientModalTitle').textContent = 'Editar Paciente';
+                document.getElementById('patientFirstName').value = patient.firstName;
+                document.getElementById('patientLastName').value = patient.lastName;
+                document.getElementById('patientBirthDateInput').value = patient.birthDate;
+                document.getElementById('patientGender').value = patient.gender;
+                document.getElementById('patientCPFInput').value = patient.cpf || '';
+                document.getElementById('patientPhoneInput').value = patient.phone;
+                document.getElementById('patientEmailInput').value = patient.email || '';
+                document.getElementById('patientSubmitBtn').textContent = 'Atualizar Paciente';
+                
+                // Mostrar modal
+                document.getElementById('patientModal').classList.add('active');
+            } catch (error) {
+                console.error('Erro ao editar paciente:', error);
+                showNotification('Erro ao carregar dados do paciente.', 'error');
+            }
+        }
+        
+        function updateAgendaDate() {
+            if (!document.getElementById('agendaDateDisplay')) return;
+            
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('agendaDateDisplay').textContent = currentDate.toLocaleDateString('pt-BR', options);
+        }
+        
+        async function loadAgenda() {
+            try {
+                const agendaDay = document.getElementById('agendaDay');
+                const emptyAgenda = document.getElementById('emptyAgenda');
+                const appointments = await db.getAppointments();
+                const currentDateString = currentDate.toISOString().split('T')[0];
+                const dayAppointments = appointments.filter(a => a.date === currentDateString);
+                
+                if (dayAppointments.length === 0) {
+                    agendaDay.innerHTML = '';
+                    emptyAgenda.classList.remove('hidden');
+                    return;
+                }
+                
+                emptyAgenda.classList.add('hidden');
+                
+                // Gerar agenda das 8h às 19h
+                let timeColumnHTML = '';
+                let appointmentsColumnHTML = '<div class="appointments-column">';
+                
+                for (let hour = 8; hour <= 19; hour++) {
+                    // Horário cheio
+                    timeColumnHTML += `<div class="time-slot-label">${hour.toString().padStart(2, '0')}:00</div>`;
+                    
+                    // Slot de horário
+                    const slotId = `slot-${hour}-00`;
+                    appointmentsColumnHTML += `<div class="appointment-slot" id="${slotId}"></div>`;
+                    
+                    // Meia hora (apenas se não for a última hora)
+                    if (hour < 19) {
+                        timeColumnHTML += `<div class="time-slot-label">${hour.toString().padStart(2, '0')}:30</div>`;
+                        const slotHalfId = `slot-${hour}-30`;
+                        appointmentsColumnHTML += `<div class="appointment-slot" id="${slotHalfId}"></div>`;
+                    }
+                }
+                
+                appointmentsColumnHTML += '</div>';
+                agendaDay.innerHTML = `
+                    <div class="time-column">${timeColumnHTML}</div>
+                    ${appointmentsColumnHTML}
+                `;
+                
+                // Adicionar consultas
+                dayAppointments.forEach(appointment => {
+                    const [hour, minute] = appointment.time.split(':').map(Number);
+                    const duration = appointment.duration;
+                    
+                    // Calcular posição e altura
+                    const startMinutes = hour * 60 + minute;
+                    const startPosition = (startMinutes - 8 * 60) / 30; // Cada 30 minutos = 1 unidade
+                    const heightUnits = duration / 30;
+                    
+                    // Encontrar o slot correto
+                    const slotId = `slot-${hour.toString().padStart(2, '0')}-${minute.toString().padStart(2, '0')}`;
+                    const slot = document.getElementById(slotId);
+                    
+                    if (slot) {
+                        const appointmentElement = document.createElement('div');
+                        appointmentElement.className = `appointment ${appointment.status === 'completed' ? 'green' : 
+                                                       appointment.status === 'not_completed' ? 'red' : 
+                                                       appointment.status === 'rescheduled' ? 'orange' : 'blue'}`;
+                        appointmentElement.style.top = `${startPosition * 80}px`;
+                        appointmentElement.style.height = `${heightUnits * 80 - 10}px`;
+                        
+                        const typeText = {
+                            'individual': 'Individual',
+                            'couple': 'Casal',
+                            'family': 'Familiar',
+                            'assessment': 'Avaliação',
+                            'emergency': 'Emergência'
+                        }[appointment.type] || 'Individual';
+                        
+                        const statusText = {
+                            'scheduled': 'Agendada',
+                            'completed': 'Realizada',
+                            'not_completed': 'Não Realizada',
+                            'rescheduled': 'Reagendada'
+                        }[appointment.status] || 'Agendada';
+                        
+                        appointmentElement.innerHTML = `
+                            <div class="appointment-header">
+                                <div class="appointment-time">${appointment.time}</div>
+                                <div>${statusText}</div>
+                            </div>
+                            <div class="appointment-patient">${appointment.patientName}</div>
+                            <div class="appointment-type">${typeText} • ${duration} min</div>
+                        `;
+                        
+                        // Adicionar evento de clique
+                        appointmentElement.addEventListener('click', () => {
+                            selectedAppointmentId = appointment.id;
+                            openStatusModal(appointment);
+                        });
+                        
+                        slot.appendChild(appointmentElement);
+                    }
+                });
+            } catch (error) {
+                console.error('Erro ao carregar agenda:', error);
+                showNotification('Erro ao carregar agenda.', 'error');
+            }
+        }
+        
+        function openStatusModal(appointment) {
+            document.getElementById('statusAppointmentInfo').textContent = 
+                `Consulta com ${appointment.patientName} em ${formatDate(appointment.date)} às ${appointment.time}`;
+            document.getElementById('statusModal').classList.add('active');
+        }
+        
+        async function markAppointmentStatus(status) {
+            try {
+                const appointments = await db.getAppointments();
+                const appointment = appointments.find(a => a.id === selectedAppointmentId);
+                if (appointment) {
+                    appointment.status = status;
+                    appointment.updatedAt = new Date().toISOString();
+                    await db.saveAppointment(appointment);
+                    
+                    // Atualizar interface
+                    await loadAgenda();
+                    await loadDashboard();
+                    
+                    // Fechar modal
+                    document.getElementById('statusModal').classList.remove('active');
+                    
+                    // Mostrar notificação
+                    const statusText = {
+                        'completed': 'realizada',
+                        'not_completed': 'não realizada',
+                        'rescheduled': 'reagendada'
+                    }[status] || 'atualizada';
+                    
+                    showNotification(`Consulta marcada como ${statusText}!`, 'success');
+                    
+                    // Se foi marcada como realizada, perguntar se quer criar relatório
+                    if (status === 'completed') {
+                        setTimeout(() => {
+                            showConfirmModal(
+                                'Deseja criar um relatório para esta sessão?',
+                                () => {
+                                    openReportModalForAppointment(selectedAppointmentId);
+                                }
+                            );
+                        }, 500);
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao atualizar status:', error);
+                showNotification('Erro ao atualizar status da consulta.', 'error');
+            }
+        }
+        
+        function openReportModalForAppointment(appointmentId) {
+            // Esta função será chamada quando o usuário quiser criar um relatório para uma consulta
+            // Preencher os dados automaticamente no modal de relatório
+            showNotification('Abra a página de relatórios para criar um relatório para esta sessão.', 'info');
+            document.getElementById('statusModal').classList.remove('active');
+            
+            // Navegar para a página de relatórios
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.querySelector('.nav-item[data-page="reports"]').classList.add('active');
+            document.querySelectorAll('.content-page').forEach(page => page.classList.remove('active'));
+            document.getElementById('reportsPage').classList.add('active');
+            
+            // Abrir modal de novo relatório
+            setTimeout(() => {
+                openReportModal();
+                
+                // Preencher dados da consulta se disponível
+                db.getAppointments().then(appointments => {
+                    const appointment = appointments.find(a => a.id === appointmentId);
+                    if (appointment) {
+                        document.getElementById('reportPatient').value = appointment.patientId;
+                        updateReportAppointmentOptions(appointment.patientId).then(() => {
+                            document.getElementById('reportAppointment').value = appointmentId;
+                        });
+                        document.getElementById('reportDate').value = new Date().toISOString().split('T')[0];
+                        document.getElementById('reportTitle').value = `Sessão com ${appointment.patientName}`;
+                    }
+                });
+            }, 500);
+        }
+        
+        async function loadReportsList() {
+            try {
+                const reportsList = document.getElementById('reportsList');
+                const emptyReports = document.getElementById('emptyReports');
+                const reports = await db.getReports();
+                
+                if (reports.length === 0) {
+                    reportsList.innerHTML = '';
+                    emptyReports.classList.remove('hidden');
+                    return;
+                }
+                
+                emptyReports.classList.add('hidden');
+                reportsList.innerHTML = '';
+                
+                reports.sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .forEach(report => {
+                        const reportItem = document.createElement('div');
+                        reportItem.className = 'report-item';
+                        
+                        const typeText = {
+                            'session': 'Relatório de Sessão',
+                            'evolution': 'Relatório de Evolução',
+                            'assessment': 'Avaliação',
+                            'discharge': 'Alta'
+                        }[report.type] || 'Relatório';
+                        
+                        reportItem.innerHTML = `
+                            <div class="report-header">
+                                <div class="report-title">${report.title}</div>
+                                <div class="report-date">${formatDate(report.date)}</div>
+                            </div>
+                            <div class="report-content">
+                                <p><strong>Paciente:</strong> ${report.patientName}</p>
+                                <p><strong>Tipo:</strong> ${typeText}</p>
+                                <p>${report.content.substring(0, 150)}${report.content.length > 150 ? '...' : ''}</p>
+                            </div>
+                            <div class="report-footer">
+                                <div class="report-author">Por ${report.author}</div>
+                                <div class="report-actions">
+                                    <button class="btn btn-secondary" onclick="viewReport(${report.id})">
+                                        <i class="fas fa-eye"></i> Ver
+                                    </button>
+                                    <button class="btn btn-danger" onclick="deleteReport(${report.id})">
+                                        <i class="fas fa-trash"></i> Excluir
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        
+                        reportsList.appendChild(reportItem);
+                    });
+            } catch (error) {
+                console.error('Erro ao carregar relatórios:', error);
+                showNotification('Erro ao carregar relatórios.', 'error');
+            }
+        }
+        
+        async function viewReport(reportId) {
+            try {
+                const reports = await db.getReports();
+                const report = reports.find(r => r.id === reportId);
+                if (!report) return;
+                
+                const typeText = {
+                    'session': 'Relatório de Sessão',
+                    'evolution': 'Relatório de Evolução',
+                    'assessment': 'Avaliação',
+                    'discharge': 'Alta'
+                }[report.type] || 'Relatório';
+                
+                document.getElementById('viewReportTitle').textContent = report.title;
+                document.getElementById('reportDetail').innerHTML = `
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">Paciente</div>
+                            <div class="detail-value">${report.patientName}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Data do Relatório</div>
+                            <div class="detail-value">${formatDate(report.date)}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Tipo</div>
+                            <div class="detail-value">${typeText}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Autor</div>
+                            <div class="detail-value">${report.author}</div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="section-title" style="margin-top: 30px;">Conteúdo</h4>
+                    <div style="background-color: var(--light-bg); padding: 20px; border-radius: var(--border-radius-sm);">
+                        <p style="white-space: pre-wrap;">${report.content}</p>
+                    </div>
+                `;
+                
+                document.getElementById('viewReportModal').classList.add('active');
+            } catch (error) {
+                console.error('Erro ao visualizar relatório:', error);
+                showNotification('Erro ao carregar relatório.', 'error');
+            }
+        }
+        
+        async function deleteReport(reportId) {
+            showConfirmModal(
+                'Tem certeza que deseja excluir este relatório? Esta ação não pode ser desfeita.',
+                async () => {
+                    try {
+                        await db.delete('reports', reportId);
+                        
+                        // Atualizar interface
+                        await loadReportsList();
+                        await loadDashboard();
+                        
+                        // Adicionar atividade
+                        const reports = await db.getReports();
+                        const deletedReport = reports.find(r => r.id === reportId);
+                        if (deletedReport) {
+                            await addActivity('report', `Relatório "${deletedReport.title}" excluído`, deletedReport.patientName);
+                        }
+                        
+                        showNotification('Relatório excluído com sucesso!', 'success');
+                    } catch (error) {
+                        console.error('Erro ao excluir relatório:', error);
+                        showNotification('Erro ao excluir relatório.', 'error');
+                    }
+                }
+            );
+        }
+        
+        async function updateFinanceSummary() {
+            try {
+                const payments = await db.getPayments();
+                const totalBalance = payments.reduce((sum, payment) => sum + payment.amount, 0);
+                
+                // Calcular receita do mês
+                const now = new Date();
+                const currentMonth = now.getMonth();
+                const currentYear = now.getFullYear();
+                const monthBalance = payments
+                    .filter(p => {
+                        const paymentDate = new Date(p.date);
+                        return paymentDate.getMonth() === currentMonth && paymentDate.getFullYear() === currentYear;
+                    })
+                    .reduce((sum, payment) => sum + payment.amount, 0);
+                
+                // Calcular receita da semana
+                const weekStart = new Date(now);
+                weekStart.setDate(now.getDate() - now.getDay()); // Domingo
+                weekStart.setHours(0, 0, 0, 0);
+                
+                const weekBalance = payments
+                    .filter(p => {
+                        const paymentDate = new Date(p.date);
+                        return paymentDate >= weekStart;
+                    })
+                    .reduce((sum, payment) => sum + payment.amount, 0);
+                
+                document.getElementById('totalBalance').textContent = `R$ ${totalBalance.toFixed(2)}`;
+                document.getElementById('monthBalance').textContent = `R$ ${monthBalance.toFixed(2)}`;
+                document.getElementById('weekBalance').textContent = `R$ ${weekBalance.toFixed(2)}`;
+                
+                // Atualizar lista de pacientes no formulário de pagamento
+                await populatePatientSelect('paymentPatient');
+            } catch (error) {
+                console.error('Erro ao atualizar resumo financeiro:', error);
+                showNotification('Erro ao carregar dados financeiros.', 'error');
+            }
+        }
+        
+        async function populatePatientSelect(selectId) {
+            try {
+                const select = document.getElementById(selectId);
+                if (!select) return;
+                
+                // Salvar valor atual
+                const currentValue = select.value;
+                
+                // Limpar e recriar opções
+                select.innerHTML = '<option value="">Selecione um paciente</option>';
+                
+                const patients = await db.getPatients();
+                patients.filter(p => p.status === 'active').forEach(patient => {
+                    const option = document.createElement('option');
+                    option.value = patient.id;
+                    option.textContent = `${patient.firstName} ${patient.lastName}`;
+                    select.appendChild(option);
+                });
+                
+                // Restaurar valor selecionado
+                select.value = currentValue;
+            } catch (error) {
+                console.error('Erro ao popular seleção de pacientes:', error);
+            }
+        }
+        
+        async function updateReportAppointmentOptions(patientId) {
+            try {
+                const select = document.getElementById('reportAppointment');
+                if (!select) return;
+                
+                // Limpar opções
+                select.innerHTML = '<option value="">Sem sessão específica</option>';
+                
+                if (!patientId) return;
+                
+                // Filtrar sessões do paciente
+                const appointments = await db.getAppointments();
+                const patientAppointments = appointments
+                    .filter(a => a.patientId === patientId)
+                    .sort((a, b) => new Date(b.date + 'T' + b.time) - new Date(a.date + 'T' + a.time));
+                
+                patientAppointments.forEach(appointment => {
+                    const option = document.createElement('option');
+                    option.value = appointment.id;
+                    option.textContent = `${formatDate(appointment.date)} às ${appointment.time} - ${appointment.type === 'individual' ? 'Individual' : 
+                                          appointment.type === 'couple' ? 'Casal' : 
+                                          appointment.type === 'family' ? 'Familiar' : 
+                                          appointment.type === 'assessment' ? 'Avaliação' : 'Emergência'}`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao atualizar opções de sessões:', error);
+            }
+        }
+        
+        async function populateFolderSelect(selectId, type) {
+            try {
+                const select = document.getElementById(selectId);
+                if (!select) return;
+                
+                // Limpar opções
+                select.innerHTML = '<option value="">Sem pasta</option>';
+                
+                const folders = await db.getFolders(type);
+                folders.forEach(folder => {
+                    const option = document.createElement('option');
+                    option.value = folder.id;
+                    option.textContent = folder.name;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao popular seleção de pastas:', error);
+            }
+        }
+        
+        async function loadFolders(type) {
+            try {
+                const foldersGrid = document.getElementById('foldersGrid');
+                const emptyFiles = document.getElementById('emptyFiles');
+                const emptyDocuments = document.getElementById('emptyDocuments');
+                const filesContent = document.getElementById('filesContent');
+                const documentsContent = document.getElementById('documentsContent');
+                
+                const folders = await db.getFolders(type);
+                
+                if (type === 'files') {
+                    // Página de Fichas
+                    if (folders.length === 0) {
+                        foldersGrid.innerHTML = '';
+                        emptyFiles.classList.remove('hidden');
+                        filesContent.classList.add('hidden');
+                    } else {
+                        emptyFiles.classList.add('hidden');
+                        filesContent.classList.remove('hidden');
+                        foldersGrid.innerHTML = '';
+                        
+                        folders.forEach(folder => {
+                            const folderItem = document.createElement('div');
+                            folderItem.className = 'folder-item';
+                            folderItem.setAttribute('data-id', folder.id);
+                            folderItem.setAttribute('data-type', type);
+                            
+                            folderItem.innerHTML = `
+                                <i class="fas fa-folder"></i>
+                                <div class="folder-name">${folder.name}</div>
+                                <div class="folder-count">${folder.fileCount || 0} arquivos</div>
+                            `;
+                            
+                            folderItem.addEventListener('click', async () => {
+                                await openFolder(folder.id, type);
+                            });
+                            
+                            foldersGrid.appendChild(folderItem);
+                        });
+                    }
+                } else {
+                    // Página de Documentos
+                    const documents = await db.getDocuments();
+                    
+                    if (folders.length === 0 && documents.length === 0) {
+                        documentsGrid.innerHTML = '';
+                        emptyDocuments.classList.remove('hidden');
+                        documentsContent.classList.add('hidden');
+                    } else {
+                        emptyDocuments.classList.add('hidden');
+                        documentsContent.classList.remove('hidden');
+                        
+                        // Mostrar documentos sem pasta
+                        const documentsGrid = document.getElementById('documentsGrid');
+                        documentsGrid.innerHTML = '';
+                        
+                        // Adicionar pastas
+                        folders.forEach(folder => {
+                            const folderItem = document.createElement('div');
+                            folderItem.className = 'folder-item';
+                            folderItem.setAttribute('data-id', folder.id);
+                            folderItem.setAttribute('data-type', type);
+                            
+                            // Contar documentos na pasta
+                            const folderDocs = documents.filter(d => d.folderId === folder.id);
+                            
+                            folderItem.innerHTML = `
+                                <i class="fas fa-folder"></i>
+                                <div class="folder-name">${folder.name}</div>
+                                <div class="folder-count">${folderDocs.length} documentos</div>
+                            `;
+                            
+                            folderItem.addEventListener('click', async () => {
+                                await openFolder(folder.id, type);
+                            });
+                            
+                            documentsGrid.appendChild(folderItem);
+                        });
+                        
+                        // Adicionar documentos sem pasta
+                        const docsWithoutFolder = documents.filter(d => !d.folderId);
+                        docsWithoutFolder.forEach(doc => {
+                            const docItem = document.createElement('div');
+                            docItem.className = 'document-item';
+                            docItem.setAttribute('data-id', doc.id);
+                            
+                            docItem.innerHTML = `
+                                <i class="fas fa-file-alt"></i>
+                                <div class="document-name">${doc.title}</div>
+                                <div class="document-date">${formatDate(doc.createdAt)}</div>
+                            `;
+                            
+                            docItem.addEventListener('click', () => {
+                                viewDocument(doc);
+                            });
+                            
+                            documentsGrid.appendChild(docItem);
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao carregar pastas:', error);
+                showNotification('Erro ao carregar pastas.', 'error');
+            }
+        }
+        
+        async function openFolder(folderId, type) {
+            try {
+                currentFolderId = folderId;
+                currentFolderType = type;
+                
+                const folders = await db.getFolders(type);
+                const folder = folders.find(f => f.id === folderId);
+                
+                if (!folder) return;
+                
+                if (type === 'files') {
+                    // Página de Fichas
+                    document.getElementById('foldersGrid').classList.add('hidden');
+                    document.getElementById('filesListContainer').classList.remove('hidden');
+                    
+                    await loadFolderFiles(folderId);
+                } else {
+                    // Página de Documentos
+                    document.getElementById('documentsGrid').classList.add('hidden');
+                    document.getElementById('documentsListContainer').classList.remove('hidden');
+                    
+                    await loadFolderDocuments(folderId);
+                }
+            } catch (error) {
+                console.error('Erro ao abrir pasta:', error);
+                showNotification('Erro ao abrir pasta.', 'error');
+            }
+        }
+        
+        async function loadFolderFiles(folderId) {
+            try {
+                const container = document.getElementById('filesListContainer');
+                const files = await db.getFiles(folderId);
+                
+                if (files.length === 0) {
+                    container.innerHTML = `
+                        <div class="folder-view-container">
+                            <div class="folder-view-header">
+                                <button class="btn btn-secondary back-btn" id="backToFoldersBtn">
+                                    <i class="fas fa-arrow-left"></i> Voltar
+                                </button>
+                                <i class="fas fa-folder"></i>
+                                <h3>Pasta Vazia</h3>
+                            </div>
+                            <div class="empty-state" style="padding: 40px 20px;">
+                                <i class="fas fa-folder-open"></i>
+                                <h4>Nenhum arquivo nesta pasta</h4>
+                                <p>Adicione arquivos a esta pasta</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    let html = `
+                        <div class="folder-view-container">
+                            <div class="folder-view-header">
+                                <button class="btn btn-secondary back-btn" id="backToFoldersBtn">
+                                    <i class="fas fa-arrow-left"></i> Voltar
+                                </button>
+                                <i class="fas fa-folder"></i>
+                                <h3>${files[0].folderName || 'Pasta'}</h3>
+                            </div>
+                            <div class="files-list">
+                    `;
+                    
+                    files.forEach(file => {
+                        const fileTypeClass = getFileTypeClass(file.type);
+                        const fileIcon = getFileIcon(file.type);
+                        
+                        html += `
+                            <div class="file-item" data-id="${file.id}">
+                                <div class="file-icon ${fileTypeClass}">
+                                    <i class="fas ${fileIcon}"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">${file.name}</div>
+                                    <div class="file-size">${formatFileSize(file.size)}</div>
+                                    ${file.description ? `<div class="file-description">${file.description}</div>` : ''}
+                                </div>
+                                <div class="file-date">${formatDate(file.uploadedAt)}</div>
+                                <div class="file-actions">
+                                    <button class="action-btn download-file-btn" data-id="${file.id}" title="Download">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="action-btn delete delete-file-btn" data-id="${file.id}" title="Excluir">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.innerHTML = html;
+                    
+                    // Configurar botão de voltar
+                    document.getElementById('backToFoldersBtn').addEventListener('click', async () => {
+                        await closeFolderView();
+                    });
+                    
+                    // Configurar botões de download
+                    document.querySelectorAll('.download-file-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const fileId = parseInt(this.getAttribute('data-id'));
+                            downloadFile(fileId);
+                        });
+                    });
+                    
+                    // Configurar botões de exclusão
+                    document.querySelectorAll('.delete-file-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const fileId = parseInt(this.getAttribute('data-id'));
+                            deleteFile(fileId);
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar arquivos da pasta:', error);
+                showNotification('Erro ao carregar arquivos.', 'error');
+            }
+        }
+        
+        async function loadFolderDocuments(folderId) {
+            try {
+                const container = document.getElementById('documentsListContainer');
+                const documents = await db.getDocuments(folderId);
+                const folders = await db.getFolders('documents');
+                const folder = folders.find(f => f.id === folderId);
+                
+                if (documents.length === 0) {
+                    container.innerHTML = `
+                        <div class="folder-view-container">
+                            <div class="folder-view-header">
+                                <button class="btn btn-secondary back-btn" id="backToFoldersBtn">
+                                    <i class="fas fa-arrow-left"></i> Voltar
+                                </button>
+                                <i class="fas fa-folder"></i>
+                                <h3>${folder?.name || 'Pasta Vazia'}</h3>
+                            </div>
+                            <div class="empty-state" style="padding: 40px 20px;">
+                                <i class="fas fa-file-alt"></i>
+                                <h4>Nenhum documento nesta pasta</h4>
+                                <p>Adicione documentos a esta pasta</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    let html = `
+                        <div class="folder-view-container">
+                            <div class="folder-view-header">
+                                <button class="btn btn-secondary back-btn" id="backToFoldersBtn">
+                                    <i class="fas fa-arrow-left"></i> Voltar
+                                </button>
+                                <i class="fas fa-folder"></i>
+                                <h3>${folder?.name || 'Pasta'}</h3>
+                            </div>
+                            <div class="documents-list">
+                    `;
+                    
+                    documents.forEach(doc => {
+                        html += `
+                            <div class="file-item" data-id="${doc.id}">
+                                <div class="file-icon document">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">${doc.title}</div>
+                                    <div class="file-description">${doc.content.substring(0, 100)}${doc.content.length > 100 ? '...' : ''}</div>
+                                </div>
+                                <div class="file-date">${formatDate(doc.createdAt)}</div>
+                                <div class="file-actions">
+                                    <button class="action-btn view-doc-btn" data-id="${doc.id}" title="Visualizar">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-btn delete delete-doc-btn" data-id="${doc.id}" title="Excluir">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.innerHTML = html;
+                    
+                    // Configurar botão de voltar
+                    document.getElementById('backToFoldersBtn').addEventListener('click', async () => {
+                        await closeFolderView();
+                    });
+                    
+                    // Configurar botões de visualização
+                    document.querySelectorAll('.view-doc-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const docId = parseInt(this.getAttribute('data-id'));
+                            viewDocumentFromList(docId);
+                        });
+                    });
+                    
+                    // Configurar botões de exclusão
+                    document.querySelectorAll('.delete-doc-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const docId = parseInt(this.getAttribute('data-id'));
+                            deleteDocument(docId);
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar documentos da pasta:', error);
+                showNotification('Erro ao carregar documentos.', 'error');
+            }
+        }
+        
+        async function closeFolderView() {
+            currentFolderId = null;
+            currentFolderType = null;
+            
+            if (document.getElementById('filesPage').classList.contains('active')) {
+                document.getElementById('filesListContainer').classList.add('hidden');
+                document.getElementById('foldersGrid').classList.remove('hidden');
+                await loadFolders('files');
+            } else if (document.getElementById('documentsPage').classList.contains('active')) {
+                document.getElementById('documentsListContainer').classList.add('hidden');
+                document.getElementById('documentsGrid').classList.remove('hidden');
+                await loadFolders('documents');
+            }
+        }
+        
+        async function downloadFile(fileId) {
+            try {
+                const files = await db.getFiles();
+                const file = files.find(f => f.id === fileId);
+                
+                if (file && file.data) {
+                    const link = document.createElement('a');
+                    link.href = file.data;
+                    link.download = file.name;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } else {
+                    showNotification('Arquivo não encontrado ou corrompido.', 'error');
+                }
+            } catch (error) {
+                console.error('Erro ao fazer download:', error);
+                showNotification('Erro ao fazer download do arquivo.', 'error');
+            }
+        }
+        
+        async function deleteFile(fileId) {
+            showConfirmModal(
+                'Tem certeza que deseja excluir este arquivo?',
+                async () => {
+                    try {
+                        await db.delete('files', fileId);
+                        
+                        // Atualizar interface
+                        if (currentFolderId) {
+                            await loadFolderFiles(currentFolderId);
+                        } else {
+                            await loadFolders('files');
+                        }
+                        
+                        showNotification('Arquivo excluído com sucesso!', 'success');
+                    } catch (error) {
+                        console.error('Erro ao excluir arquivo:', error);
+                        showNotification('Erro ao excluir arquivo.', 'error');
+                    }
+                }
+            );
+        }
+        
+        async function viewDocumentFromList(docId) {
+            try {
+                const documents = await db.getDocuments();
+                const doc = documents.find(d => d.id === docId);
+                if (doc) {
+                    viewDocument(doc);
+                }
+            } catch (error) {
+                console.error('Erro ao visualizar documento:', error);
+                showNotification('Erro ao visualizar documento.', 'error');
+            }
+        }
+        
+        function viewDocument(document) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay active';
+            modal.innerHTML = `
+                <div class="modal">
+                    <div class="modal-header">
+                        <h3>${document.title}</h3>
+                        <button class="close-modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="white-space: pre-wrap; padding: 20px; background-color: var(--light-bg); border-radius: var(--border-radius-sm); max-height: 400px; overflow-y: auto;">
+                            ${document.content}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary close-doc-view">Fechar</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Configurar fechamento
+            const closeBtn = modal.querySelector('.close-modal');
+            const closeDocBtn = modal.querySelector('.close-doc-view');
+            
+            closeBtn.addEventListener('click', () => {
+                modal.remove();
+            });
+            
+            closeDocBtn.addEventListener('click', () => {
+                modal.remove();
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        async function deleteDocument(docId) {
+            showConfirmModal(
+                'Tem certeza que deseja excluir este documento?',
+                async () => {
+                    try {
+                        await db.delete('documents', docId);
+                        
+                        // Atualizar interface
+                        if (currentFolderId) {
+                            await loadFolderDocuments(currentFolderId);
+                        } else {
+                            await loadFolders('documents');
+                        }
+                        
+                        showNotification('Documento excluído com sucesso!', 'success');
+                    } catch (error) {
+                        console.error('Erro ao excluir documento:', error);
+                        showNotification('Erro ao excluir documento.', 'error');
+                    }
+                }
+            );
+        }
+        
+        async function openAppointmentModal() {
+            try {
+                // Preencher lista de pacientes
+                await populatePatientSelect('appointmentPatient');
+                
+                // Configurar data e hora atuais
+                const now = new Date();
+                document.getElementById('appointmentDate').value = now.toISOString().split('T')[0];
+                // PERMITIR datas passadas - remover a restrição
+                // document.getElementById('appointmentDate').min = now.toISOString().split('T')[0];
+                document.getElementById('appointmentTime').value = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                // Mostrar modal
+                document.getElementById('appointmentModal').classList.add('active');
+            } catch (error) {
+                console.error('Erro ao abrir modal de consulta:', error);
+                showNotification('Erro ao abrir formulário de consulta.', 'error');
+            }
         }
         
         function openPatientModal() {
@@ -3451,38 +6212,221 @@
             document.getElementById('patientSubmitBtn').textContent = 'Salvar Paciente';
             document.getElementById('cpfError').classList.remove('show');
             
-            // Configurar data mínima para nascimento
+            // Configurar data mínima para nascimento (120 anos atrás)
+            const minDate = new Date();
+            minDate.setFullYear(minDate.getFullYear() - 120);
             document.getElementById('patientBirthDateInput').max = new Date().toISOString().split('T')[0];
+            document.getElementById('patientBirthDateInput').min = minDate.toISOString().split('T')[0];
             
             // Mostrar modal
             document.getElementById('patientModal').classList.add('active');
+            document.getElementById('patientFirstName').focus();
+        }
+        
+        async function openReportModal() {
+            try {
+                // Preencher lista de pacientes
+                await populatePatientSelect('reportPatient');
+                
+                // Limpar outros campos
+                document.getElementById('reportAppointment').innerHTML = '<option value="">Sem sessão específica</option>';
+                document.getElementById('reportDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('reportTitle').value = '';
+                document.getElementById('reportContent').value = '';
+                
+                // Mostrar modal
+                document.getElementById('reportModal').classList.add('active');
+            } catch (error) {
+                console.error('Erro ao abrir modal de relatório:', error);
+                showNotification('Erro ao abrir formulário de relatório.', 'error');
+            }
+        }
+        
+        async function setTheme(theme) {
+            // Atualizar seleção visual
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-theme') === theme) {
+                    option.classList.add('active');
+                }
+            });
+            
+            // Aplicar tema
+            if (theme === 'dark') {
+                document.documentElement.style.setProperty('--light-bg', '#1a1a1a');
+                document.documentElement.style.setProperty('--white', '#2d2d2d');
+                document.documentElement.style.setProperty('--text-color', '#ffffff');
+                document.documentElement.style.setProperty('--light-text', '#cccccc');
+                document.documentElement.style.setProperty('--border-color', '#444444');
+                document.documentElement.style.setProperty('--dark-color', '#4a5fd8');
+            } else {
+                document.documentElement.style.setProperty('--light-bg', '#f8f9fa');
+                document.documentElement.style.setProperty('--white', '#ffffff');
+                document.documentElement.style.setProperty('--text-color', '#333333');
+                document.documentElement.style.setProperty('--light-text', '#666666');
+                document.documentElement.style.setProperty('--border-color', '#e0e0e0');
+                document.documentElement.style.setProperty('--dark-color', '#1a2a6c');
+            }
+            
+            // Salvar preferência
+            await db.saveSetting('theme', theme);
+        }
+        
+        async function loadTheme() {
+            try {
+                const savedTheme = await db.getSetting('theme', 'light');
+                await setTheme(savedTheme);
+            } catch (error) {
+                console.error('Erro ao carregar tema:', error);
+            }
+        }
+        
+        // ============================================
+        // CHAT BOT
+        // ============================================
+        
+        async function loadChatMessages() {
+            try {
+                const chatMessages = document.getElementById('chatMessages');
+                const messages = await db.getChatMessages();
+                
+                // Ordenar por timestamp
+                messages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+                
+                chatMessages.innerHTML = '';
+                
+                // Mensagem inicial do bot se não houver mensagens
+                if (messages.length === 0) {
+                    const initialMessage = document.createElement('div');
+                    initialMessage.className = 'message bot';
+                    initialMessage.innerHTML = `
+                        <div class="message-content">
+                            Olá! Sou seu assistente virtual para questões psicológicas. Como posso ajudá-lo hoje?
+                        </div>
+                        <div class="message-time">Agora</div>
+                    `;
+                    chatMessages.appendChild(initialMessage);
+                    return;
+                }
+                
+                // Adicionar todas as mensagens
+                messages.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.className = `message ${message.sender}`;
+                    
+                    const messageDate = new Date(message.timestamp);
+                    const timeString = messageDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                    
+                    messageElement.innerHTML = `
+                        <div class="message-content">${message.content}</div>
+                        <div class="message-time">${timeString}</div>
+                    `;
+                    
+                    chatMessages.appendChild(messageElement);
+                });
+                
+                // Scroll para a última mensagem
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (error) {
+                console.error('Erro ao carregar mensagens do chat:', error);
+            }
+        }
+        
+        async function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Limpar input
+            input.value = '';
+            
+            // Adicionar mensagem do usuário
+            await addChatMessage('user', message);
+            
+            // Mostrar indicador de digitação do bot
+            showTypingIndicator();
+            
+            try {
+                // Simular resposta do bot (substitua por chamada real à API)
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Remover indicador de digitação
+                removeTypingIndicator();
+                
+                // Respostas simuladas para demonstração
+                const responses = [
+                    "Entendo sua preocupação. Pode me dar mais detalhes sobre o que está sentindo?",
+                    "É normal sentir-se assim em determinadas situações. Vamos trabalhar juntos para encontrar estratégias que possam ajudar.",
+                    "Baseado no que você compartilhou, algumas técnicas de respiração e mindfulness podem ser úteis. Gostaria de saber mais sobre elas?",
+                    "Lembre-se de que é importante praticar o autocuidado. Como tem sido sua rotina de sono e alimentação?",
+                    "Posso sugerir algumas técnicas para gerenciar a ansiedade. Você gostaria de tentar um exercício de respiração guiada?",
+                    "É importante celebrar as pequenas vitórias. Você notou algum progresso recente, por menor que seja?"
+                ];
+                
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                
+                // Adicionar resposta do bot
+                await addChatMessage('bot', response);
+            } catch (error) {
+                console.error('Erro ao obter resposta do chat:', error);
+                
+                // Remover indicador de digitação
+                removeTypingIndicator();
+                
+                // Adicionar mensagem de erro
+                await addChatMessage('bot', 'Desculpe, não consegui processar sua mensagem no momento. Por favor, tente novamente mais tarde.');
+            }
+        }
+        
+        async function addChatMessage(sender, content) {
+            const message = {
+                sender: sender,
+                content: content,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Salvar no banco de dados
+            await db.saveChatMessage(message);
+            
+            // Atualizar interface
+            await loadChatMessages();
+        }
+        
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingIndicator = document.createElement('div');
+            typingIndicator.id = 'typingIndicator';
+            typingIndicator.className = 'message bot';
+            typingIndicator.innerHTML = `
+                <div class="message-content">
+                    <div class="spinner" style="width: 20px; height: 20px; display: inline-block; margin-right: 10px;"></div>
+                    Digitando...
+                </div>
+            `;
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
         }
         
         // ============================================
         // INICIALIZAR APLICAÇÃO
         // ============================================
         
-        // Quando o DOM estiver carregado
+        // Inicializar quando o DOM estiver carregado
         document.addEventListener('DOMContentLoaded', () => {
             initializeApp();
-            setupEventListeners();
-            
-            // Focar no campo de usuário se estiver na tela de login
-            if (!document.getElementById('loginScreen').classList.contains('hidden')) {
-                setTimeout(() => {
-                    const usernameInput = document.getElementById('username');
-                    if (usernameInput) usernameInput.focus();
-                }, 100);
-            }
         });
         
-        // Salvar dados antes de fechar
-        window.addEventListener('beforeunload', () => {
-            if (currentUser) {
-                // Fazer qualquer limpeza necessária
-                clearTimeout(inactivityTimer);
-            }
-        });
+        // Expor funções globais para uso nos botões HTML
+        window.viewReport = viewReport;
+        window.deleteReport = deleteReport;
     </script>
 </body>
 </html>
