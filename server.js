@@ -11,9 +11,6 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
-// Importar serviço do ChatGPT
-const chatGPTService = require('./services/chatgpt');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 const SECRET_KEY = process.env.JWT_SECRET || 'sua-chave-secreta-super-forte-aqui';
@@ -51,9 +48,8 @@ function authenticateToken(req, res, next) {
     });
 }
 
-// Funções auxiliares para criptografia (simplificadas - em produção usar biblioteca adequada)
+// Funções auxiliares para criptografia
 function encrypt(text) {
-    // Em produção, usar uma biblioteca de criptografia real
     return Buffer.from(text).toString('base64');
 }
 
@@ -130,23 +126,6 @@ app.post('/api/register', async (req, res) => {
         );
     } catch (error) {
         res.status(500).json({ error: 'Erro no servidor' });
-    }
-});
-
-// Rota do ChatGPT (pública mas com limite)
-app.post('/api/chat', async (req, res) => {
-    try {
-        const { message, context = 'psychological_assistant' } = req.body;
-        
-        if (!message || message.trim().length === 0) {
-            return res.status(400).json({ error: 'Mensagem é obrigatória' });
-        }
-
-        const response = await chatGPTService.getResponse(message, context);
-        res.json({ response });
-    } catch (error) {
-        console.error('Erro no chat:', error);
-        res.status(500).json({ error: 'Erro ao processar sua mensagem' });
     }
 });
 
@@ -557,7 +536,7 @@ app.post('/api/data/clinical-notes', (req, res) => {
     );
 });
 
-// Pastas e Documentos
+// Pastas
 app.get('/api/data/folders', (req, res) => {
     const { folder_type } = req.query;
     
@@ -599,6 +578,7 @@ app.post('/api/data/folders', (req, res) => {
     );
 });
 
+// Documentos
 app.get('/api/data/documents', (req, res) => {
     const { folder_id, patient_id } = req.query;
     
@@ -658,22 +638,22 @@ app.post('/api/data/documents', (req, res) => {
     );
 });
 
-// Upload de arquivos (simplificado - em produção usar multer e armazenamento em nuvem)
+// Upload de arquivos
 app.post('/api/data/upload', (req, res) => {
-    const { file_data, file_name, file_type } = req.body;
+    const { file_data, file_name, file_type, folder_id, description } = req.body;
     
     if (!file_data || !file_name) {
         return res.status(400).json({ error: 'Dados do arquivo são obrigatórios' });
     }
     
-    // Em produção, salvar em um serviço de armazenamento (S3, Google Cloud, etc.)
     const uploadDir = path.join(__dirname, 'uploads');
     if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });
     }
     
     const fileId = Date.now();
-    const filePath = path.join(uploadDir, `${fileId}_${file_name}`);
+    const fileName = `${fileId}_${file_name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+    const filePath = path.join(uploadDir, fileName);
     
     // Converter base64 para arquivo
     const base64Data = file_data.replace(/^data:.*?;base64,/, '');
@@ -682,11 +662,26 @@ app.post('/api/data/upload', (req, res) => {
             return res.status(500).json({ error: 'Erro ao salvar arquivo' });
         }
         
-        res.json({
-            file_id: fileId,
-            file_path: `/uploads/${fileId}_${file_name}`,
-            message: 'Arquivo enviado com sucesso'
-        });
+        const stats = fs.statSync(filePath);
+        
+        // Salvar no banco
+        db.run(
+            `INSERT INTO documents 
+             (document_name, document_type, file_path, file_size, mime_type, description, folder_id, uploaded_by) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [file_name, 'file', `/uploads/${fileName}`, stats.size, file_type, description, folder_id, req.user.id],
+            function(err) {
+                if (err) {
+                    return res.status(500).json({ error: err.message });
+                }
+                
+                res.json({
+                    id: this.lastID,
+                    file_path: `/uploads/${fileName}`,
+                    message: 'Arquivo enviado com sucesso'
+                });
+            }
+        );
     });
 });
 
@@ -723,7 +718,7 @@ app.get('/api/data/dashboard', (req, res) => {
                             if (err) return res.status(500).json({ error: err.message });
                             stats.monthlyRevenue = row.total || 0;
                             
-                            // Relatórios pendentes (consultas realizadas sem relatório)
+                            // Relatórios pendentes
                             db.get(
                                 `SELECT COUNT(*) as count FROM appointments a
                                  LEFT JOIN reports r ON a.id = r.appointment_id
@@ -764,8 +759,8 @@ app.get('/api/data/activities', (req, res) => {
 
 // Log de atividade
 function logActivity(userId, activityType, tableName, recordId, description) {
-    const ip = '127.0.0.1'; // Em produção, pegar do req.ip
-    const userAgent = 'Server'; // Em produção, pegar do req.headers['user-agent']
+    const ip = '127.0.0.1';
+    const userAgent = 'Server';
     
     db.run(
         `INSERT INTO activities 
@@ -826,3 +821,4 @@ if (process.env.NODE_ENV === 'production') {
 
 // Servir arquivos estáticos
 app.use(express.static(path.join(__dirname, '../public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
