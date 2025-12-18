@@ -15,22 +15,23 @@
         }
 
         :root {
-            --primary-color: #8DA399; /* Verde Sálvia */
-            --secondary-color: #4A5D23; /* Verde Oliva Escuro */
-            --accent-color: #7A8F7A; /* Verde Sálvia mais escuro */
-            --success-color: #8DA399; /* Verde Sálvia */
-            --warning-color: #D4A574; /* Tom terroso */
-            --danger-color: #B76E79; /* Tom rosado terroso */
-            --dark-color: #4A5D23; /* Verde Oliva Escuro */
-            --light-dark: #5A6D33; /* Verde Oliva mais claro */
-            --text-color: #4A5D23; /* Verde Oliva Escuro */
-            --light-text: #6B7D44; /* Verde mais claro */
-            --lighter-text: #8A9A6B; /* Verde ainda mais claro */
-            --white: #FAFAF9; /* Branco Off-White */
-            --light-bg: #F5F5F0; /* Beige/Areia */
-            --border-color: #D8D8C9; /* Borda suave */
-            --shadow: 0 4px 12px rgba(77, 93, 35, 0.08);
-            --shadow-lg: 0 8px 24px rgba(77, 93, 35, 0.12);
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --accent-color: #333333;
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --danger-color: #F44336;
+            --dark-color: #000000;
+            --light-dark: #111111;
+            --text-color: #000000;
+            --light-text: #666666;
+            --lighter-text: #888888;
+            --white: #ffffff;
+            --light-bg: #f5f5f5;
+            --beige-bg: #F5F5DC;
+            --border-color: #dddddd;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
             --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             --border-radius: 12px;
             --border-radius-sm: 8px;
@@ -52,8 +53,8 @@
         /* SIDEBAR */
         .sidebar {
             width: 260px;
-            background: linear-gradient(180deg, var(--dark-color) 0%, var(--primary-color) 100%);
-            color: var(--white);
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
             padding: 25px 0;
             display: flex;
             flex-direction: column;
@@ -64,7 +65,7 @@
 
         .sidebar-header {
             padding: 0 25px 30px;
-            border-bottom: 1px solid rgba(250, 250, 249, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo {
@@ -76,21 +77,21 @@
 
         .logo i {
             font-size: 1.8rem;
-            color: var(--white);
+            color: var(--secondary-color);
         }
 
         .logo h1 {
             font-size: 1.5rem;
             font-weight: 700;
             letter-spacing: -0.5px;
-            color: var(--white);
+            color: var(--secondary-color);
         }
 
         .logo-subtitle {
             font-size: 0.85rem;
-            opacity: 0.9;
+            opacity: 0.8;
             padding-left: 42px;
-            color: var(--white);
+            color: var(--secondary-color);
         }
 
         .sidebar-nav {
@@ -106,17 +107,17 @@
             cursor: pointer;
             transition: var(--transition);
             border-left: 4px solid transparent;
-            color: var(--white);
+            color: var(--secondary-color);
         }
 
         .nav-item:hover {
-            background-color: rgba(250, 250, 249, 0.1);
-            border-left-color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--secondary-color);
         }
 
         .nav-item.active {
-            background-color: rgba(250, 250, 249, 0.15);
-            border-left-color: var(--white);
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left-color: var(--secondary-color);
         }
 
         .nav-item i {
@@ -131,7 +132,7 @@
 
         .sidebar-footer {
             padding: 20px 25px 0;
-            border-top: 1px solid rgba(250, 250, 249, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .user-info {
@@ -145,7 +146,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: var(--white);
+            background-color: var(--secondary-color);
             color: var(--dark-color);
             display: flex;
             align-items: center;
@@ -163,20 +164,20 @@
         .user-details h4 {
             font-size: 1rem;
             margin-bottom: 3px;
-            color: var(--white);
+            color: var(--secondary-color);
         }
 
         .user-details p {
             font-size: 0.85rem;
-            opacity: 0.9;
-            color: var(--white);
+            opacity: 0.8;
+            color: var(--secondary-color);
         }
 
         .logout-btn {
             width: 100%;
-            background-color: rgba(250, 250, 249, 0.1);
-            color: var(--white);
-            border: 1px solid rgba(250, 250, 249, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 12px;
             border-radius: var(--border-radius-sm);
             cursor: pointer;
@@ -189,7 +190,7 @@
         }
 
         .logout-btn:hover {
-            background-color: rgba(250, 250, 249, 0.2);
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         /* MAIN CONTENT */
@@ -232,7 +233,7 @@
             align-items: center;
             gap: 8px;
             background-color: var(--primary-color);
-            color: var(--white);
+            color: var(--secondary-color);
             padding: 12px 24px;
             border-radius: var(--border-radius-sm);
             font-weight: 600;
@@ -251,35 +252,39 @@
 
         .btn-success {
             background-color: var(--success-color);
+            color: white;
         }
 
         .btn-success:hover {
-            background-color: var(--dark-color);
+            background-color: #45a049;
         }
 
         .btn-warning {
             background-color: var(--warning-color);
+            color: white;
         }
 
         .btn-warning:hover {
-            background-color: #C4955A;
+            background-color: #e68a00;
         }
 
         .btn-danger {
             background-color: var(--danger-color);
+            color: white;
         }
 
         .btn-danger:hover {
-            background-color: #A65D6A;
+            background-color: #d32f2f;
         }
 
         .btn-secondary {
-            background-color: var(--secondary-color);
-            color: var(--white);
+            background-color: var(--beige-bg);
+            color: var(--dark-color);
+            border: 1px solid var(--border-color);
         }
 
         .btn-secondary:hover {
-            background-color: var(--dark-color);
+            background-color: #e8e8d0;
         }
 
         /* DASHBOARD */
@@ -317,7 +322,7 @@
         }
 
         .stat-card.purple {
-            border-top-color: var(--accent-color);
+            border-top-color: #9b59b6;
         }
 
         .stat-header {
@@ -343,7 +348,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            color: var(--white);
+            color: var(--secondary-color);
         }
 
         .stat-icon.blue {
@@ -427,7 +432,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            color: var(--white);
+            color: var(--secondary-color);
         }
 
         .activity-icon.blue {
@@ -515,7 +520,7 @@
         .search-box input:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(141, 163, 153, 0.1);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
         }
 
         .search-box i {
@@ -545,11 +550,11 @@
         }
 
         .patient-item:hover {
-            background-color: rgba(141, 163, 153, 0.05);
+            background-color: rgba(0, 0, 0, 0.05);
         }
 
         .patient-item.active {
-            background-color: rgba(141, 163, 153, 0.1);
+            background-color: rgba(0, 0, 0, 0.1);
             border-left: 4px solid var(--primary-color);
         }
 
@@ -557,8 +562,8 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-            color: var(--white);
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -612,12 +617,12 @@
         }
 
         .action-btn:hover {
-            background-color: rgba(74, 93, 35, 0.05);
+            background-color: rgba(0, 0, 0, 0.05);
             color: var(--dark-color);
         }
 
         .action-btn.delete:hover {
-            background-color: rgba(183, 110, 121, 0.1);
+            background-color: rgba(244, 67, 54, 0.1);
             color: var(--danger-color);
         }
 
@@ -630,12 +635,12 @@
         }
 
         .status-active {
-            background-color: rgba(141, 163, 153, 0.15);
+            background-color: rgba(76, 175, 80, 0.15);
             color: var(--success-color);
         }
 
         .status-inactive {
-            background-color: rgba(183, 110, 121, 0.15);
+            background-color: rgba(244, 67, 54, 0.15);
             color: var(--danger-color);
         }
 
@@ -694,8 +699,8 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-            color: var(--white);
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -811,7 +816,7 @@
             right: 10px;
             border-radius: var(--border-radius-sm);
             padding: 12px 15px;
-            color: var(--white);
+            color: var(--secondary-color);
             font-size: 0.9rem;
             box-shadow: var(--shadow);
             z-index: 2;
@@ -825,19 +830,19 @@
         }
 
         .appointment.blue {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            background-color: var(--primary-color);
         }
 
         .appointment.green {
-            background: linear-gradient(135deg, var(--success-color) 0%, #7A8F7A 100%);
+            background-color: var(--success-color);
         }
 
         .appointment.orange {
-            background: linear-gradient(135deg, var(--warning-color) 0%, #C4955A 100%);
+            background-color: var(--warning-color);
         }
 
         .appointment.red {
-            background: linear-gradient(135deg, var(--danger-color) 0%, #A65D6A 100%);
+            background-color: var(--danger-color);
         }
 
         .appointment-header {
@@ -887,8 +892,8 @@
             border-radius: var(--border-radius);
             text-align: center;
             transition: var(--transition);
-            background-color: rgba(141, 163, 153, 0.1);
-            border: 1px solid rgba(141, 163, 153, 0.2);
+            background-color: var(--beige-bg);
+            border: 1px solid var(--border-color);
         }
 
         .summary-card:hover {
@@ -935,7 +940,7 @@
         }
 
         .report-item:hover {
-            background-color: rgba(141, 163, 153, 0.05);
+            background-color: rgba(0, 0, 0, 0.05);
         }
 
         .report-header {
@@ -994,7 +999,7 @@
         }
 
         .folder-item {
-            background-color: var(--light-bg);
+            background-color: var(--beige-bg);
             border-radius: var(--border-radius-sm);
             padding: 20px;
             cursor: pointer;
@@ -1004,7 +1009,7 @@
         }
 
         .folder-item:hover {
-            background-color: rgba(141, 163, 153, 0.05);
+            background-color: rgba(0, 0, 0, 0.05);
             border-color: var(--primary-color);
             transform: translateY(-3px);
         }
@@ -1042,7 +1047,7 @@
         }
 
         .document-item {
-            background-color: var(--light-bg);
+            background-color: var(--beige-bg);
             border-radius: var(--border-radius-sm);
             padding: 20px;
             cursor: pointer;
@@ -1052,7 +1057,7 @@
         }
 
         .document-item:hover {
-            background-color: rgba(141, 163, 153, 0.05);
+            background-color: rgba(0, 0, 0, 0.05);
             transform: translateY(-3px);
         }
 
@@ -1073,67 +1078,6 @@
             color: var(--light-text);
         }
 
-        /* PONTUÁRIOS */
-        .prescriptions-container {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 25px;
-        }
-
-        .prescription-item {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-            transition: var(--transition);
-            background-color: var(--white);
-            border-radius: var(--border-radius-sm);
-            margin-bottom: 15px;
-        }
-
-        .prescription-item:hover {
-            background-color: rgba(141, 163, 153, 0.05);
-        }
-
-        .prescription-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .prescription-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--dark-color);
-        }
-
-        .prescription-date {
-            font-size: 0.9rem;
-            color: var(--light-text);
-        }
-
-        .prescription-content {
-            color: var(--text-color);
-            line-height: 1.7;
-            margin-bottom: 15px;
-        }
-
-        .prescription-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .prescription-author {
-            font-size: 0.9rem;
-            color: var(--light-text);
-        }
-
-        .prescription-actions {
-            display: flex;
-            gap: 10px;
-        }
-
         /* CONFIGURAÇÕES */
         .settings-container {
             background-color: var(--white);
@@ -1149,7 +1093,7 @@
         }
 
         .setting-card {
-            background-color: var(--light-bg);
+            background-color: var(--beige-bg);
             border-radius: var(--border-radius-sm);
             padding: 25px;
         }
@@ -1164,41 +1108,6 @@
             gap: 10px;
         }
 
-        .theme-options {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .theme-option {
-            flex: 1;
-            padding: 15px;
-            border-radius: var(--border-radius-sm);
-            cursor: pointer;
-            text-align: center;
-            border: 2px solid transparent;
-            transition: var(--transition);
-        }
-
-        .theme-option:hover {
-            background-color: rgba(74, 93, 35, 0.05);
-        }
-
-        .theme-option.active {
-            border-color: var(--primary-color);
-            background-color: rgba(141, 163, 153, 0.05);
-        }
-
-        .theme-light {
-            background: linear-gradient(135deg, var(--white) 0%, var(--light-bg) 100%);
-            color: var(--dark-color);
-        }
-
-        .theme-dark {
-            background: linear-gradient(135deg, var(--dark-color) 0%, var(--secondary-color) 100%);
-            color: var(--white);
-        }
-
         /* MODAIS */
         .modal-overlay {
             position: fixed;
@@ -1206,7 +1115,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(74, 93, 35, 0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1229,7 +1138,7 @@
             max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(74, 93, 35, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             transform: translateY(20px);
             transition: var(--transition);
         }
@@ -1316,7 +1225,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(141, 163, 153, 0.1);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
         }
 
         textarea.form-control {
@@ -1366,7 +1275,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            color: var(--white);
+            color: var(--secondary-color);
             flex-shrink: 0;
         }
 
@@ -1436,14 +1345,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--dark-color) 0%, var(--primary-color) 100%);
+            background-color: var(--primary-color);
             padding: 20px;
         }
 
         .login-container {
             background-color: var(--white);
             border-radius: var(--border-radius);
-            box-shadow: 0 20px 40px rgba(74, 93, 35, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 450px;
             overflow: hidden;
@@ -1456,24 +1365,12 @@
         }
 
         .login-header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%);
-            color: var(--white);
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
             padding: 40px 30px;
             text-align: center;
             position: relative;
             overflow: hidden;
-        }
-
-        .login-header:before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(250, 250, 249, 0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.3;
         }
 
         .login-header h2 {
@@ -1496,6 +1393,12 @@
             padding: 15px;
             margin-top: 10px;
             font-size: 1rem;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .login-btn:hover {
+            background-color: #333;
         }
 
         /* ANIMAÇÕES E EFEITOS */
@@ -1553,7 +1456,7 @@
 
             .nav-item:hover, .nav-item.active {
                 border-left: none;
-                border-bottom-color: var(--white);
+                border-bottom-color: var(--secondary-color);
             }
 
             .sidebar-footer {
@@ -1661,16 +1564,16 @@
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(250, 250, 249, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top-color: var(--white);
+            border-top-color: var(--secondary-color);
             animation: spin 1s ease-in-out infinite;
         }
 
         .spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid rgba(74, 93, 35, 0.1);
+            border: 4px solid rgba(0, 0, 0, 0.1);
             border-radius: 50%;
             border-top-color: var(--primary-color);
             animation: spin 1s ease-in-out infinite;
@@ -1734,7 +1637,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            color: var(--white);
+            color: var(--secondary-color);
         }
 
         .file-icon.pdf {
@@ -1742,7 +1645,7 @@
         }
 
         .file-icon.image {
-            background-color: var(--accent-color);
+            background-color: #3498db;
         }
 
         .file-icon.document {
@@ -1750,7 +1653,7 @@
         }
 
         .file-icon.other {
-            background-color: var(--primary-color);
+            background-color: #9b59b6;
         }
 
         .file-info {
@@ -1840,6 +1743,20 @@
         .cpf-error.show {
             display: block;
         }
+
+        /* PRONTUÁRIOS */
+        .prontuarios-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .prontuario-detail-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+        }
     </style>
 </head>
 <body>
@@ -1865,10 +1782,6 @@
                 <button type="submit" class="btn login-btn" id="loginButton">
                     <span id="loginBtnText">Acessar Sistema</span>
                 </button>
-                <div style="margin-top: 15px; text-align: center; font-size: 0.9rem; color: var(--light-text);">
-                    <p>Usuário: <strong>Andrea</strong></p>
-                    <p>Senha: <strong>Andrea1103#</strong></p>
-                </div>
             </form>
         </div>
     </div>
@@ -1906,10 +1819,6 @@
                     <i class="fas fa-file-alt"></i>
                     <span>Relatórios</span>
                 </div>
-                <div class="nav-item" data-page="prescriptions">
-                    <i class="fas fa-prescription"></i>
-                    <span>Pontuários</span>
-                </div>
                 <div class="nav-item" data-page="files">
                     <i class="fas fa-file-medical"></i>
                     <span>Fichas</span>
@@ -1917,6 +1826,10 @@
                 <div class="nav-item" data-page="documents">
                     <i class="fas fa-folder"></i>
                     <span>Documentos</span>
+                </div>
+                <div class="nav-item" data-page="prontuarios">
+                    <i class="fas fa-notes-medical"></i>
+                    <span>Prontuários</span>
                 </div>
                 <div class="nav-item" data-page="settings">
                     <i class="fas fa-cog"></i>
@@ -1954,9 +1867,6 @@
                     <div class="header-actions">
                         <button class="btn" id="quickAppointment">
                             <i class="fas fa-plus"></i> Nova Consulta
-                        </button>
-                        <button class="btn btn-secondary" id="quickPatient">
-                            <i class="fas fa-user-plus"></i> Novo Paciente
                         </button>
                     </div>
                 </div>
@@ -2001,10 +1911,10 @@
                         </div>
                     </div>
                     
-                    <div class="stat-card purple">
+                    <div class="stat-card red">
                         <div class="stat-header">
                             <div class="stat-title">Relatórios Pendentes</div>
-                            <div class="stat-icon" style="background-color: var(--accent-color);">
+                            <div class="stat-icon red">
                                 <i class="fas fa-file-medical-alt"></i>
                             </div>
                         </div>
@@ -2222,9 +2132,6 @@
                         <button class="btn" id="newPaymentBtn">
                             <i class="fas fa-plus"></i> Novo Pagamento
                         </button>
-                        <button class="btn btn-secondary" id="viewAllPaymentsBtn">
-                            <i class="fas fa-list"></i> Ver Todos Pagamentos
-                        </button>
                     </div>
                 </div>
                 
@@ -2295,13 +2202,6 @@
                                 <button type="submit" class="btn">Registrar Pagamento</button>
                             </form>
                         </div>
-                        
-                        <div class="all-payments-list" id="allPaymentsList" style="margin-top: 30px; display: none;">
-                            <h3 class="section-title">Todos os Pagamentos</h3>
-                            <div class="activity-list" id="paymentsActivityList">
-                                <!-- Lista de pagamentos será carregada dinamicamente -->
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -2329,36 +2229,6 @@
                     
                     <div class="reports-list" id="reportsList">
                         <!-- Relatórios serão carregados por JavaScript -->
-                    </div>
-                </div>
-            </div>
-            
-            <!-- PONTUÁRIOS -->
-            <div id="prescriptionsPage" class="content-page">
-                <div class="page-header">
-                    <div class="page-title">
-                        <h2><i class="fas fa-prescription"></i> Pontuários</h2>
-                        <p>Registros detalhados de sessões e evoluções</p>
-                    </div>
-                    <div class="header-actions">
-                        <button class="btn" id="newPrescriptionBtn">
-                            <i class="fas fa-plus"></i> Novo Pontuário
-                        </button>
-                        <button class="btn btn-secondary" id="filterPrescriptionsBtn">
-                            <i class="fas fa-filter"></i> Filtrar
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="prescriptions-container">
-                    <div class="empty-state" id="emptyPrescriptions">
-                        <i class="fas fa-prescription"></i>
-                        <h4>Nenhum pontuário criado</h4>
-                        <p>Comece criando seu primeiro pontuário clínico</p>
-                    </div>
-                    
-                    <div class="prescriptions-list" id="prescriptionsList">
-                        <!-- Pontuários serão carregados por JavaScript -->
                     </div>
                 </div>
             </div>
@@ -2432,6 +2302,98 @@
                     </div>
                 </div>
             </div>
+
+            <!-- PRONTUÁRIOS -->
+            <div id="prontuariosPage" class="content-page">
+                <div class="page-header">
+                    <div class="page-title">
+                        <h2><i class="fas fa-notes-medical"></i> Prontuários</h2>
+                        <p>Registros completos de saúde dos pacientes</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn" id="newProntuarioBtn">
+                            <i class="fas fa-plus"></i> Novo Prontuário
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="prontuarios-container">
+                    <div class="patients-list-container">
+                        <div class="patients-list-header">
+                            <h3>Lista de Prontuários</h3>
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="prontuarioSearch" placeholder="Buscar prontuário...">
+                            </div>
+                        </div>
+                        <div class="empty-state" id="emptyProntuariosList">
+                            <i class="fas fa-notes-medical"></i>
+                            <h4>Nenhum prontuário cadastrado</h4>
+                            <p>Comece cadastrando seu primeiro prontuário</p>
+                            <button class="btn" style="margin-top: 20px;" id="emptyNewProntuarioBtn">
+                                <i class="fas fa-plus"></i> Cadastrar Primeiro Prontuário
+                            </button>
+                        </div>
+                        <div class="patients-list" id="prontuariosList">
+                            <!-- Lista de prontuários será carregada por JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="prontuario-detail-container">
+                        <div class="empty-state" id="emptyProntuarioDetail">
+                            <i class="fas fa-notes-medical"></i>
+                            <h4>Selecione um prontuário</h4>
+                            <p>Escolha um prontuário da lista para visualizar detalhes</p>
+                        </div>
+                        
+                        <div id="prontuarioDetail" class="hidden">
+                            <div class="patient-detail-header">
+                                <div>
+                                    <div class="patient-detail-avatar" id="prontuarioDetailAvatar">P</div>
+                                    <h3 id="prontuarioDetailName">Nome do Paciente</h3>
+                                    <p id="prontuarioDetailInfo">Informações básicas</p>
+                                </div>
+                                <div class="patient-actions">
+                                    <button class="action-btn" id="editProntuarioBtn" title="Editar prontuário">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn delete" id="deleteProntuarioBtn" title="Excluir prontuário">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="patient-tabs">
+                                <div class="patient-tab active" data-tab="identificacao">Identificação</div>
+                                <div class="patient-tab" data-tab="historico">Histórico de Saúde</div>
+                                <div class="patient-tab" data-tab="tratamentos">Tratamentos</div>
+                                <div class="patient-tab" data-tab="anotacoes">Anotações</div>
+                                <div class="patient-tab" data-tab="documentos">Documentos</div>
+                            </div>
+                            
+                            <div class="tab-content active" id="identificacaoTab">
+                                <!-- Conteúdo de identificação -->
+                            </div>
+                            
+                            <div class="tab-content" id="historicoTab">
+                                <!-- Conteúdo de histórico de saúde -->
+                            </div>
+                            
+                            <div class="tab-content" id="tratamentosTab">
+                                <!-- Conteúdo de tratamentos -->
+                            </div>
+                            
+                            <div class="tab-content" id="anotacoesTab">
+                                <!-- Conteúdo de anotações -->
+                            </div>
+                            
+                            <div class="tab-content" id="documentosTab">
+                                <!-- Conteúdo de documentos -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <!-- CONFIGURAÇÕES -->
             <div id="settingsPage" class="content-page">
@@ -2462,23 +2424,6 @@
                             <button class="btn btn-secondary" style="margin-top: 20px; width: 100%;" id="changePhotoBtn">
                                 <i class="fas fa-camera"></i> Alterar Foto
                             </button>
-                        </div>
-                        
-                        <div class="setting-card">
-                            <h3 class="setting-title">
-                                <i class="fas fa-palette"></i> Tema do Sistema
-                            </h3>
-                            <p>Escolha o tema visual do sistema</p>
-                            <div class="theme-options">
-                                <div class="theme-option theme-light active" data-theme="light">
-                                    <i class="fas fa-sun"></i>
-                                    <p>Claro</p>
-                                </div>
-                                <div class="theme-option theme-dark" data-theme="dark">
-                                    <i class="fas fa-moon"></i>
-                                    <p>Escuro</p>
-                                </div>
-                            </div>
                         </div>
                         
                         <div class="setting-card">
@@ -2697,84 +2642,46 @@
         </div>
     </div>
 
-    <!-- MODAL PARA NOVO PONTUÁRIO -->
-    <div class="modal-overlay" id="prescriptionModal">
+    <!-- MODAL PARA NOVO PRONTUÁRIO -->
+    <div class="modal-overlay" id="prontuarioModal">
         <div class="modal">
             <div class="modal-header">
-                <h3>Novo Pontuário</h3>
-                <button class="close-modal" id="closePrescriptionModal">&times;</button>
+                <h3 id="prontuarioModalTitle">Novo Prontuário</h3>
+                <button class="close-modal" id="closeProntuarioModal">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="prescriptionForm">
+                <form id="prontuarioForm">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="prescriptionPatient">Paciente</label>
-                            <select id="prescriptionPatient" class="form-control" required>
+                            <label for="prontuarioPaciente">Paciente</label>
+                            <select id="prontuarioPaciente" class="form-control" required>
                                 <option value="">Selecione um paciente</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="prescriptionDate">Data do Pontuário</label>
-                            <input type="date" id="prescriptionDate" class="form-control" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="prescriptionType">Tipo de Pontuário</label>
-                            <select id="prescriptionType" class="form-control" required>
-                                <option value="initial">Avaliação Inicial</option>
-                                <option value="session">Registro de Sessão</option>
-                                <option value="evolution">Evolução Clínica</option>
-                                <option value="discharge">Alta</option>
-                                <option value="other">Outro</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="prescriptionSessionNumber">Número da Sessão (se aplicável)</label>
-                            <input type="number" id="prescriptionSessionNumber" class="form-control" min="1" placeholder="Ex: 5">
+                            <label for="prontuarioData">Data de Abertura</label>
+                            <input type="date" id="prontuarioData" class="form-control" required>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="prescriptionTitle">Título</label>
-                        <input type="text" id="prescriptionTitle" class="form-control" required placeholder="Ex: Avaliação Inicial - Paciente X">
+                        <label for="prontuarioIdentificacao">Identificação Completa</label>
+                        <textarea id="prontuarioIdentificacao" class="form-control" rows="4" placeholder="Nome completo, data de nascimento, nome da mãe, endereço, etc." required></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label for="prescriptionContent">Conteúdo Detalhado</label>
-                        <textarea id="prescriptionContent" class="form-control" rows="10" required placeholder="Descreva em detalhes a avaliação, observações comportamentais, anotações clínicas, intervenções aplicadas, resultados observados e planos para próximas sessões..."></textarea>
+                        <label for="prontuarioHistorico">Histórico de Saúde</label>
+                        <textarea id="prontuarioHistorico" class="form-control" rows="6" placeholder="Anamnese, exames físicos, diagnósticos, resultados de exames, laudos..." required></textarea>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="prescriptionMood">Estado Emocional</label>
-                            <select id="prescriptionMood" class="form-control">
-                                <option value="">Não informado</option>
-                                <option value="calm">Calmo</option>
-                                <option value="anxious">Ansioso</option>
-                                <option value="depressed">Deprimido</option>
-                                <option value="irritable">Irritável</option>
-                                <option value="euphoric">Eufórico</option>
-                                <option value="neutral">Neutro</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="prescriptionProgress">Progresso</label>
-                            <select id="prescriptionProgress" class="form-control">
-                                <option value="">Não informado</option>
-                                <option value="excellent">Excelente</option>
-                                <option value="good">Bom</option>
-                                <option value="regular">Regular</option>
-                                <option value="poor">Ruim</option>
-                                <option value="critical">Crítico</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label for="prontuarioTratamentos">Tratamentos Realizados</label>
+                        <textarea id="prontuarioTratamentos" class="form-control" rows="6" placeholder="Medicamentos prescritos, procedimentos, cirurgias..." required></textarea>
                     </div>
                     
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="cancelPrescription">Cancelar</button>
-                        <button type="submit" class="btn">Salvar Pontuário</button>
+                        <button type="button" class="btn btn-secondary" id="cancelProntuario">Cancelar</button>
+                        <button type="submit" class="btn" id="prontuarioSubmitBtn">Salvar Prontuário</button>
                     </div>
                 </form>
             </div>
@@ -2843,21 +2750,6 @@
             <div class="modal-body">
                 <div class="report-detail" id="reportDetail">
                     <!-- Conteúdo do relatório será carregado aqui -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL DE VISUALIZAR PONTUÁRIO -->
-    <div class="modal-overlay" id="viewPrescriptionModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 id="viewPrescriptionTitle">Pontuário Clínico</h3>
-                <button class="close-modal" id="closeViewPrescriptionModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="prescription-detail" id="prescriptionDetail">
-                    <!-- Conteúdo do pontuário será carregado aqui -->
                 </div>
             </div>
         </div>
@@ -3014,7 +2906,7 @@
         class Database {
             constructor() {
                 this.dbName = 'PsicoGestaoDB';
-                this.dbVersion = 4; // Aumentado para incluir pontuários
+                this.dbVersion = 4;
                 this.db = null;
                 this.initialize();
             }
@@ -3055,12 +2947,6 @@
                             reportsStore.createIndex('date', 'date', { unique: false });
                         }
                         
-                        if (!db.objectStoreNames.contains('prescriptions')) {
-                            const prescriptionsStore = db.createObjectStore('prescriptions', { keyPath: 'id', autoIncrement: true });
-                            prescriptionsStore.createIndex('patientId', 'patientId', { unique: false });
-                            prescriptionsStore.createIndex('date', 'date', { unique: false });
-                        }
-                        
                         if (!db.objectStoreNames.contains('payments')) {
                             const paymentsStore = db.createObjectStore('payments', { keyPath: 'id', autoIncrement: true });
                             paymentsStore.createIndex('patientId', 'patientId', { unique: false });
@@ -3095,6 +2981,12 @@
                         
                         if (!db.objectStoreNames.contains('settings')) {
                             const settingsStore = db.createObjectStore('settings', { keyPath: 'key' });
+                        }
+                        
+                        if (!db.objectStoreNames.contains('prontuarios')) {
+                            const prontuariosStore = db.createObjectStore('prontuarios', { keyPath: 'id', autoIncrement: true });
+                            prontuariosStore.createIndex('pacienteId', 'pacienteId', { unique: false });
+                            prontuariosStore.createIndex('dataAbertura', 'dataAbertura', { unique: false });
                         }
                         
                         console.log('Estrutura do banco de dados criada');
@@ -3202,18 +3094,6 @@
                 return this.save('reports', report);
             }
             
-            async getPrescriptions() {
-                return this.getAll('prescriptions');
-            }
-            
-            async savePrescription(prescription) {
-                if (!prescription.createdAt) {
-                    prescription.createdAt = new Date().toISOString();
-                }
-                prescription.updatedAt = new Date().toISOString();
-                return this.save('prescriptions', prescription);
-            }
-            
             async getPayments() {
                 return this.getAll('payments');
             }
@@ -3306,6 +3186,22 @@
                 return this.delete('clinicalNotes', id);
             }
             
+            async getProntuarios() {
+                return this.getAll('prontuarios');
+            }
+            
+            async saveProntuario(prontuario) {
+                if (!prontuario.createdAt) {
+                    prontuario.createdAt = new Date().toISOString();
+                }
+                prontuario.updatedAt = new Date().toISOString();
+                return this.save('prontuarios', prontuario);
+            }
+            
+            async deleteProntuario(id) {
+                return this.delete('prontuarios', id);
+            }
+            
             async getSetting(key, defaultValue = null) {
                 const setting = await this.get('settings', key);
                 return setting ? setting.value : defaultValue;
@@ -3329,7 +3225,6 @@
                     patients: await this.getPatients(),
                     appointments: await this.getAppointments(),
                     reports: await this.getReports(),
-                    prescriptions: await this.getPrescriptions(),
                     payments: await this.getPayments(),
                     activities: await this.getActivities(),
                     folders: await this.getFolders(),
@@ -3337,6 +3232,7 @@
                     files: await this.getFiles(),
                     clinicalNotes: await this.getAll('clinicalNotes'),
                     settings: await this.getAll('settings'),
+                    prontuarios: await this.getProntuarios(),
                     exportDate: new Date().toISOString(),
                     version: '1.0'
                 };
@@ -3349,9 +3245,9 @@
                 
                 // Limpar dados existentes
                 const stores = [
-                    'patients', 'appointments', 'reports', 'prescriptions', 'payments', 
+                    'patients', 'appointments', 'reports', 'payments', 
                     'activities', 'folders', 'documents', 'files', 
-                    'clinicalNotes', 'settings'
+                    'clinicalNotes', 'settings', 'prontuarios'
                 ];
                 
                 for (const storeName of stores) {
@@ -3399,17 +3295,14 @@
         let currentUser = null;
         let selectedPatientId = null;
         let selectedAppointmentId = null;
+        let selectedProntuarioId = null;
         let currentDate = new Date();
         let editingPatientId = null;
         let editingNoteId = null;
+        let editingProntuarioId = null;
         let currentFolderId = null;
         let currentFolderType = null;
         let isLoggedIn = false;
-        
-        // Sistema de sessão
-        const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutos de inatividade
-        const SESSION_EXPIRY = 8 * 60 * 60 * 1000; // 8 horas máximo
-        let sessionTimer;
         
         // ============================================
         // FUNÇÕES UTILITÁRIAS
@@ -3559,101 +3452,6 @@
         }
         
         // ============================================
-        // SISTEMA DE SESSÃO SEGURO
-        // ============================================
-        
-        function startSession() {
-            const sessionStart = Date.now();
-            sessionStorage.setItem('psicogestao_session_start', sessionStart.toString());
-            sessionStorage.setItem('psicogestao_last_activity', sessionStart.toString());
-            
-            // Iniciar timer para verificar inatividade
-            resetSessionTimer();
-            
-            // Configurar eventos para detectar atividade do usuário
-            document.addEventListener('mousemove', resetSessionTimer);
-            document.addEventListener('keypress', resetSessionTimer);
-            document.addEventListener('click', resetSessionTimer);
-        }
-        
-        function resetSessionTimer() {
-            sessionStorage.setItem('psicogestao_last_activity', Date.now().toString());
-            
-            if (sessionTimer) {
-                clearTimeout(sessionTimer);
-            }
-            
-            // Verificar se a sessão expirou por tempo máximo
-            const sessionStart = parseInt(sessionStorage.getItem('psicogestao_session_start') || '0');
-            if (Date.now() - sessionStart > SESSION_EXPIRY) {
-                sessionExpired();
-                return;
-            }
-            
-            // Configurar timer para inatividade
-            sessionTimer = setTimeout(() => {
-                sessionExpired();
-            }, SESSION_TIMEOUT);
-        }
-        
-        function sessionExpired() {
-            if (currentUser) {
-                showNotification('Sessão expirada por inatividade. Por favor, faça login novamente.', 'warning');
-                logout();
-            }
-        }
-        
-        function checkSession() {
-            const sessionStart = parseInt(sessionStorage.getItem('psicogestao_session_start') || '0');
-            const lastActivity = parseInt(sessionStorage.getItem('psicogestao_last_activity') || '0');
-            
-            // Verificar se a sessão existe e é válida
-            if (!sessionStart || !lastActivity) {
-                return false;
-            }
-            
-            // Verificar se a sessão expirou
-            const now = Date.now();
-            if (now - sessionStart > SESSION_EXPIRY) {
-                return false;
-            }
-            
-            if (now - lastActivity > SESSION_TIMEOUT) {
-                return false;
-            }
-            
-            return true;
-        }
-        
-        function logout() {
-            currentUser = null;
-            sessionStorage.removeItem('psicogestao_session_start');
-            sessionStorage.removeItem('psicogestao_last_activity');
-            sessionStorage.removeItem('psicogestao_logged_in');
-            sessionStorage.removeItem('psicogestao_user');
-            
-            if (sessionTimer) {
-                clearTimeout(sessionTimer);
-            }
-            
-            // Remover eventos
-            document.removeEventListener('mousemove', resetSessionTimer);
-            document.removeEventListener('keypress', resetSessionTimer);
-            document.removeEventListener('click', resetSessionTimer);
-            
-            // Resetar campos de login
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            
-            // Mostrar tela de login
-            document.getElementById('mainSystem').classList.add('hidden');
-            document.getElementById('loginScreen').classList.remove('hidden');
-            document.getElementById('loginScreen').classList.add('slide-down');
-            
-            showNotification('Logout realizado com sucesso.', 'success');
-        }
-        
-        // ============================================
         // INICIALIZAÇÃO
         // ============================================
         
@@ -3662,36 +3460,13 @@
                 db = new Database();
                 await db.initialize();
                 
-                // Verificar se há sessão válida
-                const hasValidSession = checkSession();
-                const savedUser = sessionStorage.getItem('psicogestao_user');
-                
-                if (hasValidSession && savedUser) {
-                    currentUser = JSON.parse(savedUser);
-                    
-                    // Verificar credenciais
-                    if (currentUser.username === predefinedUser.username && currentUser.password === predefinedUser.password) {
-                        document.getElementById('userNameDisplay').textContent = currentUser.username;
-                        document.getElementById('loginScreen').classList.add('hidden');
-                        document.getElementById('mainSystem').classList.remove('hidden');
-                        
-                        // Iniciar sessão
-                        startSession();
-                        
-                        // Carregar dados iniciais
-                        await loadInitialData();
-                        
-                        // Carregar avatar do usuário
-                        await loadUserAvatar();
-                        
-                        return;
-                    }
-                }
-                
-                // Se não estiver logado, mostrar tela de login
+                // Sempre mostrar a tela de login inicialmente
                 document.getElementById('loginScreen').classList.remove('hidden');
                 document.getElementById('mainSystem').classList.add('hidden');
                 document.getElementById('username').focus();
+                
+                // Configurar evento de login
+                setupLogin();
                 
             } catch (error) {
                 console.error('Erro ao inicializar aplicação:', error);
@@ -3699,64 +3474,7 @@
             }
         }
         
-        async function loadInitialData() {
-            // Configurar data atual
-            const today = new Date().toISOString().split('T')[0];
-            
-            // Configurar data mínima para hoje nos formulários
-            document.querySelectorAll('input[type="date"]').forEach(input => {
-                if (input.id !== 'patientBirthDateInput' && input.id !== 'noteDate') {
-                    input.value = today;
-                    input.min = today;
-                }
-            });
-            
-            // Configurar hora atual
-            const now = new Date();
-            const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-            if (document.getElementById('appointmentTime')) {
-                document.getElementById('appointmentTime').value = currentTime;
-            }
-            
-            // Carregar tema salvo
-            await loadTheme();
-            
-            // Carregar dados do dashboard
-            await loadDashboard();
-            
-            // Configurar eventos
-            setupEventListeners();
-        }
-        
-        async function loadUserAvatar() {
-            try {
-                const avatarData = await db.getUserAvatar();
-                if (avatarData) {
-                    if (avatarData.startsWith('data:image')) {
-                        // Avatar é uma imagem base64
-                        document.getElementById('userAvatarImg').src = avatarData;
-                        document.getElementById('currentUserAvatarImg').src = avatarData;
-                        document.getElementById('userAvatarFallback').style.display = 'none';
-                        document.getElementById('currentUserAvatarFallback').style.display = 'none';
-                    } else {
-                        // Avatar é uma letra
-                        document.getElementById('userAvatarFallback').textContent = avatarData;
-                        document.getElementById('currentUserAvatarFallback').textContent = avatarData;
-                        document.getElementById('userAvatarFallback').style.display = 'flex';
-                        document.getElementById('currentUserAvatarFallback').style.display = 'flex';
-                    }
-                }
-            } catch (error) {
-                console.error('Erro ao carregar avatar:', error);
-            }
-        }
-        
-        // ============================================
-        // CONFIGURAÇÃO DE EVENTOS
-        // ============================================
-        
-        function setupEventListeners() {
-            // Login
+        function setupLogin() {
             const loginForm = document.getElementById('loginForm');
             if (loginForm) {
                 loginForm.addEventListener('submit', async function(e) {
@@ -3790,9 +3508,6 @@
                             // Salvar estado de login na sessionStorage
                             sessionStorage.setItem('psicogestao_logged_in', 'true');
                             sessionStorage.setItem('psicogestao_user', JSON.stringify(currentUser));
-                            
-                            // Iniciar sessão
-                            startSession();
                             
                             // Atualizar interface
                             document.getElementById('userNameDisplay').textContent = currentUser.username;
@@ -3832,7 +3547,67 @@
                     }
                 });
             }
+        }
+        
+        async function loadInitialData() {
+            // Configurar data atual
+            const today = new Date().toISOString().split('T')[0];
             
+            // Configurar data mínima para hoje nos formulários
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                if (input.id !== 'patientBirthDateInput' && input.id !== 'noteDate') {
+                    input.value = today;
+                    input.min = today;
+                }
+            });
+            
+            // Configurar hora atual
+            const now = new Date();
+            const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            if (document.getElementById('appointmentTime')) {
+                document.getElementById('appointmentTime').value = currentTime;
+            }
+            
+            // Configurar data atual para prontuário
+            if (document.getElementById('prontuarioData')) {
+                document.getElementById('prontuarioData').value = today;
+            }
+            
+            // Configurar eventos
+            setupEventListeners();
+            
+            // Carregar dados do dashboard
+            await loadDashboard();
+        }
+        
+        async function loadUserAvatar() {
+            try {
+                const avatarData = await db.getUserAvatar();
+                if (avatarData) {
+                    if (avatarData.startsWith('data:image')) {
+                        // Avatar é uma imagem base64
+                        document.getElementById('userAvatarImg').src = avatarData;
+                        document.getElementById('currentUserAvatarImg').src = avatarData;
+                        document.getElementById('userAvatarFallback').style.display = 'none';
+                        document.getElementById('currentUserAvatarFallback').style.display = 'none';
+                    } else {
+                        // Avatar é uma letra
+                        document.getElementById('userAvatarFallback').textContent = avatarData;
+                        document.getElementById('currentUserAvatarFallback').textContent = avatarData;
+                        document.getElementById('userAvatarFallback').style.display = 'flex';
+                        document.getElementById('currentUserAvatarFallback').style.display = 'flex';
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao carregar avatar:', error);
+            }
+        }
+        
+        // ============================================
+        // CONFIGURAÇÃO DE EVENTOS
+        // ============================================
+        
+        function setupEventListeners() {
             // Logout com confirmação
             const logoutBtn = document.getElementById('logoutBtn');
             if (logoutBtn) {
@@ -3868,17 +3643,14 @@
                         await loadAgenda();
                     } else if (pageId === 'financePage') {
                         await updateFinanceSummary();
-                        await loadAllPayments();
                     } else if (pageId === 'reportsPage') {
                         await loadReportsList();
-                    } else if (pageId === 'prescriptionsPage') {
-                        await loadPrescriptionsList();
                     } else if (pageId === 'filesPage') {
                         await loadFolders('files');
                     } else if (pageId === 'documentsPage') {
                         await loadFolders('documents');
-                    } else if (pageId === 'settingsPage') {
-                        // Configurações já carregadas
+                    } else if (pageId === 'prontuariosPage') {
+                        await loadProntuariosList();
                     }
                 });
             });
@@ -3886,7 +3658,6 @@
             // Novo paciente
             document.getElementById('newPatientBtn')?.addEventListener('click', () => openPatientModal());
             document.getElementById('emptyNewPatientBtn')?.addEventListener('click', () => openPatientModal());
-            document.getElementById('quickPatient')?.addEventListener('click', () => openPatientModal());
             
             // Nova consulta
             document.getElementById('newAppointmentBtn')?.addEventListener('click', () => openAppointmentModal());
@@ -3901,24 +3672,8 @@
                 showNotification('Preencha os dados do pagamento abaixo.', 'info');
             });
             
-            // Ver todos pagamentos
-            document.getElementById('viewAllPaymentsBtn')?.addEventListener('click', async () => {
-                const paymentsList = document.getElementById('allPaymentsList');
-                if (paymentsList.style.display === 'none') {
-                    paymentsList.style.display = 'block';
-                    await loadAllPayments();
-                    document.getElementById('viewAllPaymentsBtn').innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Pagamentos';
-                } else {
-                    paymentsList.style.display = 'none';
-                    document.getElementById('viewAllPaymentsBtn').innerHTML = '<i class="fas fa-list"></i> Ver Todos Pagamentos';
-                }
-            });
-            
             // Novo relatório
             document.getElementById('newReportBtn')?.addEventListener('click', () => openReportModal());
-            
-            // Novo pontuário
-            document.getElementById('newPrescriptionBtn')?.addEventListener('click', () => openPrescriptionModal());
             
             // Navegação da agenda
             document.getElementById('prevDay')?.addEventListener('click', () => {
@@ -3939,72 +3694,18 @@
                 loadAgenda();
             });
             
-            // Formulário de pagamento
-            const paymentForm = document.getElementById('paymentForm');
-            if (paymentForm) {
-                paymentForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    
-                    const patientId = parseInt(document.getElementById('paymentPatient').value);
-                    const date = document.getElementById('paymentDate').value;
-                    const amount = parseFloat(document.getElementById('paymentAmount').value);
-                    const type = document.getElementById('paymentType').value;
-                    const description = document.getElementById('paymentDescription').value;
-                    
-                    if (!patientId) {
-                        showNotification('Selecione um paciente.', 'error');
-                        return;
-                    }
-                    
-                    if (amount <= 0 || isNaN(amount)) {
-                        showNotification('Informe um valor válido.', 'error');
-                        return;
-                    }
-                    
-                    try {
-                        const patients = await db.getPatients();
-                        const patient = patients.find(p => p.id === patientId);
-                        
-                        if (patient) {
-                            const payment = {
-                                patientId: patient.id,
-                                patientName: `${patient.firstName} ${patient.lastName}`,
-                                date: date,
-                                amount: amount,
-                                type: type,
-                                description: description
-                            };
-                            
-                            await db.savePayment(payment);
-                            
-                            // Atualizar interface
-                            await updateFinanceSummary();
-                            await loadAllPayments();
-                            
-                            // Limpar formulário
-                            this.reset();
-                            document.getElementById('paymentDate').value = new Date().toISOString().split('T')[0];
-                            
-                            // Adicionar atividade
-                            await addActivity('payment', `Pagamento registrado: R$ ${amount.toFixed(2)}`, patient.firstName);
-                            
-                            showNotification(`Pagamento de R$ ${amount.toFixed(2)} registrado com sucesso!`, 'success');
-                        }
-                    } catch (error) {
-                        console.error('Erro ao salvar pagamento:', error);
-                        showNotification('Erro ao registrar pagamento.', 'error');
-                    }
-                });
-            }
+            // Novo prontuário
+            document.getElementById('newProntuarioBtn')?.addEventListener('click', () => openProntuarioModal());
+            document.getElementById('emptyNewProntuarioBtn')?.addEventListener('click', () => openProntuarioModal());
             
             // Configurar modais
             setupModalEvents();
             
-            // Configurar tema
-            setupThemeEvents();
-            
             // Configurar botões de arquivos e documentos
             setupFileAndDocumentEvents();
+            
+            // Configurar configurações
+            setupSettingsEvents();
         }
         
         function setupModalEvents() {
@@ -4037,8 +3738,9 @@
                 document.getElementById('reportModal').classList.remove('active');
             });
             
-            document.getElementById('cancelPrescription')?.addEventListener('click', () => {
-                document.getElementById('prescriptionModal').classList.remove('active');
+            document.getElementById('cancelProntuario')?.addEventListener('click', () => {
+                document.getElementById('prontuarioModal').classList.remove('active');
+                editingProntuarioId = null;
             });
             
             document.getElementById('cancelStatus')?.addEventListener('click', () => {
@@ -4293,65 +3995,148 @@
                 });
             }
             
-            // Formulário de pontuário
-            const prescriptionForm = document.getElementById('prescriptionForm');
-            if (prescriptionForm) {
-                prescriptionForm.addEventListener('submit', async function(e) {
+            // Atualizar lista de sessões quando selecionar paciente no relatório
+            document.getElementById('reportPatient')?.addEventListener('change', async function() {
+                await updateReportAppointmentOptions(parseInt(this.value));
+            });
+            
+            // Formulário de pagamento
+            const paymentForm = document.getElementById('paymentForm');
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     
-                    const patientId = parseInt(document.getElementById('prescriptionPatient').value);
-                    const date = document.getElementById('prescriptionDate').value;
-                    const type = document.getElementById('prescriptionType').value;
-                    const sessionNumber = document.getElementById('prescriptionSessionNumber').value;
-                    const title = document.getElementById('prescriptionTitle').value.trim();
-                    const content = document.getElementById('prescriptionContent').value.trim();
-                    const mood = document.getElementById('prescriptionMood').value;
-                    const progress = document.getElementById('prescriptionProgress').value;
+                    const patientId = parseInt(document.getElementById('paymentPatient').value);
+                    const date = document.getElementById('paymentDate').value;
+                    const amount = parseFloat(document.getElementById('paymentAmount').value);
+                    const type = document.getElementById('paymentType').value;
+                    const description = document.getElementById('paymentDescription').value;
+                    
+                    if (!patientId) {
+                        showNotification('Selecione um paciente.', 'error');
+                        return;
+                    }
+                    
+                    if (amount <= 0 || isNaN(amount)) {
+                        showNotification('Informe um valor válido.', 'error');
+                        return;
+                    }
                     
                     try {
                         const patients = await db.getPatients();
                         const patient = patients.find(p => p.id === patientId);
                         
                         if (patient) {
-                            const prescription = {
+                            const payment = {
                                 patientId: patient.id,
                                 patientName: `${patient.firstName} ${patient.lastName}`,
                                 date: date,
+                                amount: amount,
                                 type: type,
-                                sessionNumber: sessionNumber || null,
-                                title: title,
-                                content: content,
-                                mood: mood,
-                                progress: progress,
-                                author: currentUser.username
+                                description: description
                             };
                             
-                            await db.savePrescription(prescription);
+                            await db.savePayment(payment);
                             
                             // Atualizar interface
-                            await loadPrescriptionsList();
+                            await updateFinanceSummary();
                             
-                            // Fechar modal e limpar formulário
-                            document.getElementById('prescriptionModal').classList.remove('active');
-                            prescriptionForm.reset();
-                            document.getElementById('prescriptionDate').value = new Date().toISOString().split('T')[0];
+                            // Limpar formulário
+                            this.reset();
+                            document.getElementById('paymentDate').value = new Date().toISOString().split('T')[0];
                             
                             // Adicionar atividade
-                            await addActivity('prescription', `Pontuário "${title}" criado`, patient.firstName);
+                            await addActivity('payment', `Pagamento registrado: R$ ${amount.toFixed(2)}`, patient.firstName);
                             
-                            showNotification(`Pontuário criado com sucesso para ${patient.firstName} ${patient.lastName}!`, 'success');
+                            showNotification(`Pagamento de R$ ${amount.toFixed(2)} registrado com sucesso!`, 'success');
                         }
                     } catch (error) {
-                        console.error('Erro ao salvar pontuário:', error);
-                        showNotification('Erro ao criar pontuário.', 'error');
+                        console.error('Erro ao salvar pagamento:', error);
+                        showNotification('Erro ao registrar pagamento.', 'error');
                     }
                 });
             }
             
-            // Atualizar lista de sessões quando selecionar paciente no relatório
-            document.getElementById('reportPatient')?.addEventListener('change', async function() {
-                await updateReportAppointmentOptions(parseInt(this.value));
-            });
+            // Formulário de prontuário
+            const prontuarioForm = document.getElementById('prontuarioForm');
+            if (prontuarioForm) {
+                prontuarioForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const pacienteId = parseInt(document.getElementById('prontuarioPaciente').value);
+                    const dataAbertura = document.getElementById('prontuarioData').value;
+                    const identificacao = document.getElementById('prontuarioIdentificacao').value;
+                    const historico = document.getElementById('prontuarioHistorico').value;
+                    const tratamentos = document.getElementById('prontuarioTratamentos').value;
+                    
+                    if (!pacienteId) {
+                        showNotification('Selecione um paciente.', 'error');
+                        return;
+                    }
+                    
+                    try {
+                        const patients = await db.getPatients();
+                        const patient = patients.find(p => p.id === pacienteId);
+                        
+                        if (patient) {
+                            let prontuario;
+                            
+                            if (editingProntuarioId) {
+                                // Editar prontuário existente
+                                const prontuarios = await db.getProntuarios();
+                                const existing = prontuarios.find(p => p.id === editingProntuarioId);
+                                if (existing) {
+                                    existing.pacienteId = patient.id;
+                                    existing.pacienteNome = `${patient.firstName} ${patient.lastName}`;
+                                    existing.dataAbertura = dataAbertura;
+                                    existing.identificacao = identificacao;
+                                    existing.historico = historico;
+                                    existing.tratamentos = tratamentos;
+                                    existing.updatedAt = new Date().toISOString();
+                                    
+                                    prontuario = existing;
+                                    await db.saveProntuario(prontuario);
+                                    showNotification(`Prontuário atualizado para ${patient.firstName} ${patient.lastName}!`, 'success');
+                                }
+                            } else {
+                                // Novo prontuário
+                                prontuario = {
+                                    pacienteId: patient.id,
+                                    pacienteNome: `${patient.firstName} ${patient.lastName}`,
+                                    dataAbertura: dataAbertura,
+                                    identificacao: identificacao,
+                                    historico: historico,
+                                    tratamentos: tratamentos,
+                                    anotacoes: [],
+                                    documentos: []
+                                };
+                                
+                                await db.saveProntuario(prontuario);
+                                showNotification(`Prontuário criado para ${patient.firstName} ${patient.lastName}!`, 'success');
+                            }
+                            
+                            // Atualizar interface
+                            await loadProntuariosList();
+                            
+                            // Fechar modal e limpar formulário
+                            document.getElementById('prontuarioModal').classList.remove('active');
+                            prontuarioForm.reset();
+                            document.getElementById('prontuarioData').value = new Date().toISOString().split('T')[0];
+                            editingProntuarioId = null;
+                            
+                            // Selecionar o prontuário recém-criado/editado
+                            if (!editingProntuarioId) {
+                                const prontuarios = await db.getProntuarios();
+                                const newProntuario = prontuarios[prontuarios.length - 1];
+                                setTimeout(() => selectProntuario(newProntuario.id), 100);
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Erro ao salvar prontuário:', error);
+                        showNotification('Erro ao salvar prontuário.', 'error');
+                    }
+                });
+            }
             
             // Botões do modal de status da consulta
             document.getElementById('markCompleted')?.addEventListener('click', async () => {
@@ -4569,7 +4354,38 @@
             }
         }
         
-        function setupThemeEvents() {
+        function setupFileAndDocumentEvents() {
+            // Nova pasta (Fichas)
+            document.getElementById('newFolderBtn')?.addEventListener('click', () => {
+                document.getElementById('folderType').value = 'files';
+                document.getElementById('newFolderModal').classList.add('active');
+                document.getElementById('folderName').focus();
+            });
+            
+            // Enviar arquivo
+            document.getElementById('uploadFileBtn')?.addEventListener('click', async () => {
+                // Preencher lista de pastas
+                await populateFolderSelect('fileFolder', 'files');
+                document.getElementById('uploadFileModal').classList.add('active');
+            });
+            
+            // Novo documento
+            document.getElementById('newDocumentBtn')?.addEventListener('click', async () => {
+                // Preencher lista de pastas
+                await populateFolderSelect('documentFolder', 'documents');
+                document.getElementById('newDocumentModal').classList.add('active');
+                document.getElementById('documentTitle').focus();
+            });
+            
+            // Nova pasta (Documentos)
+            document.getElementById('newDocFolderBtn')?.addEventListener('click', () => {
+                document.getElementById('folderType').value = 'documents';
+                document.getElementById('newFolderModal').classList.add('active');
+                document.getElementById('folderName').focus();
+            });
+        }
+        
+        function setupSettingsEvents() {
             // Alterar foto
             document.getElementById('changePhotoBtn')?.addEventListener('click', () => {
                 document.getElementById('profilePhotoInput').click();
@@ -4598,14 +4414,6 @@
                     reader.readAsDataURL(file);
                     this.value = '';
                 }
-            });
-            
-            // Tema claro/escuro
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const theme = this.getAttribute('data-theme');
-                    setTheme(theme);
-                });
             });
             
             // Exportar dados
@@ -4662,37 +4470,6 @@
             // Sincronizar agora
             document.getElementById('syncNowBtn')?.addEventListener('click', async () => {
                 showNotification('Use a função de exportar/importar dados para sincronizar entre dispositivos.', 'info');
-            });
-        }
-        
-        function setupFileAndDocumentEvents() {
-            // Nova pasta (Fichas)
-            document.getElementById('newFolderBtn')?.addEventListener('click', () => {
-                document.getElementById('folderType').value = 'files';
-                document.getElementById('newFolderModal').classList.add('active');
-                document.getElementById('folderName').focus();
-            });
-            
-            // Enviar arquivo
-            document.getElementById('uploadFileBtn')?.addEventListener('click', async () => {
-                // Preencher lista de pastas
-                await populateFolderSelect('fileFolder', 'files');
-                document.getElementById('uploadFileModal').classList.add('active');
-            });
-            
-            // Novo documento
-            document.getElementById('newDocumentBtn')?.addEventListener('click', async () => {
-                // Preencher lista de pastas
-                await populateFolderSelect('documentFolder', 'documents');
-                document.getElementById('newDocumentModal').classList.add('active');
-                document.getElementById('documentTitle').focus();
-            });
-            
-            // Nova pasta (Documentos)
-            document.getElementById('newDocFolderBtn')?.addEventListener('click', () => {
-                document.getElementById('folderType').value = 'documents';
-                document.getElementById('newFolderModal').classList.add('active');
-                document.getElementById('folderName').focus();
             });
         }
         
@@ -4774,14 +4551,14 @@
                         icon = 'fa-file-alt';
                         color = 'orange';
                         typeText = 'Relatório';
-                    } else if (activity.type === 'prescription') {
-                        icon = 'fa-prescription';
-                        color = 'purple';
-                        typeText = 'Pontuário';
                     } else if (activity.type === 'payment') {
                         icon = 'fa-dollar-sign';
                         color = 'purple';
                         typeText = 'Pagamento';
+                    } else if (activity.type === 'prontuario') {
+                        icon = 'fa-notes-medical';
+                        color = 'blue';
+                        typeText = 'Prontuário';
                     }
                     
                     activityItem.innerHTML = `
@@ -5317,12 +5094,6 @@
                             await db.delete('reports', report.id);
                         }
                         
-                        const prescriptions = await db.getPrescriptions();
-                        const patientPrescriptions = prescriptions.filter(p => p.patientId === patientId);
-                        for (const prescription of patientPrescriptions) {
-                            await db.delete('prescriptions', prescription.id);
-                        }
-                        
                         const payments = await db.getPayments();
                         const patientPayments = payments.filter(p => p.patientId === patientId);
                         for (const payment of patientPayments) {
@@ -5334,14 +5105,20 @@
                             await db.delete('clinicalNotes', note.id);
                         }
                         
+                        // Excluir prontuários relacionados
+                        const prontuarios = await db.getProntuarios();
+                        const patientProntuarios = prontuarios.filter(p => p.pacienteId === patientId);
+                        for (const prontuario of patientProntuarios) {
+                            await db.delete('prontuarios', prontuario.id);
+                        }
+                        
                         // Atualizar interface
                         await loadPatientsList();
                         await loadDashboard();
                         await loadAgenda();
                         await loadReportsList();
-                        await loadPrescriptionsList();
+                        await loadProntuariosList();
                         await updateFinanceSummary();
-                        await loadAllPayments();
                         
                         // Esconder detalhes do paciente
                         document.getElementById('emptyPatientDetail').classList.remove('hidden');
@@ -5550,6 +5327,8 @@
         }
         
         function openReportModalForAppointment(appointmentId) {
+            // Esta função será chamada quando o usuário quiser criar um relatório para uma consulta
+            // Preencher os dados automaticamente no modal de relatório
             showNotification('Abra a página de relatórios para criar um relatório para esta sessão.', 'info');
             document.getElementById('statusModal').classList.remove('active');
             
@@ -5710,176 +5489,6 @@
             );
         }
         
-        async function loadPrescriptionsList() {
-            try {
-                const prescriptionsList = document.getElementById('prescriptionsList');
-                const emptyPrescriptions = document.getElementById('emptyPrescriptions');
-                const prescriptions = await db.getPrescriptions();
-                
-                if (prescriptions.length === 0) {
-                    prescriptionsList.innerHTML = '';
-                    emptyPrescriptions.classList.remove('hidden');
-                    return;
-                }
-                
-                emptyPrescriptions.classList.add('hidden');
-                prescriptionsList.innerHTML = '';
-                
-                prescriptions.sort((a, b) => new Date(b.date) - new Date(a.date))
-                    .forEach(prescription => {
-                        const prescriptionItem = document.createElement('div');
-                        prescriptionItem.className = 'prescription-item';
-                        
-                        const typeText = {
-                            'initial': 'Avaliação Inicial',
-                            'session': 'Registro de Sessão',
-                            'evolution': 'Evolução Clínica',
-                            'discharge': 'Alta',
-                            'other': 'Outro'
-                        }[prescription.type] || 'Pontuário';
-                        
-                        prescriptionItem.innerHTML = `
-                            <div class="prescription-header">
-                                <div class="prescription-title">${prescription.title}</div>
-                                <div class="prescription-date">${formatDate(prescription.date)}</div>
-                            </div>
-                            <div class="prescription-content">
-                                <p><strong>Paciente:</strong> ${prescription.patientName}</p>
-                                <p><strong>Tipo:</strong> ${typeText}</p>
-                                ${prescription.sessionNumber ? `<p><strong>Sessão Nº:</strong> ${prescription.sessionNumber}</p>` : ''}
-                                <p>${prescription.content.substring(0, 150)}${prescription.content.length > 150 ? '...' : ''}</p>
-                            </div>
-                            <div class="prescription-footer">
-                                <div class="prescription-author">Por ${prescription.author}</div>
-                                <div class="prescription-actions">
-                                    <button class="btn btn-secondary" onclick="viewPrescription(${prescription.id})">
-                                        <i class="fas fa-eye"></i> Ver
-                                    </button>
-                                    <button class="btn btn-danger" onclick="deletePrescription(${prescription.id})">
-                                        <i class="fas fa-trash"></i> Excluir
-                                    </button>
-                                </div>
-                            </div>
-                        `;
-                        
-                        prescriptionsList.appendChild(prescriptionItem);
-                    });
-            } catch (error) {
-                console.error('Erro ao carregar pontuários:', error);
-                showNotification('Erro ao carregar pontuários.', 'error');
-            }
-        }
-        
-        async function viewPrescription(prescriptionId) {
-            try {
-                const prescriptions = await db.getPrescriptions();
-                const prescription = prescriptions.find(p => p.id === prescriptionId);
-                if (!prescription) return;
-                
-                const typeText = {
-                    'initial': 'Avaliação Inicial',
-                    'session': 'Registro de Sessão',
-                    'evolution': 'Evolução Clínica',
-                    'discharge': 'Alta',
-                    'other': 'Outro'
-                }[prescription.type] || 'Pontuário';
-                
-                const moodText = {
-                    'calm': 'Calmo',
-                    'anxious': 'Ansioso',
-                    'depressed': 'Deprimido',
-                    'irritable': 'Irritável',
-                    'euphoric': 'Eufórico',
-                    'neutral': 'Neutro',
-                    '': 'Não informado'
-                }[prescription.mood] || 'Não informado';
-                
-                const progressText = {
-                    'excellent': 'Excelente',
-                    'good': 'Bom',
-                    'regular': 'Regular',
-                    'poor': 'Ruim',
-                    'critical': 'Crítico',
-                    '': 'Não informado'
-                }[prescription.progress] || 'Não informado';
-                
-                document.getElementById('viewPrescriptionTitle').textContent = prescription.title;
-                document.getElementById('prescriptionDetail').innerHTML = `
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <div class="detail-label">Paciente</div>
-                            <div class="detail-value">${prescription.patientName}</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Data do Pontuário</div>
-                            <div class="detail-value">${formatDate(prescription.date)}</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Tipo</div>
-                            <div class="detail-value">${typeText}</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Autor</div>
-                            <div class="detail-value">${prescription.author}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="detail-grid" style="margin-top: 20px;">
-                        <div class="detail-item">
-                            <div class="detail-label">Estado Emocional</div>
-                            <div class="detail-value">${moodText}</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Progresso</div>
-                            <div class="detail-value">${progressText}</div>
-                        </div>
-                        ${prescription.sessionNumber ? `
-                        <div class="detail-item">
-                            <div class="detail-label">Número da Sessão</div>
-                            <div class="detail-value">${prescription.sessionNumber}</div>
-                        </div>
-                        ` : ''}
-                    </div>
-                    
-                    <h4 class="section-title" style="margin-top: 30px;">Conteúdo Detalhado</h4>
-                    <div style="background-color: var(--light-bg); padding: 20px; border-radius: var(--border-radius-sm);">
-                        <p style="white-space: pre-wrap;">${prescription.content}</p>
-                    </div>
-                `;
-                
-                document.getElementById('viewPrescriptionModal').classList.add('active');
-            } catch (error) {
-                console.error('Erro ao visualizar pontuário:', error);
-                showNotification('Erro ao carregar pontuário.', 'error');
-            }
-        }
-        
-        async function deletePrescription(prescriptionId) {
-            showConfirmModal(
-                'Tem certeza que deseja excluir este pontuário? Esta ação não pode ser desfeita.',
-                async () => {
-                    try {
-                        await db.delete('prescriptions', prescriptionId);
-                        
-                        // Atualizar interface
-                        await loadPrescriptionsList();
-                        
-                        // Adicionar atividade
-                        const prescriptions = await db.getPrescriptions();
-                        const deletedPrescription = prescriptions.find(p => p.id === prescriptionId);
-                        if (deletedPrescription) {
-                            await addActivity('prescription', `Pontuário "${deletedPrescription.title}" excluído`, deletedPrescription.patientName);
-                        }
-                        
-                        showNotification('Pontuário excluído com sucesso!', 'success');
-                    } catch (error) {
-                        console.error('Erro ao excluir pontuário:', error);
-                        showNotification('Erro ao excluir pontuário.', 'error');
-                    }
-                }
-            );
-        }
-        
         async function updateFinanceSummary() {
             try {
                 const payments = await db.getPayments();
@@ -5917,57 +5526,6 @@
             } catch (error) {
                 console.error('Erro ao atualizar resumo financeiro:', error);
                 showNotification('Erro ao carregar dados financeiros.', 'error');
-            }
-        }
-        
-        async function loadAllPayments() {
-            try {
-                const paymentsList = document.getElementById('paymentsActivityList');
-                const payments = await db.getPayments();
-                
-                if (payments.length === 0) {
-                    paymentsList.innerHTML = `
-                        <div class="empty-state" style="padding: 40px 20px;">
-                            <i class="fas fa-dollar-sign"></i>
-                            <h4>Nenhum pagamento registrado</h4>
-                            <p>Registre seu primeiro pagamento</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                paymentsList.innerHTML = '';
-                
-                payments.sort((a, b) => new Date(b.date) - new Date(a.date))
-                    .forEach(payment => {
-                        const typeText = {
-                            'session': 'Sessão Individual',
-                            'package': 'Pacote Mensal',
-                            'assessment': 'Avaliação',
-                            'other': 'Outro'
-                        }[payment.type] || 'Pagamento';
-                        
-                        const paymentItem = document.createElement('div');
-                        paymentItem.className = 'activity-item';
-                        
-                        paymentItem.innerHTML = `
-                            <div class="activity-icon purple">
-                                <i class="fas fa-dollar-sign"></i>
-                            </div>
-                            <div class="activity-content">
-                                <h4>${typeText}</h4>
-                                <p>Paciente: ${payment.patientName}</p>
-                                <p>Valor: R$ ${payment.amount.toFixed(2)}</p>
-                                <p>Data: ${formatDate(payment.date)}</p>
-                                ${payment.description ? `<p>Descrição: ${payment.description}</p>` : ''}
-                            </div>
-                        `;
-                        
-                        paymentsList.appendChild(paymentItem);
-                    });
-            } catch (error) {
-                console.error('Erro ao carregar pagamentos:', error);
-                showNotification('Erro ao carregar lista de pagamentos.', 'error');
             }
         }
         
@@ -6046,6 +5604,352 @@
                 console.error('Erro ao popular seleção de pastas:', error);
             }
         }
+        
+        // ============================================
+        // FUNÇÕES DE PRONTUÁRIOS
+        // ============================================
+        
+        async function loadProntuariosList() {
+            try {
+                const prontuariosList = document.getElementById('prontuariosList');
+                const emptyProntuariosList = document.getElementById('emptyProntuariosList');
+                const prontuarios = await db.getProntuarios();
+                
+                if (prontuarios.length === 0) {
+                    prontuariosList.innerHTML = '';
+                    emptyProntuariosList.classList.remove('hidden');
+                    return;
+                }
+                
+                emptyProntuariosList.classList.add('hidden');
+                prontuariosList.innerHTML = '';
+                
+                prontuarios.forEach(prontuario => {
+                    const prontuarioItem = document.createElement('div');
+                    prontuarioItem.className = 'patient-item';
+                    prontuarioItem.setAttribute('data-id', prontuario.id);
+                    
+                    const initials = prontuario.pacienteNome.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                    
+                    prontuarioItem.innerHTML = `
+                        <div class="patient-avatar">${initials}</div>
+                        <div class="patient-info">
+                            <h4>${prontuario.pacienteNome}</h4>
+                            <p><i class="fas fa-calendar"></i> Aberto em ${formatDate(prontuario.dataAbertura)}</p>
+                        </div>
+                        <div class="patient-actions">
+                            <button class="action-btn edit-prontuario-btn" data-id="${prontuario.id}" title="Editar prontuário">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete delete-prontuario-btn" data-id="${prontuario.id}" title="Excluir prontuário">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Evento para selecionar prontuário
+                    prontuarioItem.addEventListener('click', function(e) {
+                        if (!e.target.closest('.patient-actions')) {
+                            selectProntuario(prontuario.id);
+                        }
+                    });
+                    
+                    // Evento para editar prontuário
+                    const editBtn = prontuarioItem.querySelector('.edit-prontuario-btn');
+                    editBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        editProntuario(prontuario.id);
+                    });
+                    
+                    // Evento para excluir prontuário
+                    const deleteBtn = prontuarioItem.querySelector('.delete-prontuario-btn');
+                    deleteBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        deleteProntuario(prontuario.id);
+                    });
+                    
+                    prontuariosList.appendChild(prontuarioItem);
+                });
+                
+                // Busca de prontuários
+                const prontuarioSearch = document.getElementById('prontuarioSearch');
+                if (prontuarioSearch) {
+                    prontuarioSearch.addEventListener('input', function() {
+                        const searchTerm = this.value.toLowerCase();
+                        const prontuarioItems = document.querySelectorAll('.patient-item');
+                        
+                        prontuarioItems.forEach(item => {
+                            const pacienteNome = item.querySelector('h4').textContent.toLowerCase();
+                            const shouldShow = pacienteNome.includes(searchTerm) || searchTerm === '';
+                            item.style.display = shouldShow ? 'flex' : 'none';
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao carregar prontuários:', error);
+                showNotification('Erro ao carregar lista de prontuários.', 'error');
+            }
+        }
+        
+        async function selectProntuario(prontuarioId) {
+            try {
+                const prontuarios = await db.getProntuarios();
+                const prontuario = prontuarios.find(p => p.id === prontuarioId);
+                if (!prontuario) return;
+                
+                selectedProntuarioId = prontuarioId;
+                
+                // Atualizar seleção visual
+                document.querySelectorAll('.patient-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (parseInt(item.getAttribute('data-id')) === prontuarioId) {
+                        item.classList.add('active');
+                    }
+                });
+                
+                // Mostrar detalhes
+                document.getElementById('emptyProntuarioDetail').classList.add('hidden');
+                document.getElementById('prontuarioDetail').classList.remove('hidden');
+                
+                // Atualizar informações básicas
+                const initials = prontuario.pacienteNome.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                
+                document.getElementById('prontuarioDetailAvatar').textContent = initials;
+                document.getElementById('prontuarioDetailName').textContent = prontuario.pacienteNome;
+                document.getElementById('prontuarioDetailInfo').textContent = `Prontuário aberto em ${formatDate(prontuario.dataAbertura)}`;
+                
+                // Configurar botões de ação
+                document.getElementById('deleteProntuarioBtn').onclick = () => deleteProntuario(prontuarioId);
+                document.getElementById('editProntuarioBtn').onclick = () => editProntuario(prontuarioId);
+                
+                // Carregar conteúdo das abas
+                await loadProntuarioIdentificacao(prontuario);
+                await loadProntuarioHistorico(prontuario);
+                await loadProntuarioTratamentos(prontuario);
+                await loadProntuarioAnotacoes(prontuario);
+                await loadProntuarioDocumentos(prontuario);
+                
+                // Configurar abas
+                setupProntuarioTabs();
+            } catch (error) {
+                console.error('Erro ao selecionar prontuário:', error);
+                showNotification('Erro ao carregar dados do prontuário.', 'error');
+            }
+        }
+        
+        function setupProntuarioTabs() {
+            const tabs = document.querySelectorAll('.patient-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Atualizar abas ativas
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === tabId + 'Tab') {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+        
+        async function loadProntuarioIdentificacao(prontuario) {
+            const container = document.getElementById('identificacaoTab');
+            container.innerHTML = `
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Paciente</div>
+                        <div class="detail-value">${prontuario.pacienteNome}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Data de Abertura</div>
+                        <div class="detail-value">${formatDate(prontuario.dataAbertura)}</div>
+                    </div>
+                </div>
+                
+                <h4 class="section-title" style="margin-top: 30px;">Identificação Completa</h4>
+                <div style="background-color: var(--light-bg); padding: 20px; border-radius: var(--border-radius-sm);">
+                    <p style="white-space: pre-wrap;">${prontuario.identificacao || 'Não informado'}</p>
+                </div>
+            `;
+        }
+        
+        async function loadProntuarioHistorico(prontuario) {
+            const container = document.getElementById('historicoTab');
+            container.innerHTML = `
+                <h4 class="section-title">Histórico de Saúde</h4>
+                <div style="background-color: var(--light-bg); padding: 20px; border-radius: var(--border-radius-sm);">
+                    <p style="white-space: pre-wrap;">${prontuario.historico || 'Não informado'}</p>
+                </div>
+            `;
+        }
+        
+        async function loadProntuarioTratamentos(prontuario) {
+            const container = document.getElementById('tratamentosTab');
+            container.innerHTML = `
+                <h4 class="section-title">Tratamentos Realizados</h4>
+                <div style="background-color: var(--light-bg); padding: 20px; border-radius: var(--border-radius-sm);">
+                    <p style="white-space: pre-wrap;">${prontuario.tratamentos || 'Não informado'}</p>
+                </div>
+            `;
+        }
+        
+        async function loadProntuarioAnotacoes(prontuario) {
+            const container = document.getElementById('anotacoesTab');
+            const anotacoes = prontuario.anotacoes || [];
+            
+            if (anotacoes.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="padding: 40px 20px;">
+                        <i class="fas fa-file-alt"></i>
+                        <h4>Nenhuma anotação adicional</h4>
+                        <p>Adicione anotações específicas a este prontuário</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '<div class="activity-list">';
+            anotacoes.forEach((anotacao, index) => {
+                html += `
+                    <div class="activity-item">
+                        <div class="activity-icon blue">
+                            <i class="fas fa-sticky-note"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>Anotação ${index + 1}</h4>
+                            <p>${anotacao.data ? `Data: ${formatDate(anotacao.data)}` : ''}</p>
+                            <p>${anotacao.conteudo || ''}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            container.innerHTML = html;
+        }
+        
+        async function loadProntuarioDocumentos(prontuario) {
+            const container = document.getElementById('documentosTab');
+            const documentos = prontuario.documentos || [];
+            
+            if (documentos.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="padding: 40px 20px;">
+                        <i class="fas fa-file-alt"></i>
+                        <h4>Nenhum documento anexado</h4>
+                        <p>Anexe documentos a este prontuário</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '<div class="activity-list">';
+            documentos.forEach((documento, index) => {
+                html += `
+                    <div class="activity-item">
+                        <div class="activity-icon green">
+                            <i class="fas fa-paperclip"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>Documento ${index + 1}</h4>
+                            <p>${documento.nome || 'Documento sem nome'}</p>
+                            <p>${documento.tipo ? `Tipo: ${documento.tipo}` : ''}</p>
+                            <p>${documento.data ? `Data: ${formatDate(documento.data)}` : ''}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            container.innerHTML = html;
+        }
+        
+        function openProntuarioModal(prontuarioId = null) {
+            editingProntuarioId = prontuarioId;
+            
+            // Preencher lista de pacientes
+            populatePatientSelect('prontuarioPaciente');
+            
+            if (prontuarioId) {
+                document.getElementById('prontuarioModalTitle').textContent = 'Editar Prontuário';
+                document.getElementById('prontuarioSubmitBtn').textContent = 'Atualizar Prontuário';
+                
+                // Carregar dados do prontuário
+                db.getProntuarios().then(prontuarios => {
+                    const prontuario = prontuarios.find(p => p.id === prontuarioId);
+                    if (prontuario) {
+                        document.getElementById('prontuarioPaciente').value = prontuario.pacienteId;
+                        document.getElementById('prontuarioData').value = prontuario.dataAbertura;
+                        document.getElementById('prontuarioIdentificacao').value = prontuario.identificacao || '';
+                        document.getElementById('prontuarioHistorico').value = prontuario.historico || '';
+                        document.getElementById('prontuarioTratamentos').value = prontuario.tratamentos || '';
+                    }
+                });
+            } else {
+                document.getElementById('prontuarioModalTitle').textContent = 'Novo Prontuário';
+                document.getElementById('prontuarioSubmitBtn').textContent = 'Salvar Prontuário';
+                
+                // Limpar formulário
+                document.getElementById('prontuarioForm').reset();
+                document.getElementById('prontuarioData').value = new Date().toISOString().split('T')[0];
+            }
+            
+            document.getElementById('prontuarioModal').classList.add('active');
+        }
+        
+        async function editProntuario(prontuarioId) {
+            try {
+                const prontuarios = await db.getProntuarios();
+                const prontuario = prontuarios.find(p => p.id === prontuarioId);
+                if (prontuario) {
+                    openProntuarioModal(prontuarioId);
+                }
+            } catch (error) {
+                console.error('Erro ao editar prontuário:', error);
+                showNotification('Erro ao carregar dados do prontuário.', 'error');
+            }
+        }
+        
+        async function deleteProntuario(prontuarioId) {
+            showConfirmModal(
+                'Tem certeza que deseja excluir este prontuário? Esta ação não pode ser desfeita.',
+                async () => {
+                    try {
+                        await db.deleteProntuario(prontuarioId);
+                        
+                        // Atualizar interface
+                        await loadProntuariosList();
+                        
+                        // Esconder detalhes do prontuário
+                        document.getElementById('emptyProntuarioDetail').classList.remove('hidden');
+                        document.getElementById('prontuarioDetail').classList.add('hidden');
+                        
+                        // Adicionar atividade
+                        const prontuarios = await db.getProntuarios();
+                        const deletedProntuario = prontuarios.find(p => p.id === prontuarioId);
+                        if (deletedProntuario) {
+                            await addActivity('prontuario', `Prontuário de ${deletedProntuario.pacienteNome} excluído`, deletedProntuario.pacienteNome);
+                        }
+                        
+                        showNotification('Prontuário excluído com sucesso!', 'success');
+                    } catch (error) {
+                        console.error('Erro ao excluir prontuário:', error);
+                        showNotification('Erro ao excluir prontuário.', 'error');
+                    }
+                }
+            );
+        }
+        
+        // ============================================
+        // FUNÇÕES DE ARQUIVOS E PASTAS
+        // ============================================
         
         async function loadFolders(type) {
             try {
@@ -6205,6 +6109,9 @@
                         </div>
                     `;
                 } else {
+                    const folders = await db.getFolders('files');
+                    const folder = folders.find(f => f.id === folderId);
+                    
                     let html = `
                         <div class="folder-view-container">
                             <div class="folder-view-header">
@@ -6212,7 +6119,7 @@
                                     <i class="fas fa-arrow-left"></i> Voltar
                                 </button>
                                 <i class="fas fa-folder"></i>
-                                <h3>${files[0].folderName || 'Pasta'}</h3>
+                                <h3>${folder ? folder.name : 'Pasta'}</h3>
                             </div>
                             <div class="files-list">
                     `;
@@ -6289,14 +6196,14 @@
                     container.innerHTML = `
                         <div class="folder-view-container">
                             <div class="folder-view-header">
-                                <button class="btn btn-secondary back-btn" id="backToFoldersBtn">
+                                <button class="btn btn-secondary back-btn" id="backToDocumentsBtn">
                                     <i class="fas fa-arrow-left"></i> Voltar
                                 </button>
                                 <i class="fas fa-folder"></i>
-                                <h3>${folder?.name || 'Pasta Vazia'}</h3>
+                                <h3>Pasta Vazia</h3>
                             </div>
                             <div class="empty-state" style="padding: 40px 20px;">
-                                <i class="fas fa-file-alt"></i>
+                                <i class="fas fa-folder-open"></i>
                                 <h4>Nenhum documento nesta pasta</h4>
                                 <p>Adicione documentos a esta pasta</p>
                             </div>
@@ -6306,11 +6213,11 @@
                     let html = `
                         <div class="folder-view-container">
                             <div class="folder-view-header">
-                                <button class="btn btn-secondary back-btn" id="backToFoldersBtn">
+                                <button class="btn btn-secondary back-btn" id="backToDocumentsBtn">
                                     <i class="fas fa-arrow-left"></i> Voltar
                                 </button>
                                 <i class="fas fa-folder"></i>
-                                <h3>${folder?.name || 'Pasta'}</h3>
+                                <h3>${folder ? folder.name : 'Pasta'}</h3>
                             </div>
                             <div class="documents-list">
                     `;
@@ -6323,14 +6230,14 @@
                                 </div>
                                 <div class="file-info">
                                     <div class="file-name">${doc.title}</div>
-                                    <div class="file-description">${doc.content.substring(0, 100)}${doc.content.length > 100 ? '...' : ''}</div>
+                                    <div class="file-size">${doc.content.length} caracteres</div>
                                 </div>
                                 <div class="file-date">${formatDate(doc.createdAt)}</div>
                                 <div class="file-actions">
-                                    <button class="action-btn view-doc-btn" data-id="${doc.id}" title="Visualizar">
+                                    <button class="action-btn view-document-btn" data-id="${doc.id}" title="Visualizar">
                                         <i class="fas fa-eye"></i>
                                     </button>
-                                    <button class="action-btn delete delete-doc-btn" data-id="${doc.id}" title="Excluir">
+                                    <button class="action-btn delete delete-document-btn" data-id="${doc.id}" title="Excluir">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -6346,20 +6253,20 @@
                     container.innerHTML = html;
                     
                     // Configurar botão de voltar
-                    document.getElementById('backToFoldersBtn').addEventListener('click', async () => {
+                    document.getElementById('backToDocumentsBtn').addEventListener('click', async () => {
                         await closeFolderView();
                     });
                     
                     // Configurar botões de visualização
-                    document.querySelectorAll('.view-doc-btn').forEach(btn => {
+                    document.querySelectorAll('.view-document-btn').forEach(btn => {
                         btn.addEventListener('click', function() {
                             const docId = parseInt(this.getAttribute('data-id'));
-                            viewDocumentFromList(docId);
+                            viewDocumentById(docId);
                         });
                     });
                     
                     // Configurar botões de exclusão
-                    document.querySelectorAll('.delete-doc-btn').forEach(btn => {
+                    document.querySelectorAll('.delete-document-btn').forEach(btn => {
                         btn.addEventListener('click', function() {
                             const docId = parseInt(this.getAttribute('data-id'));
                             deleteDocument(docId);
@@ -6387,11 +6294,53 @@
             }
         }
         
+        function viewDocument(doc) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay active';
+            modal.innerHTML = `
+                <div class="modal">
+                    <div class="modal-header">
+                        <h3>${doc.title}</h3>
+                        <button class="close-modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="background-color: var(--light-bg); padding: 20px; border-radius: var(--border-radius-sm);">
+                            <p style="white-space: pre-wrap;">${doc.content}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            modal.querySelector('.close-modal').addEventListener('click', () => {
+                modal.remove();
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        async function viewDocumentById(docId) {
+            try {
+                const documents = await db.getDocuments();
+                const doc = documents.find(d => d.id === docId);
+                if (doc) {
+                    viewDocument(doc);
+                }
+            } catch (error) {
+                console.error('Erro ao visualizar documento:', error);
+                showNotification('Erro ao carregar documento.', 'error');
+            }
+        }
+        
         async function downloadFile(fileId) {
             try {
                 const files = await db.getFiles();
                 const file = files.find(f => f.id === fileId);
-                
                 if (file && file.data) {
                     const link = document.createElement('a');
                     link.href = file.data;
@@ -6399,11 +6348,9 @@
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                } else {
-                    showNotification('Arquivo não encontrado ou corrompido.', 'error');
                 }
             } catch (error) {
-                console.error('Erro ao fazer download:', error);
+                console.error('Erro ao fazer download do arquivo:', error);
                 showNotification('Erro ao fazer download do arquivo.', 'error');
             }
         }
@@ -6431,60 +6378,6 @@
             );
         }
         
-        async function viewDocumentFromList(docId) {
-            try {
-                const documents = await db.getDocuments();
-                const doc = documents.find(d => d.id === docId);
-                if (doc) {
-                    viewDocument(doc);
-                }
-            } catch (error) {
-                console.error('Erro ao visualizar documento:', error);
-                showNotification('Erro ao visualizar documento.', 'error');
-            }
-        }
-        
-        function viewDocument(document) {
-            const modal = document.createElement('div');
-            modal.className = 'modal-overlay active';
-            modal.innerHTML = `
-                <div class="modal">
-                    <div class="modal-header">
-                        <h3>${document.title}</h3>
-                        <button class="close-modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div style="white-space: pre-wrap; padding: 20px; background-color: var(--light-bg); border-radius: var(--border-radius-sm); max-height: 400px; overflow-y: auto;">
-                            ${document.content}
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary close-doc-view">Fechar</button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Configurar fechamento
-            const closeBtn = modal.querySelector('.close-modal');
-            const closeDocBtn = modal.querySelector('.close-doc-view');
-            
-            closeBtn.addEventListener('click', () => {
-                modal.remove();
-            });
-            
-            closeDocBtn.addEventListener('click', () => {
-                modal.remove();
-            });
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        }
-        
         async function deleteDocument(docId) {
             showConfirmModal(
                 'Tem certeza que deseja excluir este documento?',
@@ -6508,132 +6401,52 @@
             );
         }
         
-        async function openAppointmentModal() {
-            try {
-                // Preencher lista de pacientes
-                await populatePatientSelect('appointmentPatient');
-                
-                // Configurar data e hora atuais
-                const now = new Date();
-                document.getElementById('appointmentDate').value = now.toISOString().split('T')[0];
-                // PERMITIR datas passadas - remover a restrição
-                // document.getElementById('appointmentDate').min = now.toISOString().split('T')[0];
-                document.getElementById('appointmentTime').value = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-                
-                // Mostrar modal
-                document.getElementById('appointmentModal').classList.add('active');
-            } catch (error) {
-                console.error('Erro ao abrir modal de consulta:', error);
-                showNotification('Erro ao abrir formulário de consulta.', 'error');
-            }
+        // ============================================
+        // FUNÇÕES AUXILIARES
+        // ============================================
+        
+        function openAppointmentModal() {
+            populatePatientSelect('appointmentPatient');
+            document.getElementById('appointmentModal').classList.add('active');
         }
         
         function openPatientModal() {
-            // Limpar formulário
-            const patientForm = document.getElementById('patientForm');
-            patientForm.reset();
             editingPatientId = null;
             document.getElementById('patientModalTitle').textContent = 'Novo Paciente';
             document.getElementById('patientSubmitBtn').textContent = 'Salvar Paciente';
-            document.getElementById('cpfError').classList.remove('show');
-            
-            // Configurar data mínima para nascimento (120 anos atrás)
-            const minDate = new Date();
-            minDate.setFullYear(minDate.getFullYear() - 120);
-            document.getElementById('patientBirthDateInput').max = new Date().toISOString().split('T')[0];
-            document.getElementById('patientBirthDateInput').min = minDate.toISOString().split('T')[0];
-            
-            // Mostrar modal
+            document.getElementById('patientForm').reset();
             document.getElementById('patientModal').classList.add('active');
-            document.getElementById('patientFirstName').focus();
         }
         
-        async function openReportModal() {
-            try {
-                // Preencher lista de pacientes
-                await populatePatientSelect('reportPatient');
-                
-                // Limpar outros campos
-                document.getElementById('reportAppointment').innerHTML = '<option value="">Sem sessão específica</option>';
-                document.getElementById('reportDate').value = new Date().toISOString().split('T')[0];
-                document.getElementById('reportTitle').value = '';
-                document.getElementById('reportContent').value = '';
-                
-                // Mostrar modal
-                document.getElementById('reportModal').classList.add('active');
-            } catch (error) {
-                console.error('Erro ao abrir modal de relatório:', error);
-                showNotification('Erro ao abrir formulário de relatório.', 'error');
-            }
+        function openReportModal() {
+            populatePatientSelect('reportPatient');
+            document.getElementById('reportModal').classList.add('active');
         }
         
-        async function openPrescriptionModal() {
-            try {
-                // Preencher lista de pacientes
-                await populatePatientSelect('prescriptionPatient');
-                
-                // Limpar outros campos
-                document.getElementById('prescriptionDate').value = new Date().toISOString().split('T')[0];
-                document.getElementById('prescriptionTitle').value = '';
-                document.getElementById('prescriptionContent').value = '';
-                
-                // Mostrar modal
-                document.getElementById('prescriptionModal').classList.add('active');
-            } catch (error) {
-                console.error('Erro ao abrir modal de pontuário:', error);
-                showNotification('Erro ao abrir formulário de pontuário.', 'error');
-            }
-        }
-        
-        async function setTheme(theme) {
-            // Atualizar seleção visual
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.classList.remove('active');
-                if (option.getAttribute('data-theme') === theme) {
-                    option.classList.add('active');
-                }
-            });
+        function logout() {
+            currentUser = null;
+            sessionStorage.removeItem('psicogestao_logged_in');
+            sessionStorage.removeItem('psicogestao_user');
             
-            // Aplicar tema
-            if (theme === 'dark') {
-                document.documentElement.style.setProperty('--light-bg', '#1a1a1a');
-                document.documentElement.style.setProperty('--white', '#2d2d2d');
-                document.documentElement.style.setProperty('--text-color', '#ffffff');
-                document.documentElement.style.setProperty('--light-text', '#cccccc');
-                document.documentElement.style.setProperty('--border-color', '#444444');
-                document.documentElement.style.setProperty('--dark-color', '#4A5D23');
-            } else {
-                document.documentElement.style.setProperty('--light-bg', '#F5F5F0');
-                document.documentElement.style.setProperty('--white', '#FAFAF9');
-                document.documentElement.style.setProperty('--text-color', '#4A5D23');
-                document.documentElement.style.setProperty('--light-text', '#6B7D44');
-                document.documentElement.style.setProperty('--border-color', '#D8D8C9');
-                document.documentElement.style.setProperty('--dark-color', '#4A5D23');
-            }
+            // Mostrar tela de login
+            document.getElementById('mainSystem').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('loginScreen').classList.add('slide-down');
             
-            // Salvar preferência
-            await db.saveSetting('theme', theme);
+            showNotification('Logout realizado com sucesso.', 'success');
         }
         
-        async function loadTheme() {
-            try {
-                const savedTheme = await db.getSetting('theme', 'light');
-                await setTheme(savedTheme);
-            } catch (error) {
-                console.error('Erro ao carregar tema:', error);
-            }
-        }
+        // ============================================
+        // INICIALIZAÇÃO DA APLICAÇÃO
+        // ============================================
         
-        // Inicializar a aplicação quando o DOM estiver pronto
+        // Inicializar a aplicação quando o DOM estiver carregado
         document.addEventListener('DOMContentLoaded', initializeApp);
         
-        // Expor funções para uso em onclick
+        // Expor funções para o escopo global (para botões onclick)
         window.viewReport = viewReport;
         window.deleteReport = deleteReport;
-        window.viewPrescription = viewPrescription;
-        window.deletePrescription = deletePrescription;
         window.showNotification = showNotification;
-        window.viewDocument = viewDocument;
     </script>
 </body>
 </html>
